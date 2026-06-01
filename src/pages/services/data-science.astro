@@ -1,0 +1,110 @@
+---
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Data science and forecasting',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Data science and forecasting"
+    title="Forecasting models grounded in research and reality"
+    subtitle="We design, train and deploy machine-learning and time-series models that make sense in production — and that you can explain to the people who depend on them."
+  />
+
+  <!-- Content Widget — What we do **** -->
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Forecasting models',
+        description:
+          'Time-series forecasting for energy, demand, operations and other domains where what comes next actually matters.',
+        icon: 'tabler:chart-line',
+      },
+      {
+        title: 'Machine learning pipelines',
+        description:
+          'End-to-end pipelines — data ingestion, training, evaluation, deployment and monitoring — designed for the realities of your team, not a research lab.',
+        icon: 'tabler:cpu',
+      },
+      {
+        title: 'Data analysis and exploration',
+        description:
+          'Exploratory analysis, dashboards and reports that turn raw data into decisions you can defend to your board or your engineers.',
+        icon: 'tabler:chart-histogram',
+      },
+      {
+        title: 'Research-backed methods',
+        description:
+          'Our lead on this work holds a PhD in computer science from HES-SO. You get academic rigour without the academic timeline.',
+        icon: 'tabler:school',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Data and analytics dashboard',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">What we do</h3>
+      We build models that earn their place in production — accurate enough to trust, simple enough to maintain.
+    </Fragment>
+  </Content>
+
+  <!-- Content Widget — How we work **** -->
+
+  <Content
+    isAfterContent
+    items={[
+      {
+        title: 'Start with the question',
+        description:
+          'Before any model, we agree on what you actually need to decide. A simple baseline that answers the right question beats a sophisticated model that does not.',
+        icon: 'tabler:bulb',
+      },
+      {
+        title: 'Honest about uncertainty',
+        description:
+          'Every forecast comes with confidence intervals and a clear note on where the model is and is not reliable. No black boxes.',
+        icon: 'tabler:scale',
+      },
+      {
+        title: 'Production from day one',
+        description:
+          'Models that never leave a notebook do not help anyone. We design for deployment, observability and retraining from the start.',
+        icon: 'tabler:rocket',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Notebook with statistical work',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">How we work</h3>
+    </Fragment>
+  </Content>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Talk to us',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+    title="Got a forecasting or data problem?"
+    subtitle="Send us the question you are trying to answer. We will tell you whether modelling is the right tool — and if so, what kind."
+  />
+</Layout>

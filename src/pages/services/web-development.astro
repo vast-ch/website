@@ -1,0 +1,109 @@
+---
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Web and application development',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Web and application development"
+    title="Web and mobile applications, built to last"
+    subtitle="From the first sketch to a production system you can keep running for years. We design, build and ship software for the web, mobile and everything in between."
+  />
+
+  <!-- Content Widget — What we build ** -->
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Web applications',
+        description:
+          'Modern web apps with TypeScript, Astro, Ember and React. Strong on accessibility, performance and the boring parts that keep a product healthy after launch.',
+        icon: 'tabler:browser',
+      },
+      {
+        title: 'Mobile applications',
+        description:
+          'Native and cross-platform mobile apps for iOS and Android — including apps already in production on the App Store and Google Play.',
+        icon: 'tabler:device-mobile',
+      },
+      {
+        title: 'Backends and APIs',
+        description:
+          'Robust backends, REST and GraphQL APIs, and the integrations that connect them to the rest of your stack.',
+        icon: 'tabler:server',
+      },
+      {
+        title: 'Long-term maintainability',
+        description:
+          'We pick stacks that your team — or future hires — can actually maintain. Pragmatic choices over trendy ones.',
+        icon: 'tabler:tools',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Software engineering team at work',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">What we build</h3>
+      From quick prototypes to full production systems — and the everyday work in between.
+    </Fragment>
+  </Content>
+
+  <!-- Content Widget — How we work **** -->
+
+  <Content
+    isAfterContent
+    items={[
+      {
+        title: 'You talk to the engineers',
+        description: 'No account managers in the middle. Decisions move quickly and nothing gets lost in translation.',
+        icon: 'tabler:messages',
+      },
+      {
+        title: 'Small, focused projects',
+        description:
+          'We work on a handful of projects at a time so each one gets real attention. That keeps quality and timelines honest.',
+        icon: 'tabler:target',
+      },
+      {
+        title: 'Documentation and handover',
+        description:
+          'When the project ends, your team has the documentation, tests and clarity to keep going without us. That is the goal from day one.',
+        icon: 'tabler:notebook',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1552664688-cf412ec27db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+      alt: 'Collaborative engineering work',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">How we work</h3>
+    </Fragment>
+  </Content>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Start a project',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+    title="Have a project in mind?"
+    subtitle="Tell us the rough shape of what you need. We will tell you honestly whether we are the right team for it."
+  />
+</Layout>

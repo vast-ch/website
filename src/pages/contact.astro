@@ -12,12 +12,68 @@ const metadata = {
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <HeroText
+    tagline="Contact"
+    title="Let's talk about your project"
+    subtitle="Three engineers, three offices, three languages. Tell us what you're working on — we'll get back to you within a few business days."
+  />
+
+  <!-- Features2 Widget — Offices ****** -->
+
+  <Features2
+    title="Our three offices"
+    subtitle="We work across Switzerland and can meet you in person at any of these locations, or fully remotely."
+    columns={3}
+    items={[
+      {
+        title: 'Interlaken',
+        description: 'Berner Oberland, Bern canton.<br />Where vast.ch started.',
+        icon: 'tabler:mountain',
+      },
+      {
+        title: 'Brig',
+        description: 'Upper Valais.<br />At the foot of the Simplon pass.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'Fribourg',
+        description: 'Innovation Lab Fribourg.<br />Registered office of vast.ch.',
+        icon: 'tabler:building',
+      },
+    ]}
+  />
+
+  <!-- Features2 Widget — Languages **** -->
+
+  <Features2
+    title="Languages we work in"
+    subtitle="Reach out in whichever language is easiest for you."
+    columns={3}
+    items={[
+      {
+        title: 'Swiss German',
+        description: 'Schweizerdeutsch — und Hochdeutsch wenn es schriftlich sein muss.',
+        icon: 'tabler:message-language',
+      },
+      {
+        title: 'Français',
+        description: "N'hésitez pas à nous écrire ou nous appeler en français.",
+        icon: 'tabler:message-language',
+      },
+      {
+        title: 'English',
+        description: 'For international clients and technical conversations.',
+        icon: 'tabler:message-language',
+      },
+    ]}
+  />
+
+  <!-- Contact form ******************** -->
 
   <ContactUs
     id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+    title="Send us a message"
+    subtitle="Project details, a rough timeline, a budget range — whatever you have. We'll take it from there."
     inputs={[
       {
         type: 'text',
@@ -35,44 +91,26 @@ const metadata = {
     }}
     disclaimer={{
       label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+        'By submitting this form, you agree that we may store and process your message to respond to your enquiry.',
     }}
-    description="Our support team typically responds within 24 business hours."
+    description="We typically respond within a few business days."
   />
 
-  <!-- Features2 Widget ************** -->
+  <!-- Features2 Widget — Direct contact -->
 
   <Features2
-    title="We are here to help!"
+    title="Or reach us directly"
+    columns={2}
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
-      },
-      {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
-      },
-      {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
-      },
-      {
         title: 'Email',
-        description: 'contact@support.com',
+        description: 'hello@vast.ch',
         icon: 'tabler:mail',
       },
       {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
-        icon: 'tabler:map-pin',
+        title: 'Company',
+        description: 'Vast Switzerland GmbH<br />Innovation Lab Fribourg<br />Chemin du Musée 4, 1700 Fribourg',
+        icon: 'tabler:building-bank',
       },
     ]}
   />

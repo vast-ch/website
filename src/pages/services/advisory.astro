@@ -1,0 +1,110 @@
+---
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Technological advice',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Technological advice"
+    title="An independent technical opinion you can trust"
+    subtitle="Sometimes you do not need another team — you need a clear-eyed second opinion. We advise founders, product teams and managers on the technical decisions that shape their work."
+  />
+
+  <!-- Content Widget — What we advise on -->
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Architecture reviews',
+        description:
+          'A senior look at the system you have or are about to build — strengths, risks, and what we would change if it were ours.',
+        icon: 'tabler:building-arch',
+      },
+      {
+        title: 'Stack and vendor choices',
+        description:
+          'Which framework, which database, which cloud, which tool. Decisions are easier to live with when someone with no stake in the outcome helps you make them.',
+        icon: 'tabler:list-check',
+      },
+      {
+        title: 'Hiring and team setup',
+        description:
+          'Job descriptions, technical interviews, screening engineers — practical help for founders building their first technical team.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Second opinions',
+        description:
+          'An offer is on the table, a vendor is pushing a solution, an internal proposal needs scrutiny. We provide the independent read.',
+        icon: 'tabler:eye-check',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
+      alt: 'Technical strategy session',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">What we advise on</h3>
+      Concrete questions, concrete answers. We do not sell strategy decks.
+    </Fragment>
+  </Content>
+
+  <!-- Content Widget — How it works *** -->
+
+  <Content
+    isAfterContent
+    items={[
+      {
+        title: 'Short engagements',
+        description:
+          'Most advisory work is a few hours to a few days. Long enough to understand the problem, short enough to keep us honest.',
+        icon: 'tabler:clock',
+      },
+      {
+        title: 'Written conclusions',
+        description:
+          'You get a short, plain-language document at the end — something you can share with your board, your CTO or your future self.',
+        icon: 'tabler:file-text',
+      },
+      {
+        title: 'No lock-in',
+        description:
+          'We are happy to help you implement what we recommended — and just as happy if you take it to your existing team or another partner.',
+        icon: 'tabler:lock-open',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Notes from an advisory session',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">How it works</h3>
+    </Fragment>
+  </Content>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Ask us anything',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+    title="Have a decision to make?"
+    subtitle="Send the question through. If it is something we can help with, we will say so — and if not, we will point you somewhere useful."
+  />
+</Layout>
