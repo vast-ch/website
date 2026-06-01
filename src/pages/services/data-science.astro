@@ -1,11 +1,14 @@
 ---
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Content from '~/components/widgets/Content.astro';
+import Features2 from '~/components/widgets/Features2.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'Data science and forecasting',
+  title: 'Forecasting and machine learning',
+  description:
+    'Time-series forecasting, foundation models, classical statistical methods, and ML pipelines built for production. PhD-led, peer-reviewed, energy and smart-buildings depth.',
 };
 ---
 
@@ -13,74 +16,115 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero
-    tagline="Data science and forecasting"
+    tagline="Forecasting and machine learning"
     title="Forecasting models grounded in research and reality"
-    subtitle="We design, train and deploy machine-learning and time-series models that make sense in production — and that you can explain to the people who depend on them."
+    subtitle="Time-series forecasting, foundation models and classical statistical methods — designed, trained and deployed by a PhD-led team with peer-reviewed publications. Models that earn their place in production."
   />
 
-  <!-- Content Widget — What we do **** -->
+  <!-- Content Widget — Capabilities *** -->
 
   <Content
     isReversed
     items={[
       {
-        title: 'Forecasting models',
+        title: 'Time-series forecasting',
         description:
-          'Time-series forecasting for energy, demand, operations and other domains where what comes next actually matters.',
+          'Energy demand, building consumption, sensor readings, operational metrics. Models ranging from ARIMA and exponential smoothing to gradient-boosted trees and deep neural networks — chosen to match your data, not our preferences.',
         icon: 'tabler:chart-line',
       },
       {
-        title: 'Machine learning pipelines',
+        title: 'Foundation models for time series',
         description:
-          'End-to-end pipelines — data ingestion, training, evaluation, deployment and monitoring — designed for the realities of your team, not a research lab.',
+          'We track and benchmark the latest foundation models (Chronos, TimesFM, Moirai, Lag-Llama). We have published peer-reviewed work comparing them against classical baselines on real building-energy data.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'Classical statistical methods',
+        description:
+          'When a transparent ARIMA, regression or state-space model is the right answer, we say so. Simple beats sophisticated when the simple one is honest about uncertainty.',
+        icon: 'tabler:math-function',
+      },
+      {
+        title: 'ML pipelines for production',
+        description:
+          "End-to-end pipelines — ingestion, training, evaluation, deployment, monitoring and retraining — designed for your team and your infrastructure. Not notebooks left on someone's laptop.",
         icon: 'tabler:cpu',
-      },
-      {
-        title: 'Data analysis and exploration',
-        description:
-          'Exploratory analysis, dashboards and reports that turn raw data into decisions you can defend to your board or your engineers.',
-        icon: 'tabler:chart-histogram',
-      },
-      {
-        title: 'Research-backed methods',
-        description:
-          'Our lead on this work holds a PhD in computer science from HES-SO. You get academic rigour without the academic timeline.',
-        icon: 'tabler:school',
       },
     ]}
     image={{
       src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Data and analytics dashboard',
+      alt: 'Data analytics dashboard with time-series',
     }}
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">What we do</h3>
-      We build models that earn their place in production — accurate enough to trust, simple enough to maintain.
+      Forecasting work that survives contact with production — accurate enough to trust, simple enough to maintain.
     </Fragment>
   </Content>
 
-  <!-- Content Widget — How we work **** -->
+  <!-- Features2 Widget — Proof points -->
+
+  <Features2
+    title="Why this is not just another consultancy claim"
+    tagline="Proof"
+    subtitle="Peer-reviewed publications, open-source tools and real industrial deployments — the receipts behind the pitch."
+    columns={2}
+    items={[
+      {
+        title: 'PhD-led research',
+        description:
+          'Our forecasting work is led by a doctorate from HES-SO with peer-reviewed publications on building energy forecasting, foundation models for time series, and Big Building Data.',
+        icon: 'tabler:school',
+      },
+      {
+        title: 'onTime — open-source library',
+        description:
+          'We develop onTime, an open-source Python library for benchmarking time-series forecasting models. The infrastructure we use ourselves, made public.',
+        icon: 'tabler:brand-github',
+      },
+      {
+        title: 'Energy and smart buildings',
+        description:
+          'Domain depth in district heating, domestic hot water, building energy performance and IoT/sensor platforms — backed by peer-reviewed publications and industrial projects.',
+        icon: 'tabler:bolt',
+      },
+      {
+        title: 'Foundation-model benchmarking',
+        description:
+          'Independent, published comparisons of modern foundation models against classical baselines. We do not chase hype — we measure it.',
+        icon: 'tabler:scale',
+      },
+    ]}
+  />
+
+  <!-- Content Widget — How we work *** -->
 
   <Content
     isAfterContent
     items={[
       {
-        title: 'Start with the question',
+        title: 'Start with the decision, not the data',
         description:
-          'Before any model, we agree on what you actually need to decide. A simple baseline that answers the right question beats a sophisticated model that does not.',
+          'Before any model, we agree on what you need to decide and at what cost of being wrong. A simple baseline that answers the right question beats a sophisticated model that does not.',
         icon: 'tabler:bulb',
       },
       {
         title: 'Honest about uncertainty',
         description:
-          'Every forecast comes with confidence intervals and a clear note on where the model is and is not reliable. No black boxes.',
-        icon: 'tabler:scale',
+          'Every forecast comes with confidence intervals and a clear note on where the model is and is not reliable. No black boxes, no over-claimed accuracy.',
+        icon: 'tabler:scale-outline',
       },
       {
         title: 'Production from day one',
         description:
-          'Models that never leave a notebook do not help anyone. We design for deployment, observability and retraining from the start.',
+          'Models are designed for deployment, observability and retraining from the very first sprint. We hand over a system, not a slide deck.',
         icon: 'tabler:rocket',
+      },
+      {
+        title: 'Boring, reproducible infrastructure',
+        description:
+          'Containerised pipelines, version-controlled data and infrastructure-as-code. So next year you can still rerun, reproduce and audit every result.',
+        icon: 'tabler:brand-docker',
       },
     ]}
     image={{
@@ -104,7 +148,7 @@ const metadata = {
         icon: 'tabler:mail',
       },
     ]}
-    title="Got a forecasting or data problem?"
-    subtitle="Send us the question you are trying to answer. We will tell you whether modelling is the right tool — and if so, what kind."
+    title="Have a forecasting or ML problem?"
+    subtitle="Send the question you are actually trying to answer. We will tell you whether modelling is the right tool — and if so, what kind, with what data, and at what cost."
   />
 </Layout>

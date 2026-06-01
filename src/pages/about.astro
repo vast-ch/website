@@ -6,7 +6,9 @@ import Steps2 from '~/components/widgets/Steps2.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'About us',
+  title: 'About vast.ch — Swiss engineering studio',
+  description:
+    'vast.ch is a small Swiss engineering studio. Co-founders Frédéric Montet (PhD, ML), Michal Bryxí (Ember, frontend) and Yannick Lagger (mobile, FHIR). Based in Interlaken, Brig and Fribourg.',
 };
 ---
 
@@ -25,9 +27,8 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="subtitle">
-      vast.ch is a three-person engineering studio based in Switzerland. We design and build web and mobile
-      applications, train forecasting models, and advise founders and product teams on the technical decisions that
-      shape their work.
+      vast.ch is a small engineering studio based in Switzerland. We design and build web and mobile applications, train
+      forecasting models, and advise founders and product teams on the technical decisions that shape their work.
     </Fragment>
   </Hero>
 
@@ -47,7 +48,7 @@ const metadata = {
 
   <Features2
     title="The team"
-    subtitle="Three engineers who built vast.ch around the projects we actually want to work on."
+    subtitle="The engineers who built vast.ch around the projects we actually want to work on."
     columns={3}
     items={[
       {
@@ -92,16 +93,51 @@ const metadata = {
     ]}
   />
 
+  <!-- Features2 Widget — Proof points ** -->
+
+  <Features2
+    title="What we have actually shipped"
+    tagline="The receipts"
+    subtitle="A decade of combined output — peer-reviewed research, open-source tools and apps in production stores."
+    columns={2}
+    items={[
+      {
+        title: 'Peer-reviewed publications',
+        description:
+          'PhD in Computer Science (HES-SO, 2025) and multiple journal and conference papers on building-energy forecasting, Big Building Data and foundation models for time series.',
+        icon: 'tabler:school',
+      },
+      {
+        title: 'Open-source tools in active use',
+        description:
+          'onTime (Python time-series benchmarking), vscode-fhir-tools (clinical data tooling used internationally), Ember addons and infrastructure-as-code modules.',
+        icon: 'tabler:brand-github',
+      },
+      {
+        title: 'Apps in production',
+        description:
+          'Own products on the App Store and Google Play — including Flightbook, used by paragliding pilots and instructors and shipped in four languages.',
+        icon: 'tabler:apps',
+      },
+      {
+        title: 'Industrial and research projects',
+        description:
+          'Engagements with universities, research institutes, healthcare interoperability teams and Swiss SMEs — across energy, smart buildings, healthcare and mobility.',
+        icon: 'tabler:briefcase',
+      },
+    ]}
+  />
+
   <!-- Steps2 Widget — Values *********** -->
 
   <Steps2
     title="How we work"
-    subtitle="Three principles that shape every project we take on."
+    subtitle="The principles that shape every project we take on."
     items={[
       {
         title: 'Small team, direct contact',
         description:
-          'You talk to the engineers doing the work — not account managers. Three people means decisions move fast and nothing gets lost in translation.',
+          'You talk to the engineers doing the work — not account managers. A small team means decisions move fast and nothing gets lost in translation.',
       },
       {
         title: 'Pragmatic over trendy',
@@ -111,7 +147,7 @@ const metadata = {
       {
         title: 'Built for Switzerland',
         description:
-          'Three Swiss offices, three working languages, and a calendar that respects how things actually get done here. We meet you where you are.',
+          'Offices in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a calendar that respects how things actually get done here. We meet you where you are.',
       },
     ]}
   />
@@ -121,7 +157,7 @@ const metadata = {
   <Features2
     title="Where we are"
     tagline="Offices"
-    subtitle="Three locations across Switzerland — we can meet you in person or work fully remotely."
+    subtitle="Locations across Switzerland — we can meet you in person or work fully remotely."
     columns={3}
     items={[
       {

@@ -11,10 +11,6 @@ export const headerData = {
       href: getPermalink('/services'),
       links: [
         {
-          text: 'All services',
-          href: getPermalink('/services'),
-        },
-        {
           text: 'Web and app development',
           href: getPermalink('/services/web-development'),
         },
@@ -23,8 +19,30 @@ export const headerData = {
           href: getPermalink('/services/data-science'),
         },
         {
-          text: 'Technological advice',
+          text: 'Advisory & digitalization',
           href: getPermalink('/services/advisory'),
+        },
+        {
+          text: 'Small tools & prototypes',
+          href: getPermalink('/services/small-tools'),
+        },
+      ],
+    },
+    {
+      text: 'Domains',
+      href: getPermalink('/domains'),
+      links: [
+        {
+          text: 'Energy and buildings',
+          href: getPermalink('/domains/energy'),
+        },
+        {
+          text: 'Applied research',
+          href: getPermalink('/domains/research'),
+        },
+        {
+          text: 'Outdoor sports',
+          href: getPermalink('/domains/outdoor-sports'),
         },
       ],
     },
@@ -54,7 +72,16 @@ export const footerData = {
       links: [
         { text: 'Web and app development', href: getPermalink('/services/web-development') },
         { text: 'Data science and forecasting', href: getPermalink('/services/data-science') },
-        { text: 'Technological advice', href: getPermalink('/services/advisory') },
+        { text: 'Advisory & digitalization', href: getPermalink('/services/advisory') },
+        { text: 'Small tools & prototypes', href: getPermalink('/services/small-tools') },
+      ],
+    },
+    {
+      title: 'Domains',
+      links: [
+        { text: 'Energy and buildings', href: getPermalink('/domains/energy') },
+        { text: 'Applied research', href: getPermalink('/domains/research') },
+        { text: 'Outdoor sports', href: getPermalink('/domains/outdoor-sports') },
       ],
     },
   ],

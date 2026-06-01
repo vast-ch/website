@@ -9,9 +9,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: vast.ch
+    default: 'vast.ch — Swiss software engineering studio'
     template: '%s — vast.ch'
-  description: 'vast.ch — placeholder description. Replace with your real site description.'
+  description: 'vast.ch is a Swiss software engineering studio in Interlaken, Brig and Fribourg. We build web and mobile applications, develop forecasting and machine-learning models, and advise teams on the technical decisions that matter. In German, French and English.'
   robots:
     index: true
     follow: true
