@@ -156,6 +156,14 @@ const cta = z.object({
   actions: z.array(action),
 });
 
+const tech = z.object({
+  id: z.string().optional(),
+  title: z.string().optional(),
+  tagline: z.string().optional(),
+  subtitle: z.string().optional(),
+  items: z.array(z.object({ name: z.string(), icon: z.string() })).max(6),
+});
+
 const pageSchema = z.object({
   metadata: pageMetadata.optional(),
   hero: hero.optional(),
@@ -163,14 +171,14 @@ const pageSchema = z.object({
   stats: stats.optional(),
   services: featuresGrid.optional(),
   whyUs: content.optional(),
-  domains: featuresGrid.optional(),
+  industries: featuresGrid.optional(),
   team: featuresGrid.optional(),
   receipts: featuresGrid.optional(),
   values: steps.optional(),
   offices: featuresGrid.optional(),
   languages: featuresGrid.optional(),
   techStack: featuresGrid.optional(),
-  whyTheseDomains: content.optional(),
+  whyTheseIndustries: content.optional(),
   whatsHard: content.optional(),
   proof: featuresGrid.optional(),
   whoItsFor: featuresGrid.optional(),
@@ -188,6 +196,7 @@ const pageSchema = z.object({
   howItWorks: content.optional(),
   directContact: featuresGrid.optional(),
   contactForm: contactForm.optional(),
+  tech: tech.optional(),
   cta: cta.optional(),
 });
 

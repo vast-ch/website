@@ -26,11 +26,11 @@ whatsHard:
 proof:
   title: 'Why this is not just a marketing line'
   tagline: Proof
-  subtitle: 'A doctorate, peer-reviewed publications, open-source research tooling and active collaborations — the receipts behind a domain that is easy to claim and hard to back up.'
+  subtitle: 'A doctorate, peer-reviewed publications, open-source research tooling and active collaborations — the receipts behind an industry that is easy to claim and hard to back up.'
   columns: 2
   items:
     - title: 'PhD in computer science'
-      description: 'Frédéric defended a PhD at HES-SO in 2025 on foundation models for time-series forecasting in the energy domain. The lead engineer on research projects is an active researcher.'
+      description: 'Frédéric defended a PhD at HES-SO in 2025 on foundation models for time-series forecasting in the energy industry. The lead engineer on research projects is an active researcher.'
       icon: 'tabler:school'
     - title: 'Peer-reviewed publications'
       description: 'Journal and conference papers on building-energy forecasting, foundation models for time series and Big Building Data — the work has been through review, not just into a slide deck.'
@@ -44,7 +44,7 @@ proof:
 whoItsFor:
   title: 'Who hires us for research work'
   tagline: "Who it's for"
-  subtitle: 'Research is a domain at vast.ch because the same kind of engagement keeps coming back — from different sides of the academia/industry line.'
+  subtitle: 'Research is one of our industries at vast.ch because the same kind of engagement keeps coming back — from different sides of the academia/industry line.'
   columns: 2
   items:
     - title: 'Research labs and groups'

@@ -39,8 +39,8 @@ services:
         text: 'Learn more'
         href: '/services/small-tools'
         icon: 'tabler:chevron-right'
-domains:
-  title: 'Domains we know well'
+industries:
+  title: 'Industries we know well'
   tagline: Specialties
   subtitle: 'Whichever service you pick, these are areas where we have measurable depth — through published research, shipped products and open-source contributions.'
   columns: 3
@@ -50,21 +50,21 @@ domains:
       icon: 'tabler:bolt'
       callToAction:
         text: 'Learn more'
-        href: '/domains/energy'
+        href: '/industries/energy'
         icon: 'tabler:chevron-right'
     - title: 'Applied research'
       description: 'Research software engineering, reproducible infrastructure and the bridge between academic prototypes and production code. PhD-led, peer-reviewed.'
       icon: 'tabler:school'
       callToAction:
         text: 'Learn more'
-        href: '/domains/research'
+        href: '/industries/research'
         icon: 'tabler:chevron-right'
-    - title: 'Outdoor sports'
-      description: 'Mobile-first applications for paragliding, alpine and mountain users. Built from the Swiss Alps in four languages — and a real app on the App Store and Google Play.'
-      icon: 'tabler:mountain'
+    - title: 'Sport industry'
+      description: 'Software for clubs, federations, equipment brands and athletes — mobile apps, multilingual UX and field-tested products. Built from the Swiss Alps with a real app on the App Store and Google Play.'
+      icon: 'tabler:run'
       callToAction:
         text: 'Learn more'
-        href: '/domains/outdoor-sports'
+        href: '/industries/sport-industry'
         icon: 'tabler:chevron-right'
 techStack:
   title: 'Technologies we use'

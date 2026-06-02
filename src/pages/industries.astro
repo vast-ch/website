@@ -6,9 +6,9 @@ import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
-const page = await getEntry('pages', 'domains');
-if (!page) throw new Error('Missing page entry: domains');
-const { metadata, hero, domains, whyTheseDomains, cta } = page.data as Required<typeof page.data>;
+const page = await getEntry('pages', 'industries');
+if (!page) throw new Error('Missing page entry: industries');
+const { metadata, hero, industries, whyTheseIndustries, cta } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
@@ -19,20 +19,20 @@ const { metadata, hero, domains, whyTheseDomains, cta } = page.data as Required<
   />
 
   <Features3
-    title={domains.title}
-    subtitle={domains.subtitle}
-    columns={domains.columns}
-    items={domains.items}
+    title={industries.title}
+    subtitle={industries.subtitle}
+    columns={industries.columns}
+    items={industries.items}
   />
 
   <Content
-    isReversed={whyTheseDomains.isReversed}
-    items={whyTheseDomains.items}
-    image={whyTheseDomains.image}
+    isReversed={whyTheseIndustries.isReversed}
+    items={whyTheseIndustries.items}
+    image={whyTheseIndustries.image}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whyTheseDomains.contentHeading}</h3>
-      {whyTheseDomains.contentBody}
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whyTheseIndustries.contentHeading}</h3>
+      {whyTheseIndustries.contentBody}
     </Fragment>
   </Content>
 

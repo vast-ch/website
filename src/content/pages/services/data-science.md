@@ -15,7 +15,7 @@ capabilities:
       description: 'Energy demand, building consumption, sensor readings, operational metrics. Models ranging from ARIMA and exponential smoothing to gradient-boosted trees and deep neural networks — chosen to match your data, not our preferences.'
       icon: 'tabler:chart-line'
     - title: 'Foundation models for time series'
-      description: 'We track and benchmark the latest foundation models (Chronos, TimesFM, Moirai, Lag-Llama). We have published peer-reviewed work comparing them against classical baselines on real building-energy data.'
+      description: 'We track and benchmark modern time-series foundation models. We have published peer-reviewed work comparing them against classical baselines on real building-energy data.'
       icon: 'tabler:brain'
     - title: 'Classical statistical methods'
       description: 'When a transparent ARIMA, regression or state-space model is the right answer, we say so. Simple beats sophisticated when the simple one is honest about uncertainty.'
@@ -36,14 +36,25 @@ proof:
       description: 'Our forecasting work is led by a doctorate from HES-SO with peer-reviewed publications on building energy forecasting, foundation models for time series, and Big Building Data.'
       icon: 'tabler:school'
     - title: 'onTime — open-source library'
-      description: 'We develop onTime, an open-source Python library for benchmarking time-series forecasting models. The infrastructure we use ourselves, made public.'
-      icon: 'tabler:brand-github'
+      description: 'We develop onTime, an open-source library for benchmarking time-series forecasting models. The infrastructure we use ourselves, made public.'
+      icon: 'tabler:package'
     - title: 'Energy and smart buildings'
-      description: 'Domain depth in district heating, domestic hot water, building energy performance and IoT/sensor platforms — backed by peer-reviewed publications and industrial projects.'
+      description: 'Industry depth in district heating, domestic hot water, building energy performance and IoT/sensor platforms — backed by peer-reviewed publications and industrial projects.'
       icon: 'tabler:bolt'
     - title: 'Foundation-model benchmarking'
       description: 'Independent, published comparisons of modern foundation models against classical baselines. We do not chase hype — we measure it.'
       icon: 'tabler:scale'
+tech:
+  tagline: Stack
+  title: 'Technologies we use'
+  subtitle: 'The day-to-day toolkit for forecasting work.'
+  items:
+    - { name: 'Python', icon: 'simple-icons:python' }
+    - { name: 'PyTorch', icon: 'simple-icons:pytorch' }
+    - { name: 'scikit-learn', icon: 'simple-icons:scikitlearn' }
+    - { name: 'pandas', icon: 'simple-icons:pandas' }
+    - { name: 'Jupyter', icon: 'simple-icons:jupyter' }
+    - { name: 'Docker', icon: 'simple-icons:docker' }
 howWeWork:
   isAfterContent: true
   contentHeading: 'How we work'
@@ -59,7 +70,7 @@ howWeWork:
       icon: 'tabler:rocket'
     - title: 'Boring, reproducible infrastructure'
       description: 'Containerised pipelines, version-controlled data and infrastructure-as-code. So next year you can still rerun, reproduce and audit every result.'
-      icon: 'tabler:brand-docker'
+      icon: 'tabler:cube'
   image:
     src: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
     alt: 'Notebook with statistical work'

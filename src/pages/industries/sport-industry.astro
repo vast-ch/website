@@ -6,8 +6,8 @@ import Features2 from '~/components/widgets/Features2.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
-const page = await getEntry('pages', 'domains/energy');
-if (!page) throw new Error('Missing page entry: domains/energy');
+const page = await getEntry('pages', 'industries/sport-industry');
+if (!page) throw new Error('Missing page entry: industries/sport-industry');
 const { metadata, hero, whatsHard, proof, approach, cta } = page.data as Required<typeof page.data>;
 ---
 

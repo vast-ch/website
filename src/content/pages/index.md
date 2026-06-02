@@ -4,7 +4,7 @@ metadata:
   ignoreTitleTemplate: true
   description: 'Swiss engineering studio building web and mobile applications, forecasting models and technical strategy. Offices in Interlaken, Brig and Fribourg. German, French, English.'
 hero:
-  title: 'Software, data and technical guidance'
+  title: 'Software, data and technical guidance '
   titleAccent: 'from the Swiss Alps'
   subtitle: '<span class="font-semibold">vast.ch</span> is a three-person Swiss engineering studio. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization — in German, French and English.'
   imageAlt: 'vast.ch — Swiss software engineering studio'
@@ -33,12 +33,12 @@ services:
     - title: 'Forecasting and machine learning'
       description: 'Time-series forecasting from classical statistical models to modern foundation models. PhD-led, grounded in peer-reviewed research and real production constraints — not just notebooks.'
       icon: 'tabler:chart-line'
-    - title: 'Advisory and digitalization solutions'
-      description: 'Independent architecture reviews, stack and vendor choices, and hands-on digitalization — process digitization, workflow automation and custom internal tools. Short engagements with written conclusions you can defend.'
-      icon: 'tabler:bulb'
     - title: 'Small tools and rapid prototypes'
       description: 'Micro-utilities and quick prototypes that turn a daily annoyance into a few minutes saved — like our Nuudel-to-ICS scheduler converter, Spotify Flipbook playlist viewer and LinkedIn avatar generator. Small in scope, fast to ship, useful every day.'
       icon: 'tabler:tool'
+    - title: 'Advisory and digitalization solutions'
+      description: 'Independent architecture reviews, stack and vendor choices, and hands-on digitalization — process digitization, workflow automation and custom internal tools. Short engagements with written conclusions you can defend.'
+      icon: 'tabler:bulb'
 whyUs:
   isReversed: true
   tagline: 'Why vast.ch'
@@ -56,8 +56,8 @@ whyUs:
   image:
     src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
     alt: 'A small team collaborating on engineering work'
-domains:
-  title: 'Domains we know well'
+industries:
+  title: 'Industries we know well'
   tagline: Specialties
   subtitle: 'Areas where we have measurable depth — published research, shipped products and open-source tools.'
   columns: 3
@@ -67,21 +67,21 @@ domains:
       icon: 'tabler:bolt'
       callToAction:
         text: 'Learn more'
-        href: '/domains/energy'
+        href: '/industries/energy'
         icon: 'tabler:chevron-right'
     - title: 'Applied research'
       description: 'Research software engineering, reproducible infrastructure and the bridge between academic prototypes and production code. PhD-led, peer-reviewed.'
       icon: 'tabler:school'
       callToAction:
         text: 'Learn more'
-        href: '/domains/research'
+        href: '/industries/research'
         icon: 'tabler:chevron-right'
-    - title: 'Outdoor sports'
-      description: 'Mobile-first applications for paragliding, alpine and mountain users. Designed from the Swiss Alps in four languages — and a real app on the App Store and Google Play.'
-      icon: 'tabler:mountain'
+    - title: 'Sport industry'
+      description: 'Software for clubs, federations, equipment brands and athletes — mobile apps, multilingual UX and field-tested products. Designed from the Swiss Alps with a real app on the App Store and Google Play.'
+      icon: 'tabler:run'
       callToAction:
         text: 'Learn more'
-        href: '/domains/outdoor-sports'
+        href: '/industries/sport-industry'
         icon: 'tabler:chevron-right'
 cta:
   title: 'Have a project in mind?'

@@ -6,9 +6,9 @@ import Features2 from '~/components/widgets/Features2.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
-const page = await getEntry('pages', 'domains/research');
-if (!page) throw new Error('Missing page entry: domains/research');
-const { metadata, hero, whatsHard, proof, whoItsFor, approach, cta } = page.data as Required<typeof page.data>;
+const page = await getEntry('pages', 'industries/energy');
+if (!page) throw new Error('Missing page entry: industries/energy');
+const { metadata, hero, whatsHard, proof, approach, cta } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
@@ -35,14 +35,6 @@ const { metadata, hero, whatsHard, proof, whoItsFor, approach, cta } = page.data
     subtitle={proof.subtitle}
     columns={proof.columns}
     items={proof.items}
-  />
-
-  <Features2
-    title={whoItsFor.title}
-    tagline={whoItsFor.tagline}
-    subtitle={whoItsFor.subtitle}
-    columns={whoItsFor.columns}
-    items={whoItsFor.items}
   />
 
   <Content

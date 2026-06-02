@@ -9,40 +9,56 @@ export const headerData = {
     {
       text: 'Services',
       href: getPermalink('/services'),
+      megamenu: true,
       links: [
         {
           text: 'Web and app development',
           href: getPermalink('/services/web-development'),
+          icon: 'tabler:code',
+          description: 'Production TypeScript across web, mobile and backend.',
         },
         {
           text: 'Data science and forecasting',
           href: getPermalink('/services/data-science'),
-        },
-        {
-          text: 'Advisory & digitalization',
-          href: getPermalink('/services/advisory'),
+          icon: 'tabler:chart-line',
+          description: 'Time-series forecasting and ML grounded in research.',
         },
         {
           text: 'Small tools & prototypes',
           href: getPermalink('/services/small-tools'),
+          icon: 'tabler:tool',
+          description: 'Quick utilities that turn an annoyance into time saved.',
+        },
+        {
+          text: 'Advisory & digitalization',
+          href: getPermalink('/services/advisory'),
+          icon: 'tabler:bulb',
+          description: 'Independent reviews and hands-on digitalization.',
         },
       ],
     },
     {
-      text: 'Domains',
-      href: getPermalink('/domains'),
+      text: 'Industries',
+      href: getPermalink('/industries'),
+      megamenu: true,
       links: [
         {
           text: 'Energy and buildings',
-          href: getPermalink('/domains/energy'),
+          href: getPermalink('/industries/energy'),
+          icon: 'tabler:bolt',
+          description: 'Forecasting and ML for energy and smart buildings.',
         },
         {
           text: 'Applied research',
-          href: getPermalink('/domains/research'),
+          href: getPermalink('/industries/research'),
+          icon: 'tabler:school',
+          description: 'Research software engineering, reproducible by design.',
         },
         {
-          text: 'Outdoor sports',
-          href: getPermalink('/domains/outdoor-sports'),
+          text: 'Sport industry',
+          href: getPermalink('/industries/sport-industry'),
+          icon: 'tabler:run',
+          description: 'Mobile apps for clubs, federations and athletes.',
         },
       ],
     },
@@ -72,16 +88,16 @@ export const footerData = {
       links: [
         { text: 'Web and app development', href: getPermalink('/services/web-development') },
         { text: 'Data science and forecasting', href: getPermalink('/services/data-science') },
-        { text: 'Advisory & digitalization', href: getPermalink('/services/advisory') },
         { text: 'Small tools & prototypes', href: getPermalink('/services/small-tools') },
+        { text: 'Advisory & digitalization', href: getPermalink('/services/advisory') },
       ],
     },
     {
-      title: 'Domains',
+      title: 'Industries',
       links: [
-        { text: 'Energy and buildings', href: getPermalink('/domains/energy') },
-        { text: 'Applied research', href: getPermalink('/domains/research') },
-        { text: 'Outdoor sports', href: getPermalink('/domains/outdoor-sports') },
+        { text: 'Energy and buildings', href: getPermalink('/industries/energy') },
+        { text: 'Applied research', href: getPermalink('/industries/research') },
+        { text: 'Sport industry', href: getPermalink('/industries/sport-industry') },
       ],
     },
   ],

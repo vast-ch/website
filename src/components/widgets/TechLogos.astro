@@ -1,0 +1,46 @@
+---
+import { Icon } from 'astro-icon/components';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+
+interface Item {
+  name: string;
+  icon: string;
+}
+
+interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  items?: Item[];
+  isDark?: boolean;
+  classes?: Record<string, string>;
+}
+
+const {
+  id,
+  title = '',
+  subtitle = '',
+  tagline = '',
+  items = [],
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props as Props & { bg?: string };
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+
+  <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 sm:gap-x-12 lg:gap-x-16">
+    {
+      items.map(({ name, icon }) => (
+        <div class="flex flex-col items-center min-w-[80px]">
+          <Icon name={icon} class="w-12 h-12 text-gray-700 dark:text-gray-300" />
+          <span class="text-sm mt-2 text-muted">{name}</span>
+        </div>
+      ))
+    }
+  </div>
+</WidgetWrapper>

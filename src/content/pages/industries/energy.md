@@ -30,13 +30,13 @@ proof:
   columns: 2
   items:
     - title: 'Peer-reviewed publications'
-      description: 'Journal and conference papers on building-energy forecasting, district heating and Big Building Data — including a PhD thesis (HES-SO, 2025) on foundation models for time series in the energy domain.'
+      description: 'Journal and conference papers on building-energy forecasting, district heating and Big Building Data — including a PhD thesis (HES-SO, 2025) on foundation models for time series in the energy industry.'
       icon: 'tabler:school'
     - title: 'onTime — open-source library'
       description: 'A Python library we develop for benchmarking time-series forecasting models on building-energy and IoT data. Open source so others can verify our claims and reuse our infrastructure.'
       icon: 'tabler:brand-github'
     - title: 'District heating and hot water'
-      description: 'Forecasting and modelling work on real district-heating networks and domestic-hot-water systems — domains where the physics and the data both have to make sense.'
+      description: 'Forecasting and modelling work on real district-heating networks and domestic-hot-water systems — areas where the physics and the data both have to make sense.'
       icon: 'tabler:flame'
     - title: 'Big Building Data platforms'
       description: 'IoT data pipelines, time-series databases and dashboards for buildings with thousands of sensors — designed for engineers who will keep them running long after we leave.'

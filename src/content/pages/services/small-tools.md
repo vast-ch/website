@@ -40,7 +40,7 @@ categories:
       icon: 'tabler:rocket'
     - title: 'Open-source by default'
       description: 'When we can share it, we do. Public repository, permissive licence, and a README that explains what it actually does.'
-      icon: 'tabler:brand-github'
+      icon: 'tabler:git-pull-request'
 approach:
   isAfterContent: true
   contentHeading: 'How we approach it'
@@ -58,6 +58,16 @@ approach:
   image:
     src: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
     alt: 'Sketch of a quick prototype'
+tech:
+  tagline: Stack
+  title: 'Technologies we use'
+  subtitle: 'Lean toolkit for things that ship in an afternoon.'
+  items:
+    - { name: 'TypeScript', icon: 'simple-icons:typescript' }
+    - { name: 'JavaScript', icon: 'simple-icons:javascript' }
+    - { name: 'HTML5', icon: 'simple-icons:html5' }
+    - { name: 'Python', icon: 'simple-icons:python' }
+    - { name: 'GitHub', icon: 'simple-icons:github' }
 whenItFits:
   title: 'When this is the right call'
   tagline: 'When it fits'
