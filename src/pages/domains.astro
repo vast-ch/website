@@ -1,116 +1,44 @@
 ---
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import Content from '~/components/widgets/Content.astro';
-import Features3 from '~/components/widgets/Features3.astro';
-import Hero from '~/components/widgets/Hero.astro';
 import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getEntry } from 'astro:content';
 
-const metadata = {
-  title: 'Domains — Energy and buildings, applied research, outdoor sports',
-  description:
-    'Domains where vast.ch has measurable depth: energy and buildings, applied research, and outdoor sports. Backed by peer-reviewed publications, open-source tools, and a shipped mobile product on iOS and Android.',
-};
+const page = await getEntry('pages', 'domains');
+if (!page) throw new Error('Missing page entry: domains');
+const { metadata, hero, domains, whyTheseDomains, cta } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
-
   <Hero
-    tagline="Domains"
-    title="Where we have real depth"
-    subtitle="We work across many industries, but these are the areas where our publications, open-source tools and shipped products speak louder than our pitch."
+    tagline={hero.tagline}
+    title={hero.title}
+    subtitle={hero.subtitle}
   />
-
-  <!-- Features3 Widget — Domains **** -->
 
   <Features3
-    title="Where you'll get the most from us"
-    subtitle="Each of these is anchored by something we can show you — a paper, a repository, or a shipped product."
-    columns={3}
-    items={[
-      {
-        title: 'Energy and buildings',
-        description:
-          'Energy forecasting, smart buildings, district heating, IoT and Big Building Data. Peer-reviewed publications and our open-source onTime library.',
-        icon: 'tabler:bolt',
-        callToAction: {
-          text: 'Learn more',
-          href: '/domains/energy',
-          icon: 'tabler:chevron-right',
-        },
-      },
-      {
-        title: 'Applied research',
-        description:
-          'Research software engineering, reproducible infrastructure and the bridge between academic prototypes and production code. PhD-led, peer-reviewed.',
-        icon: 'tabler:school',
-        callToAction: {
-          text: 'Learn more',
-          href: '/domains/research',
-          icon: 'tabler:chevron-right',
-        },
-      },
-      {
-        title: 'Outdoor sports',
-        description:
-          'Mobile-first applications for paragliding, alpine and mountain users. Built from the Swiss Alps with multi-language UX — and a real app on the App Store and Google Play.',
-        icon: 'tabler:mountain',
-        callToAction: {
-          text: 'Learn more',
-          href: '/domains/outdoor-sports',
-          icon: 'tabler:chevron-right',
-        },
-      },
-    ]}
+    title={domains.title}
+    subtitle={domains.subtitle}
+    columns={domains.columns}
+    items={domains.items}
   />
 
-  <!-- Content Widget — Why these domains -->
-
   <Content
-    isReversed
-    items={[
-      {
-        title: 'Depth, not just breadth',
-        description:
-          'Plenty of studios list a dozen industries on their website. We list only the ones where we can point to receipts — papers, repositories, store listings — instead of logos.',
-        icon: 'tabler:zoom-scan',
-      },
-      {
-        title: 'Anchored by real work',
-        description:
-          'A PhD thesis, an open-source library used internationally, and active research collaborations. Each domain rests on something concrete you can verify.',
-        icon: 'tabler:anchor',
-      },
-      {
-        title: 'We will say no honestly',
-        description:
-          'If your project sits outside what we know best, we will say so and point you somewhere useful. The honest answer beats a stretched one.',
-        icon: 'tabler:circle-check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Data and analytics overview',
-    }}
+    isReversed={whyTheseDomains.isReversed}
+    items={whyTheseDomains.items}
+    image={whyTheseDomains.image}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Why we picked these</h3>
-      We would rather be excellent in a few places than mediocre in many.
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whyTheseDomains.contentHeading}</h3>
+      {whyTheseDomains.contentBody}
     </Fragment>
   </Content>
 
-  <!-- CallToAction Widget *********** -->
-
   <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Start a project',
-        href: '/contact',
-        icon: 'tabler:mail',
-      },
-    ]}
-    title="Working in one of these domains?"
-    subtitle="Tell us about the project. We will tell you honestly whether we are the right fit — and what depth we can actually bring."
+    actions={cta.actions}
+    title={cta.title}
+    subtitle={cta.subtitle}
   />
 </Layout>

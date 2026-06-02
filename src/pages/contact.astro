@@ -3,115 +3,47 @@ import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import { getEntry } from 'astro:content';
 
-const metadata = {
-  title: 'Contact',
-};
+const page = await getEntry('pages', 'contact');
+if (!page) throw new Error('Missing page entry: contact');
+const { metadata, heroText, offices, languages, contactForm, directContact } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
-
   <HeroText
-    tagline="Contact"
-    title="Let's talk about your project"
-    subtitle="Tell us what you're working on — in Swiss German, French or English. We'll get back to you within a few business days."
+    tagline={heroText.tagline}
+    title={heroText.title}
+    subtitle={heroText.subtitle}
   />
-
-  <!-- Features2 Widget — Offices ****** -->
 
   <Features2
-    title="Our offices"
-    subtitle="We work across Switzerland and can meet you in person at any of these locations, or fully remotely."
-    columns={3}
-    items={[
-      {
-        title: 'Interlaken',
-        description: 'Berner Oberland, Bern canton.<br />Where vast.ch started.',
-        icon: 'tabler:mountain',
-      },
-      {
-        title: 'Brig',
-        description: 'Upper Valais.<br />At the foot of the Simplon pass.',
-        icon: 'tabler:map-pin',
-      },
-      {
-        title: 'Fribourg',
-        description: 'Innovation Lab Fribourg.<br />Registered office of vast.ch.',
-        icon: 'tabler:building',
-      },
-    ]}
+    title={offices.title}
+    subtitle={offices.subtitle}
+    columns={offices.columns}
+    items={offices.items}
   />
-
-  <!-- Features2 Widget — Languages **** -->
 
   <Features2
-    title="Languages we work in"
-    subtitle="Reach out in whichever language is easiest for you."
-    columns={3}
-    items={[
-      {
-        title: 'Swiss German',
-        description: 'Schweizerdeutsch — und Hochdeutsch wenn es schriftlich sein muss.',
-        icon: 'tabler:message-language',
-      },
-      {
-        title: 'Français',
-        description: "N'hésitez pas à nous écrire ou nous appeler en français.",
-        icon: 'tabler:message-language',
-      },
-      {
-        title: 'English',
-        description: 'For international clients and technical conversations.',
-        icon: 'tabler:message-language',
-      },
-    ]}
+    title={languages.title}
+    subtitle={languages.subtitle}
+    columns={languages.columns}
+    items={languages.items}
   />
-
-  <!-- Contact form ******************** -->
 
   <ContactUs
-    id="form"
-    title="Send us a message"
-    subtitle="Project details, a rough timeline, a budget range — whatever you have. We'll take it from there."
-    inputs={[
-      {
-        type: 'text',
-        name: 'name',
-        label: 'Name',
-      },
-      {
-        type: 'email',
-        name: 'email',
-        label: 'Email',
-      },
-    ]}
-    textarea={{
-      label: 'Message',
-    }}
-    disclaimer={{
-      label:
-        'By submitting this form, you agree that we may store and process your message to respond to your enquiry.',
-    }}
-    description="We typically respond within a few business days."
+    id={contactForm.id}
+    title={contactForm.title}
+    subtitle={contactForm.subtitle}
+    inputs={contactForm.inputs}
+    textarea={contactForm.textarea}
+    disclaimer={contactForm.disclaimer}
+    description={contactForm.description}
   />
 
-  <!-- Features2 Widget — Direct contact -->
-
   <Features2
-    title="Or reach us directly"
-    columns={2}
-    items={[
-      {
-        title: 'Email',
-        description: 'hello@vast.ch',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Company',
-        description: 'Vast Switzerland GmbH<br />Innovation Lab Fribourg<br />Chemin du Musée 4, 1700 Fribourg',
-        icon: 'tabler:building-bank',
-      },
-    ]}
+    title={directContact.title}
+    columns={directContact.columns}
+    items={directContact.items}
   />
 </Layout>

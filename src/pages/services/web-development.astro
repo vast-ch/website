@@ -1,177 +1,66 @@
 ---
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import Layout from '~/layouts/PageLayout.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getEntry } from 'astro:content';
 
-const metadata = {
-  title: 'Web and mobile application development',
-  description:
-    'TypeScript across the stack — web (Astro, Ember, Angular), mobile (Ionic + Capacitor for iOS and Android), backends (NestJS). Production apps shipped in four languages.',
-};
+const page = await getEntry('pages', 'services/web-development');
+if (!page) throw new Error('Missing page entry: services/web-development');
+const { metadata, hero, web, mobile, backend, proof, cta } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
-
   <Hero
-    tagline="Web and mobile development"
-    title="Production TypeScript, web to mobile to backend"
-    subtitle="From a single sketch to apps on the App Store and Google Play — built by senior engineers who maintain what they ship. One language across the stack: TypeScript."
+    tagline={hero.tagline}
+    title={hero.title}
+    subtitle={hero.subtitle}
   />
 
-  <!-- Content Widget — Web *********** -->
-
   <Content
-    isReversed
-    items={[
-      {
-        title: 'Astro for content-driven sites',
-        description:
-          'Marketing sites, documentation portals and content platforms with native SEO, image optimisation and zero-JS-by-default performance.',
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'Ember.js for long-lived applications',
-        description:
-          'When you need a web app that two more developers can still ship in five years. We are long-time Ember contributors — addons, core patterns, the works.',
-        icon: 'tabler:components',
-      },
-      {
-        title: 'Angular for enterprise frontends',
-        description:
-          'Strict typing, dependency injection, and the structure large teams need. We use it where it earns its weight — usually paired with NestJS on the backend.',
-        icon: 'tabler:brand-angular',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Code editor with TypeScript',
-    }}
+    isReversed={web.isReversed}
+    items={web.items}
+    image={web.image}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Web applications</h3>
-      Three frameworks, one rule: we pick the right tool for the lifetime of the product, not the launch.
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{web.contentHeading}</h3>
+      {web.contentBody}
     </Fragment>
   </Content>
 
-  <!-- Content Widget — Mobile ******** -->
-
   <Content
-    isAfterContent
-    items={[
-      {
-        title: 'Ionic + Capacitor',
-        description:
-          'One TypeScript codebase, two app stores. Native plugins where they matter, web technology where they do not.',
-        icon: 'tabler:device-mobile',
-      },
-      {
-        title: 'Shipped, not just shipped-ready',
-        description:
-          'Apps in active production on iOS and Android — including Flightbook, an own product used by paragliding pilots and instructors across four languages.',
-        icon: 'tabler:apps',
-      },
-      {
-        title: 'App-store discipline',
-        description:
-          'Review processes, push notifications, in-app updates, crash analytics and the boring release infrastructure that keeps users coming back.',
-        icon: 'tabler:check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Mobile application development',
-    }}
+    isAfterContent={mobile.isAfterContent}
+    items={mobile.items}
+    image={mobile.image}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Mobile applications</h3>
-      Cross-platform mobile apps shipped to real stores, in production, in four languages.
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{mobile.contentHeading}</h3>
+      {mobile.contentBody}
     </Fragment>
   </Content>
 
-  <!-- Content Widget — Backend ******* -->
-
   <Content
-    isReversed
-    items={[
-      {
-        title: 'NestJS for typed, structured APIs',
-        description:
-          'Modular architecture, dependency injection, OpenAPI generation out of the box. The backend that pairs naturally with our Angular and Ionic work.',
-        icon: 'tabler:server-2',
-      },
-      {
-        title: 'Standards-based integration',
-        description:
-          'REST, OpenAPI, OAuth/OIDC, webhooks. And in healthcare: FHIR (Fast Healthcare Interoperability Resources) — we maintain an open-source VS Code extension for FHIR developers.',
-        icon: 'tabler:plug',
-      },
-      {
-        title: 'Databases that fit the question',
-        description:
-          'PostgreSQL for the relational parts, time-series databases for sensor and energy data, file storage for the rest. Boring choices that age well.',
-        icon: 'tabler:database',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Server room and data infrastructure',
-    }}
+    isReversed={backend.isReversed}
+    items={backend.items}
+    image={backend.image}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Backends and APIs</h3>
-      Typed, tested and documented backends — the unglamorous half that decides whether the product lasts.
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{backend.contentHeading}</h3>
+      {backend.contentBody}
     </Fragment>
   </Content>
-
-  <!-- Features2 Widget — Why us ****** -->
 
   <Features2
-    title="Why teams hire us for this work"
-    tagline="Why us"
-    columns={2}
-    items={[
-      {
-        title: 'One language across the stack',
-        description:
-          'TypeScript on the web, on mobile, and on the backend. Fewer context switches, fewer bugs at the boundaries, simpler hiring later.',
-        icon: 'tabler:brand-typescript',
-      },
-      {
-        title: 'Multilingual by default',
-        description:
-          'Switzerland has four national languages — we have shipped apps in four. i18n is built into the work from day one, not bolted on for the launch.',
-        icon: 'tabler:language',
-      },
-      {
-        title: 'Open-source contributors',
-        description:
-          "Ember addons, FHIR tooling, infrastructure modules. We share what we build when we can — and we know how to read other people's code, too.",
-        icon: 'tabler:brand-github',
-      },
-      {
-        title: 'Maintainable handover',
-        description:
-          'Documentation, tests, infrastructure-as-code and a clean repository — so your team or your next vendor can pick up the keys without ceremony.',
-        icon: 'tabler:notebook',
-      },
-    ]}
+    title={proof.title}
+    tagline={proof.tagline}
+    columns={proof.columns}
+    items={proof.items}
   />
 
-  <!-- CallToAction Widget *********** -->
-
   <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Start a project',
-        href: '/contact',
-        icon: 'tabler:mail',
-      },
-    ]}
-    title="Got a web or mobile app to build?"
-    subtitle="Tell us what you are trying to ship. We will say honestly whether we are the right team — and if so, what the next two weeks should look like."
+    actions={cta.actions}
+    title={cta.title}
+    subtitle={cta.subtitle}
   />
 </Layout>

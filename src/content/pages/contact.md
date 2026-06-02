@@ -1,0 +1,58 @@
+---
+metadata:
+  title: 'Contact'
+heroText:
+  tagline: Contact
+  title: "Let's talk about your project"
+  subtitle: "Tell us what you're working on — in Swiss German, French or English. We'll get back to you within a few business days."
+offices:
+  title: 'Our offices'
+  subtitle: 'We work across Switzerland and can meet you in person at any of these locations, or fully remotely.'
+  columns: 3
+  items:
+    - title: Interlaken
+      description: 'Berner Oberland, Bern canton.<br />Where vast.ch started.'
+      icon: 'tabler:mountain'
+    - title: Brig
+      description: 'Upper Valais.<br />At the foot of the Simplon pass.'
+      icon: 'tabler:map-pin'
+    - title: Fribourg
+      description: 'Innovation Lab Fribourg.<br />Registered office of vast.ch.'
+      icon: 'tabler:building'
+languages:
+  title: 'Languages we work in'
+  subtitle: 'Reach out in whichever language is easiest for you.'
+  columns: 3
+  items:
+    - title: 'Swiss German'
+      description: 'Schweizerdeutsch — und Hochdeutsch wenn es schriftlich sein muss.'
+      icon: 'tabler:message-language'
+    - title: 'Français'
+      description: "N'hésitez pas à nous écrire ou nous appeler en français."
+      icon: 'tabler:message-language'
+    - title: 'English'
+      description: 'For international clients and technical conversations.'
+      icon: 'tabler:message-language'
+contactForm:
+  id: form
+  title: 'Send us a message'
+  subtitle: "Project details, a rough timeline, a budget range — whatever you have. We'll take it from there."
+  inputs:
+    - { type: text, name: name, label: Name }
+    - { type: email, name: email, label: Email }
+  textarea:
+    label: Message
+  disclaimer:
+    label: 'By submitting this form, you agree that we may store and process your message to respond to your enquiry.'
+  description: 'We typically respond within a few business days.'
+directContact:
+  title: 'Or reach us directly'
+  columns: 2
+  items:
+    - title: Email
+      description: 'hello@vast.ch'
+      icon: 'tabler:mail'
+    - title: Company
+      description: 'Vast Switzerland GmbH<br />Innovation Lab Fribourg<br />Chemin du Musée 4, 1700 Fribourg'
+      icon: 'tabler:building-bank'
+---
