@@ -50,7 +50,7 @@ directContact:
   columns: 2
   items:
     - title: Email
-      description: 'hello@vast.ch'
+      description: '<a href="mailto:hello@vast.ch" class="text-primary hover:underline">hello@vast.ch</a>'
       icon: 'tabler:mail'
     - title: Company
       description: 'Vast Switzerland GmbH<br />Innovation Lab Fribourg<br />Chemin du Musée 4, 1700 Fribourg'

@@ -1,12 +1,12 @@
 ---
 metadata:
-  title: 'vast.ch — Swiss software engineering studio'
+  title: 'vast.ch — Swiss software engineering office'
   ignoreTitleTemplate: true
-  description: 'Swiss engineering studio building web and mobile applications, forecasting models and technical strategy. Offices in Interlaken, Brig and Fribourg. German, French, English.'
+  description: 'Swiss engineering office building web and mobile applications, forecasting models and technical strategy. Offices in Interlaken, Brig and Fribourg. German, French, English.'
 hero:
   title: 'Software, data and technical guidance '
   titleAccent: 'from the Swiss Alps'
-  subtitle: '<span class="font-semibold">vast.ch</span> is a three-person Swiss engineering studio. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization — in German, French and English.'
+  subtitle: '<span class="font-semibold">vast.ch</span> is a small Swiss engineering studio. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization — in German, French and English.'
   imageAlt: 'vast.ch — Swiss software engineering studio'
   actions:
     - variant: primary
@@ -15,12 +15,6 @@ hero:
       icon: 'tabler:arrow-right'
     - text: 'Start a project'
       href: '/contact'
-stats:
-  items:
-    - { title: Engineers, amount: '3' }
-    - { title: Swiss offices, amount: '3' }
-    - { title: Working languages, amount: '3' }
-    - { title: Founded, amount: '2020' }
 services:
   id: services
   tagline: 'What we do'
