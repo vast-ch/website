@@ -4,27 +4,22 @@ import Hero from '~/components/widgets/Hero.astro';
 import Features from '~/components/widgets/Features.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import Content from '~/components/widgets/Content.astro';
-import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'index');
 if (!page) throw new Error('Missing page entry: index');
-const { metadata, hero, stats, services, whyUs, industries, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, services, whyUs, industries, cta } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    actions={hero.actions}
-    image={{ src: '~/assets/images/hero-image.png', alt: hero.imageAlt }}
-  >
+  <Hero actions={hero.actions} image={{ src: '~/assets/images/hero-image.png', alt: hero.imageAlt }}>
     <Fragment slot="title">
-      {hero.title} <span class="text-accent dark:text-white">{hero.titleAccent}</span>
+      {hero.title}
+      <span class="text-accent dark:text-white">{hero.titleAccent}</span>
     </Fragment>
     <Fragment slot="subtitle" set:html={hero.subtitle} />
   </Hero>
-
-  <Stats stats={stats.items} />
 
   <Features
     id={services.id}
@@ -45,11 +40,13 @@ const { metadata, hero, stats, services, whyUs, industries, cta } = page.data as
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whyUs.contentHeading}</h3>
       {whyUs.contentBody}
     </Fragment>
-    {whyUs.accentBackground && (
-      <Fragment slot="bg">
-        <div class="absolute inset-0 bg-gray-100 dark:bg-transparent"></div>
-      </Fragment>
-    )}
+    {
+      whyUs.accentBackground && (
+        <Fragment slot="bg">
+          <div class="absolute inset-0 bg-gray-100 dark:bg-transparent" />
+        </Fragment>
+      )
+    }
   </Content>
 
   <Features3
@@ -60,9 +57,5 @@ const { metadata, hero, stats, services, whyUs, industries, cta } = page.data as
     items={industries.items}
   />
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
-  />
+  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>

@@ -1,38 +1,24 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import Stats from '~/components/widgets/Stats.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'about');
 if (!page) throw new Error('Missing page entry: about');
-const { metadata, hero, stats, team, receipts, values, offices, languages } = page.data as Required<typeof page.data>;
+const { metadata, hero, team, receipts, values, offices, languages } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    image={hero.image}
-    subtitle={hero.subtitle}
-  >
+  <Hero tagline={hero.tagline} image={hero.image} subtitle={hero.subtitle}>
     <Fragment slot="title">
-      {hero.title} <span class="text-accent dark:text-white">{hero.titleAccent}</span>
+      {hero.title}
+      <span class="text-accent dark:text-white">{hero.titleAccent}</span>
     </Fragment>
   </Hero>
 
-  <Stats
-    title={stats.title}
-    stats={stats.items}
-  />
-
-  <Features2
-    title={team.title}
-    subtitle={team.subtitle}
-    columns={team.columns}
-    items={team.items}
-  />
+  <Features2 title={team.title} subtitle={team.subtitle} columns={team.columns} items={team.items} />
 
   <Features2
     title={receipts.title}
@@ -42,11 +28,7 @@ const { metadata, hero, stats, team, receipts, values, offices, languages } = pa
     items={receipts.items}
   />
 
-  <Steps2
-    title={values.title}
-    subtitle={values.subtitle}
-    items={values.items}
-  />
+  <Steps2 title={values.title} subtitle={values.subtitle} items={values.items} />
 
   <Features2
     title={offices.title}
@@ -56,10 +38,5 @@ const { metadata, hero, stats, team, receipts, values, offices, languages } = pa
     items={offices.items}
   />
 
-  <Features2
-    title={languages.title}
-    tagline={languages.tagline}
-    columns={languages.columns}
-    items={languages.items}
-  />
+  <Features2 title={languages.title} tagline={languages.tagline} columns={languages.columns} items={languages.items} />
 </Layout>

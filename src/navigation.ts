@@ -103,9 +103,12 @@ export const footerData = {
   ],
   secondaryLinks: [{ text: 'Terms', href: getPermalink('/terms') }],
   socialLinks: [
-    { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
+    {
+      ariaLabel: 'LinkedIn',
+      icon: 'tabler:brand-linkedin',
+      href: 'https://www.linkedin.com/company/vast-switzerland-gmbh',
+    },
+    { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/vast-ch' },
   ],
   footNote: `
     © ${new Date().getFullYear()} Vast Switzerland GmbH — All rights reserved.

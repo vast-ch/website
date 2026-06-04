@@ -5,7 +5,12 @@ import Button from '~/components/ui/Button.astro';
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
 ---
 
-<form>
+<form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-form>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hidden">
+    <label>Don’t fill this out if you’re human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
   {
     inputs &&
       inputs.map(
@@ -23,6 +28,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 id={name}
                 autocomplete={autocomplete}
                 placeholder={placeholder}
+                required
                 class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
               />
             </div>
@@ -41,6 +47,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           name={textarea.name ? textarea.name : 'message'}
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
+          required
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
         />
       </div>
@@ -55,7 +62,8 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
             id="disclaimer"
             name="disclaimer"
             type="checkbox"
-            class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+            required
+            class="cursor-pointer mt-1 py-3 px-4 block text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
           />
         </div>
         <div class="ml-3">
@@ -66,6 +74,15 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
       </div>
     )
   }
+
+  <div
+    data-form-error
+    class="hidden mt-4 rounded-lg border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-4 py-3 text-sm text-red-700 dark:text-red-300"
+  >
+    Something went wrong sending your message. Please email us directly at{' '}
+    <a class="font-medium underline" href="mailto:hello@vast.ch"> hello@vast.ch </a>
+    .
+  </div>
 
   {
     button && (
@@ -85,3 +102,44 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 </form>
+
+<div
+  data-form-success
+  class="hidden rounded-lg border border-green-300 dark:border-green-900 bg-green-50 dark:bg-green-950/40 px-4 py-8 text-center"
+>
+  <p class="text-lg font-semibold text-green-800 dark:text-green-300">Thanks — your message is on its way.</p>
+  <p class="mt-1 text-sm text-green-700 dark:text-green-400">We’ll get back to you within a few business days.</p>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-contact-form]');
+  const success = document.querySelector<HTMLElement>('[data-form-success]');
+  const error = form?.querySelector<HTMLElement>('[data-form-error]');
+  const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    error?.classList.add('hidden');
+    submitBtn?.setAttribute('disabled', 'true');
+
+    const params = new URLSearchParams();
+    new FormData(form).forEach((value, key) => params.append(key, value.toString()));
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      form.reset();
+      form.classList.add('hidden');
+      success?.classList.remove('hidden');
+      success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch {
+      error?.classList.remove('hidden');
+    } finally {
+      submitBtn?.removeAttribute('disabled');
+    }
+  });
+</script>

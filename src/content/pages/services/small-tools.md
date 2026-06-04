@@ -14,12 +14,30 @@ examples:
     - title: 'Nuudel-to-ICS scheduler converter'
       description: 'Turn a Nuudel group poll into a calendar invite in one click. The piece the polling tool never shipped — built in an afternoon for our own use and shared since.'
       icon: 'tabler:calendar-event'
+      callToAction:
+        text: 'Try it'
+        # TODO: replace placeholder with the live demo URL
+        href: 'https://example.com/nuudel-to-ics'
+        icon: 'tabler:external-link'
+        target: _blank
     - title: 'Spotify Flipbook'
       description: 'A different way to look at a Spotify playlist — visual, scannable, sharable. A small experiment that turned into a tool we keep using ourselves.'
       icon: 'tabler:brand-spotify'
+      callToAction:
+        text: 'Try it'
+        # TODO: replace placeholder with the live demo URL
+        href: 'https://example.com/spotify-flipbook'
+        icon: 'tabler:external-link'
+        target: _blank
     - title: 'LinkedIn avatar generator'
       description: 'Consistent, well-cropped profile photos for a team that hates spending an hour on it. Browser-only, no data leaves your machine.'
       icon: 'tabler:brand-linkedin'
+      callToAction:
+        text: 'Try it'
+        # TODO: replace placeholder with the live demo URL
+        href: 'https://example.com/linkedin-avatar-generator'
+        icon: 'tabler:external-link'
+        target: _blank
   image:
     src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
     alt: 'Workbench of small tools and circuits'

@@ -7,29 +7,11 @@ import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'contact');
 if (!page) throw new Error('Missing page entry: contact');
-const { metadata, heroText, offices, languages, contactForm, directContact } = page.data as Required<typeof page.data>;
+const { metadata, heroText, contactForm, directContact } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <HeroText
-    tagline={heroText.tagline}
-    title={heroText.title}
-    subtitle={heroText.subtitle}
-  />
-
-  <Features2
-    title={offices.title}
-    subtitle={offices.subtitle}
-    columns={offices.columns}
-    items={offices.items}
-  />
-
-  <Features2
-    title={languages.title}
-    subtitle={languages.subtitle}
-    columns={languages.columns}
-    items={languages.items}
-  />
+  <HeroText tagline={heroText.tagline} title={heroText.title} subtitle={heroText.subtitle} />
 
   <ContactUs
     id={contactForm.id}
@@ -41,9 +23,5 @@ const { metadata, heroText, offices, languages, contactForm, directContact } = p
     description={contactForm.description}
   />
 
-  <Features2
-    title={directContact.title}
-    columns={directContact.columns}
-    items={directContact.items}
-  />
+  <Features2 title={directContact.title} columns={directContact.columns} items={directContact.items} />
 </Layout>

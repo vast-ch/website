@@ -5,34 +5,6 @@ heroText:
   tagline: Contact
   title: "Let's talk about your project"
   subtitle: "Tell us what you're working on — in Swiss German, French or English. We'll get back to you within a few business days."
-offices:
-  title: 'Our offices'
-  subtitle: 'We work across Switzerland and can meet you in person at any of these locations, or fully remotely.'
-  columns: 3
-  items:
-    - title: Interlaken
-      description: 'Berner Oberland, Bern canton.<br />Where vast.ch started.'
-      icon: 'tabler:mountain'
-    - title: Brig
-      description: 'Upper Valais.<br />At the foot of the Simplon pass.'
-      icon: 'tabler:map-pin'
-    - title: Fribourg
-      description: 'Innovation Lab Fribourg.<br />Registered office of vast.ch.'
-      icon: 'tabler:building'
-languages:
-  title: 'Languages we work in'
-  subtitle: 'Reach out in whichever language is easiest for you.'
-  columns: 3
-  items:
-    - title: 'Swiss German'
-      description: 'Schweizerdeutsch — und Hochdeutsch wenn es schriftlich sein muss.'
-      icon: 'tabler:message-language'
-    - title: 'Français'
-      description: "N'hésitez pas à nous écrire ou nous appeler en français."
-      icon: 'tabler:message-language'
-    - title: 'English'
-      description: 'For international clients and technical conversations.'
-      icon: 'tabler:message-language'
 contactForm:
   id: form
   title: 'Send us a message'

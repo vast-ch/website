@@ -10,13 +10,6 @@ hero:
   image:
     src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
     alt: 'The Swiss Alps'
-stats:
-  title: 'vast.ch at a glance'
-  items:
-    - { title: Engineers, amount: '3' }
-    - { title: Offices, amount: '3' }
-    - { title: Languages, amount: '3' }
-    - { title: Founded, amount: '2020' }
 team:
   title: 'The team'
   subtitle: 'The engineers who built vast.ch around the projects we actually want to work on.'
@@ -76,11 +69,11 @@ values:
     - title: 'Pragmatic over trendy'
       description: 'We pick the stack that fits the problem and the people who will maintain it after we leave. Long-term simplicity beats short-term cleverness.'
     - title: 'Built for Switzerland'
-      description: 'Offices in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a calendar that respects how things actually get done here. We meet you where you are.'
+      description: 'Based in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a calendar that respects how things actually get done here. We meet you where you are.'
 offices:
   title: 'Where we are'
-  tagline: Offices
-  subtitle: 'Locations across Switzerland — we can meet you in person or work fully remotely.'
+  tagline: Locations
+  subtitle: 'We are based across Switzerland and registered in Fribourg — happy to meet in person or work fully remotely.'
   columns: 3
   items:
     - title: Interlaken

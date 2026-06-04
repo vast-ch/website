@@ -14,7 +14,7 @@ hero:
       href: '/services'
       icon: 'tabler:arrow-right'
     - text: 'Start a project'
-      href: '/contact'
+      href: '/contact#form'
 services:
   id: services
   tagline: 'What we do'
@@ -46,7 +46,7 @@ whyUs:
     - title: 'Senior across the stack'
       description: 'Frontend, mobile, backend, data science and infrastructure — covered by people who have shipped real software in each.'
     - title: 'Built for Switzerland'
-      description: 'Offices in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a respect for how things actually get done here. We meet you where you are.'
+      description: 'Based in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a respect for how things actually get done here. We meet you where you are.'
   image:
     src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
     alt: 'A small team collaborating on engineering work'
@@ -83,6 +83,6 @@ cta:
   actions:
     - variant: primary
       text: 'Get in touch'
-      href: '/contact'
+      href: '/contact#form'
       icon: 'tabler:mail'
 ---
