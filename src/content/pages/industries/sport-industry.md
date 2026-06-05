@@ -21,7 +21,7 @@ whatsHard:
       description: 'Swiss federations, European leagues and outdoor brands serve users across many languages. Apps that ship in one language only do not get adopted.'
       icon: 'tabler:language'
   image:
-    src: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Athletes training in field conditions'
 proof:
   title: 'What we have actually shipped'
@@ -58,7 +58,7 @@ approach:
       description: 'A great sport app is one the user can leave running all day. Background sync, sensible polling and lean payloads are not optimisations — they are correctness.'
       icon: 'tabler:battery-charging'
   image:
-    src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Mountain peak in the Swiss Alps'
 cta:
   title: 'Building something for the sport industry?'

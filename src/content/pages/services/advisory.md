@@ -24,7 +24,7 @@ whatWeAdviseOn:
       description: 'An offer is on the table, a vendor is pushing a solution, an internal proposal needs scrutiny. We provide the independent read — written, defensible, and short enough to read in one sitting.'
       icon: 'tabler:eye-check'
   image:
-    src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Technical strategy session'
 digitalization:
   title: 'Digitalization solutions'
@@ -76,7 +76,7 @@ howItWorks:
       description: 'We are happy to help implement what we recommended — and just as happy if you take it to your existing team or another partner. Our recommendation does not depend on who builds it.'
       icon: 'tabler:lock-open'
   image:
-    src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Notes from an advisory session'
 cta:
   title: 'Have a decision to make — or a process to digitize?'

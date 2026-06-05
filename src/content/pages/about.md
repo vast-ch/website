@@ -8,7 +8,7 @@ hero:
   titleAccent: 'software that matters'
   subtitle: 'vast.ch is a small engineering studio based in Switzerland. We design and build web and mobile applications, train forecasting models, and advise founders and product teams on the technical decisions that shape their work.'
   image:
-    src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'The Swiss Alps'
 team:
   title: 'The team'

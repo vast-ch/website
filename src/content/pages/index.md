@@ -6,7 +6,7 @@ metadata:
 hero:
   title: 'Software, data and technical guidance '
   titleAccent: 'from the Swiss Alps'
-  subtitle: '<span class="font-semibold">vast.ch</span> is a small Swiss engineering studio. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization — in German, French and English.'
+  subtitle: '<span class="font-semibold">vast.ch</span> is a Swiss engineering office. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization — in German, French and English.'
   imageAlt: 'vast.ch — Swiss software engineering studio'
   actions:
     - variant: primary
@@ -36,9 +36,9 @@ services:
 whyUs:
   isReversed: true
   tagline: 'Why vast.ch'
-  title: 'A small Swiss team you can actually reach'
+  title: 'A Swiss team you can actually reach'
   contentHeading: 'Senior, focused, Swiss.'
-  contentBody: 'A small team across Interlaken, Brig and Fribourg — and a deliberate choice to stay that way.'
+  contentBody: 'A focused team across Interlaken, Brig and Fribourg — and a deliberate choice to stay that way.'
   accentBackground: true
   items:
     - title: 'You talk to the engineers'
@@ -48,8 +48,19 @@ whyUs:
     - title: 'Built for Switzerland'
       description: 'Based in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a respect for how things actually get done here. We meet you where you are.'
   image:
-    src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-    alt: 'A small team collaborating on engineering work'
+    src: '~/assets/images/placeholder.png'
+    alt: 'A team collaborating on engineering work'
+stats:
+  title: 'A team with a real track record'
+  items:
+    - amount: '10+ yrs'
+      title: 'Combined engineering experience'
+    - amount: '4'
+      title: 'Languages shipped in production'
+    - amount: 'iOS + Android'
+      title: 'Apps live in both app stores'
+    - amount: 'PhD-led'
+      title: 'Peer-reviewed, research-grade work'
 industries:
   title: 'Industries we know well'
   tagline: Specialties

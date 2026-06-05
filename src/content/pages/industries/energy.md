@@ -21,7 +21,7 @@ whatsHard:
       description: 'Buildings stand for decades. The data platforms and models around them need to outlive the people who built them — and stay reproducible.'
       icon: 'tabler:building'
   image:
-    src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Smart-building data and operations'
 proof:
   title: 'What we have actually done here'
@@ -55,7 +55,7 @@ approach:
       description: 'Every forecast comes with confidence intervals and a clear note on where the model is and is not reliable — because energy decisions are made on the edges of the distribution.'
       icon: 'tabler:chart-bar-popular'
   image:
-    src: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Energy and buildings infrastructure'
 cta:
   title: 'Have an energy or buildings problem?'

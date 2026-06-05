@@ -21,7 +21,7 @@ whatsHard:
       description: 'Researchers and engineers optimise for different things: novelty versus reliability, exploration versus deadlines. Productive collaboration needs people who speak both dialects.'
       icon: 'tabler:messages'
   image:
-    src: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Research notebook and laptop'
 proof:
   title: 'Why this is not just a marketing line'
@@ -76,7 +76,7 @@ approach:
       description: 'Academic claims earn the right to ship. We replicate the published numbers under realistic conditions before betting a product on them.'
       icon: 'tabler:checklist'
   image:
-    src: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Notebook with statistical and research work'
 cta:
   title: 'Got a research project that needs engineering?'

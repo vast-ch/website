@@ -4,71 +4,58 @@ import Hero from '~/components/widgets/Hero.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import TechLogos from '~/components/widgets/TechLogos.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/web-development');
 if (!page) throw new Error('Missing page entry: services/web-development');
-const { metadata, hero, web, mobile, backend, tech, proof, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, web, mobile, backend, tech, proof, caseStudy, nextSteps, cta } = page.data as Required<
+  typeof page.data
+>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
+  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-  <Content
-    isReversed={web.isReversed}
-    items={web.items}
-    image={web.image}
-  >
+  <Features2 title={proof.title} tagline={proof.tagline} columns={proof.columns} items={proof.items} />
+
+  <Content isReversed={web.isReversed} items={web.items} image={web.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{web.contentHeading}</h3>
       {web.contentBody}
     </Fragment>
   </Content>
 
-  <Content
-    isAfterContent={mobile.isAfterContent}
-    items={mobile.items}
-    image={mobile.image}
-  >
+  <Content isAfterContent={mobile.isAfterContent} items={mobile.items} image={mobile.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{mobile.contentHeading}</h3>
       {mobile.contentBody}
     </Fragment>
   </Content>
 
-  <Content
-    isReversed={backend.isReversed}
-    items={backend.items}
-    image={backend.image}
-  >
+  <Content isReversed={backend.isReversed} items={backend.items} image={backend.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{backend.contentHeading}</h3>
       {backend.contentBody}
     </Fragment>
   </Content>
 
-  <TechLogos
-    title={tech.title}
-    tagline={tech.tagline}
-    subtitle={tech.subtitle}
-    items={tech.items}
-  />
+  <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
 
-  <Features2
-    title={proof.title}
-    tagline={proof.tagline}
-    columns={proof.columns}
-    items={proof.items}
-  />
+  <Content
+    isReversed={caseStudy.isReversed}
+    tagline={caseStudy.tagline}
+    items={caseStudy.items}
+    image={caseStudy.image}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
+      {caseStudy.contentBody}
+    </Fragment>
+  </Content>
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
-  />
+  <Steps2 title={nextSteps.title} subtitle={nextSteps.subtitle} items={nextSteps.items} />
+
+  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>

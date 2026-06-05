@@ -39,7 +39,7 @@ examples:
         icon: 'tabler:external-link'
         target: _blank
   image:
-    src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Workbench of small tools and circuits'
 categories:
   title: 'What this category covers'
@@ -74,7 +74,7 @@ approach:
       description: 'Sometimes the cheapest answer to "should we build this?" is to build the smallest possible version and watch what happens. We are good at that — and at killing the idea when the answer is no.'
       icon: 'tabler:flask'
   image:
-    src: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Sketch of a quick prototype'
 tech:
   tagline: Stack

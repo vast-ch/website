@@ -194,6 +194,8 @@ const pageSchema = z.object({
   howWeWork: content.optional(),
   whatWeAdviseOn: content.optional(),
   howItWorks: content.optional(),
+  caseStudy: content.optional(),
+  nextSteps: steps.optional(),
   directContact: featuresGrid.optional(),
   contactForm: contactForm.optional(),
   tech: tech.optional(),

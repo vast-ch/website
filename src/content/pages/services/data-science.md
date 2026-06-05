@@ -24,7 +24,7 @@ capabilities:
       description: "End-to-end pipelines — ingestion, training, evaluation, deployment, monitoring and retraining — designed for your team and your infrastructure. Not notebooks left on someone's laptop."
       icon: 'tabler:cpu'
   image:
-    src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Data analytics dashboard with time-series'
 proof:
   title: 'Why this is not just another consultancy claim'
@@ -72,7 +72,7 @@ howWeWork:
       description: 'Containerised pipelines, version-controlled data and infrastructure-as-code. So next year you can still rerun, reproduce and audit every result.'
       icon: 'tabler:cube'
   image:
-    src: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'
+    src: '~/assets/images/placeholder.png'
     alt: 'Notebook with statistical work'
 cta:
   title: 'Have a forecasting or ML problem?'
