@@ -4,13 +4,12 @@ import Hero from '~/components/widgets/Hero.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import TechLogos from '~/components/widgets/TechLogos.astro';
-import Steps2 from '~/components/widgets/Steps2.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import QuickStart from '~/components/widgets/QuickStart.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/web-development');
 if (!page) throw new Error('Missing page entry: services/web-development');
-const { metadata, hero, web, mobile, backend, tech, proof, caseStudy, nextSteps, cta } = page.data as Required<
+const { metadata, hero, web, mobile, backend, tech, proof, caseStudy, nextSteps, quickStart } = page.data as Required<
   typeof page.data
 >;
 ---
@@ -55,7 +54,14 @@ const { metadata, hero, web, mobile, backend, tech, proof, caseStudy, nextSteps,
     </Fragment>
   </Content>
 
-  <Steps2 title={nextSteps.title} subtitle={nextSteps.subtitle} items={nextSteps.items} />
-
-  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
+  <QuickStart
+    tagline={nextSteps.tagline}
+    title={nextSteps.title}
+    subtitle={nextSteps.subtitle}
+    steps={nextSteps.items}
+    formTitle={quickStart.title}
+    categories={quickStart.categories}
+    button={quickStart.button}
+    consent={quickStart.consent}
+  />
 </Layout>

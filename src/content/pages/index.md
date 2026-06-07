@@ -90,10 +90,14 @@ industries:
         icon: 'tabler:chevron-right'
 cta:
   title: 'Have a project in mind?'
-  subtitle: "Tell us what you're working on — in German, French or English. We'll get back to you within a few business days."
+  subtitle: "Tell us what you're working on — in German, French or English."
   actions:
     - variant: primary
       text: 'Get in touch'
       href: '/contact#form'
       icon: 'tabler:mail'
+    - text: 'Book a 20-min call'
+      href: 'https://example.com/book-a-call'
+      icon: 'tabler:calendar'
+      target: _blank
 ---

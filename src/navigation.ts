@@ -1,5 +1,8 @@
 import { getPermalink } from './utils/permalinks';
 
+// TODO: replace with the real Calendly/cal.com scheduling link
+export const CALENDAR_URL = 'https://example.com/book-a-call';
+
 export const headerData = {
   links: [
     {
@@ -13,7 +16,7 @@ export const headerData = {
       links: [
         {
           text: 'Application development',
-          href: getPermalink('/services/application-development'),
+          href: getPermalink('/services/app-development'),
           icon: 'tabler:code',
           description: 'Software built around your metrics.',
         },
@@ -71,7 +74,10 @@ export const headerData = {
       href: getPermalink('/contact'),
     },
   ],
-  actions: [{ text: 'Contact us', href: getPermalink('/contact') }],
+  actions: [
+    { variant: 'primary', text: 'Book a call', href: CALENDAR_URL, target: '_blank' },
+    { text: 'Contact us', href: getPermalink('/contact') },
+  ],
 };
 
 export const footerData = {

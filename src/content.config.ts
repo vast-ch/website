@@ -135,6 +135,7 @@ const content = z.object({
 });
 
 const steps = z.object({
+  tagline: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
   items: z.array(z.object({ title: z.string(), description: z.string() })),
@@ -144,7 +145,9 @@ const contactForm = z.object({
   id: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
-  inputs: z.array(z.object({ type: z.string(), name: z.string(), label: z.string() })),
+  inputs: z.array(
+    z.object({ type: z.string(), name: z.string(), label: z.string(), required: z.boolean().optional() })
+  ),
   textarea: z.object({ label: z.string() }),
   disclaimer: z.object({ label: z.string() }),
   description: z.string().optional(),
@@ -162,6 +165,14 @@ const tech = z.object({
   tagline: z.string().optional(),
   subtitle: z.string().optional(),
   items: z.array(z.object({ name: z.string(), icon: z.string() })).max(6),
+});
+
+const quickStart = z.object({
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  categories: z.array(z.string()),
+  button: z.string().optional(),
+  consent: z.string().optional(),
 });
 
 const pageSchema = z.object({
@@ -196,6 +207,7 @@ const pageSchema = z.object({
   howItWorks: content.optional(),
   caseStudy: content.optional(),
   nextSteps: steps.optional(),
+  quickStart: quickStart.optional(),
   directContact: featuresGrid.optional(),
   contactForm: contactForm.optional(),
   tech: tech.optional(),

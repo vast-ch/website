@@ -1,0 +1,183 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import Button from '~/components/ui/Button.astro';
+
+interface Props {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  steps?: Array<{ title: string; description: string }>;
+  formTitle?: string;
+  categories?: Array<string>;
+  button?: string;
+  consent?: string;
+  id?: string;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  steps = [],
+  formTitle = '',
+  categories = [],
+  button = 'Send',
+  consent = '',
+  id,
+} = Astro.props;
+---
+
+<WidgetWrapper id={id} containerClass="max-w-6xl mx-auto">
+  <Headline tagline={tagline} classes={{ container: 'max-w-xl sm:mx-auto lg:max-w-2xl' }} />
+
+  <div class="md:flex md:gap-12 md:items-start">
+    
+    <div class="mb-10 md:mb-0 md:basis-1/2">
+      <div class="mb-12">
+        {title && <h2 class="mb-2 text-2xl font-bold tracking-tight dark:text-white sm:text-3xl">{title}</h2>}
+        {subtitle && <p class="mb-6 text-lg text-muted dark:text-slate-400">{subtitle}</p>}
+      </div>
+        {
+          steps.length > 0 && (
+            <ul class="space-y-6">
+              {steps.map((step, index) => (
+                <li class="flex gap-4">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
+                  {index + 1}
+                </span>
+                  <div>
+                    <p class="text-lg font-semibold leading-6 dark:text-white">{step.title}</p>
+                    <p class="mt-1 text-muted dark:text-slate-400">{step.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    
+    <div class="w-full md:basis-1/2">
+      <div
+        class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8"
+      >
+        {formTitle && <p class="mb-4 text-lg font-semibold dark:text-white">{formTitle}</p>}
+
+        <form name="quick-start" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-quickstart>
+          <input type="hidden" name="form-name" value="quick-start" />
+          <p class="hidden">
+            <label
+              >Don’t fill this out if you’re human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label
+            >
+          </p>
+
+          <div class="mb-6">
+            <label for="qs-email" class="block text-sm font-medium">Your email</label>
+            <input
+              type="email"
+              id="qs-email"
+              name="email"
+              autocomplete="email"
+              required
+              class="py-3 px-4 block w-full text-base rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+            />
+          </div>
+
+          <div class="mb-6">
+            <label for="qs-phone" class="block text-sm font-medium">Your phone number (optional)</label>
+            <input
+              type="tel"
+              id="qs-phone"
+              name="phone"
+              autocomplete="tel"
+              class="py-3 px-4 block w-full text-base rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+            />
+          </div>
+
+          {
+            categories.length > 0 && (
+              <fieldset class="mb-6">
+                <legend class="block text-sm font-medium mb-2">What do you have in mind? (optional)</legend>
+                <div class="flex flex-wrap gap-2">
+                  {categories.map((cat) => (
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="project-type" value={cat} class="peer sr-only" />
+                      <span class="inline-block rounded-full border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary">
+                        {cat}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            )
+          }
+
+          <div>
+            <label for="qs-message" class="block text-sm font-medium">Anything to add? (optional)</label>
+            <textarea
+              id="qs-message"
+              name="message"
+              rows={3}
+              class="py-3 px-4 block w-full text-base rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+            ></textarea>
+          </div>
+
+          <div
+            data-qs-error
+            class="hidden mt-4 rounded-lg border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-4 py-3 text-sm text-red-700 dark:text-red-300"
+          >
+            Something went wrong. Please email us directly at{' '}
+            <a class="font-medium underline" href="mailto:hello@vast.ch">hello@vast.ch</a>.
+          </div>
+
+          <div class="mt-6 grid">
+            <Button variant="primary" type="submit">{button}</Button>
+          </div>
+
+          {consent && <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">{consent}</p>}
+        </form>
+
+        <div
+          data-qs-success
+          class="hidden mt-4 rounded-lg border border-green-300 dark:border-green-900 bg-green-50 dark:bg-green-950/40 px-4 py-6 text-center"
+        >
+          <p class="font-semibold text-green-800 dark:text-green-300">Thanks — message received.</p>
+          <p class="mt-1 text-sm text-green-700 dark:text-green-400">We read every message and reply personally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</WidgetWrapper>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-quickstart]');
+  const success = document.querySelector<HTMLElement>('[data-qs-success]');
+  const error = form?.querySelector<HTMLElement>('[data-qs-error]');
+  const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    error?.classList.add('hidden');
+    submitBtn?.setAttribute('disabled', 'true');
+
+    const params = new URLSearchParams();
+    new FormData(form).forEach((value, key) => params.append(key, value.toString()));
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      form.reset();
+      form.classList.add('hidden');
+      success?.classList.remove('hidden');
+      success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch {
+      error?.classList.remove('hidden');
+    } finally {
+      submitBtn?.removeAttribute('disabled');
+    }
+  });
+</script>

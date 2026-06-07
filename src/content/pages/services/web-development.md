@@ -2,7 +2,7 @@
 metadata:
   title: 'Web and mobile application development'
   description: 'A single typed language across the stack — web frameworks, cross-platform mobile, and typed backend APIs. Production apps shipped in four languages.'
-  
+
 hero:
   tagline: 'Application development'
   title: 'Software built around your metrics'
@@ -43,7 +43,7 @@ web:
   image:
     src: '~/assets/images/placeholder.png'
     alt: 'Code editor with typed source code'
-    
+
 mobile:
   isAfterContent: true
   contentHeading: 'Mobile applications'
@@ -60,7 +60,7 @@ mobile:
       icon: 'tabler:check'
   image:
     src: '~/assets/images/placeholder.png'
-    alt: 'Mobile application development'    
+    alt: 'Mobile application development'
 
 backend:
   isReversed: true
@@ -112,21 +112,24 @@ caseStudy:
     src: '~/assets/images/placeholder.png'
     alt: 'Flightbook — paragliding logbook app'
 nextSteps:
+  tagline: 'Get started'
   title: 'What happens next'
-  subtitle: 'Reaching out is low-commitment — here is how a project starts.'
+  subtitle: 'No brief, no obligation — you talk to an engineer, not a salesperson.'
   items:
-    - title: 'Tell us about the project'
-      description: 'Send a short description through the contact form or by email — a rough idea is enough to start.'
+    - title: 'Reach out in a sentence or two'
+      description: 'A rough idea is plenty — pick a couple of tags below or book a quick call. No spec required.'
     - title: 'An honest fit assessment'
-      description: "Within a few business days we'll tell you whether we're the right team — and if we're not, we'll say so."
-    - title: 'A scoped first step'
+      description: "We'll tell you whether we're the right team — and if we're not, we'll say so and point you somewhere better."
+    - title: 'A small, no-pressure first step'
       description: 'If it is a fit, we propose a small, well-defined first step — so you can judge the work before any big commitment.'
-cta:
-  title: 'Got a web or mobile app to build?'
-  subtitle: 'Tell us what you are trying to ship. We will say honestly whether we are the right team — and if so, what the next two weeks should look like.'
-  actions:
-    - variant: primary
-      text: 'Start a project'
-      href: '/contact'
-      icon: 'tabler:mail'
+quickStart:
+  title: 'Start a conversation'
+  subtitle: 'A couple of taps is enough — add detail only if you want to.'
+  categories:
+    - 'Web app'
+    - 'Mobile app'
+    - 'API / backend'
+    - 'Not sure yet'
+  button: 'Send'
+  consent: 'By sending this, you agree we may store and use your message to reply. We don’t share it.'
 ---
