@@ -12,10 +12,10 @@ export const headerData = {
       megamenu: true,
       links: [
         {
-          text: 'Web and app development',
-          href: getPermalink('/services/web-development'),
+          text: 'Application development',
+          href: getPermalink('/services/application-development'),
           icon: 'tabler:code',
-          description: 'Production TypeScript across web, mobile and backend.',
+          description: 'Software built around your metrics.',
         },
         {
           text: 'Data science and forecasting',
