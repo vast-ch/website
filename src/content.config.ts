@@ -202,6 +202,8 @@ const pageSchema = z.object({
   mobile: content.optional(),
   backend: content.optional(),
   capabilities: content.optional(),
+  forecasting: content.optional(),
+  toolbox: content.optional(),
   howWeWork: content.optional(),
   whatWeAdviseOn: content.optional(),
   howItWorks: content.optional(),

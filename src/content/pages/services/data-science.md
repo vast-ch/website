@@ -1,31 +1,11 @@
 ---
 metadata:
   title: 'Forecasting and machine learning'
-  description: 'Time-series forecasting, foundation models, classical statistical methods, and ML pipelines built for production. PhD-led, peer-reviewed, energy and smart-buildings depth.'
+  description: 'Time-series forecasting, foundation models, classical statistical methods, and ML pipelines built for production.'
 hero:
   tagline: 'Forecasting and machine learning'
-  title: 'Forecasting models grounded in research and reality'
-  subtitle: 'Time-series forecasting, foundation models and classical statistical methods — designed, trained and deployed by a PhD-led team with peer-reviewed publications. Models that earn their place in production.'
-capabilities:
-  isReversed: true
-  contentHeading: 'What we do'
-  contentBody: 'Forecasting work that survives contact with production — accurate enough to trust, simple enough to maintain.'
-  items:
-    - title: 'Time-series forecasting'
-      description: 'Energy demand, building consumption, sensor readings, operational metrics. Models ranging from ARIMA and exponential smoothing to gradient-boosted trees and deep neural networks — chosen to match your data, not our preferences.'
-      icon: 'tabler:chart-line'
-    - title: 'Foundation models for time series'
-      description: 'We track and benchmark modern time-series foundation models. We have published peer-reviewed work comparing them against classical baselines on real building-energy data.'
-      icon: 'tabler:brain'
-    - title: 'Classical statistical methods'
-      description: 'When a transparent ARIMA, regression or state-space model is the right answer, we say so. Simple beats sophisticated when the simple one is honest about uncertainty.'
-      icon: 'tabler:math-function'
-    - title: 'ML pipelines for production'
-      description: "End-to-end pipelines — ingestion, training, evaluation, deployment, monitoring and retraining — designed for your team and your infrastructure. Not notebooks left on someone's laptop."
-      icon: 'tabler:cpu'
-  image:
-    src: '~/assets/images/placeholder.png'
-    alt: 'Data analytics dashboard with time-series'
+  title: 'Specialised in forecasting. Fluent across machine learning.'
+  subtitle: 'Time-series forecasting is our craft. We design, benchmark and deploy models led by a PhD level team backed by peer-reviewed publications. Around it, the full data science toolbox  pipelines, models and infrastructure that earn their place in production.'
 proof:
   title: 'Why this is not just another consultancy claim'
   tagline: Proof
@@ -44,6 +24,42 @@ proof:
     - title: 'Foundation-model benchmarking'
       description: 'Independent, published comparisons of modern foundation models against classical baselines. We do not chase hype — we measure it.'
       icon: 'tabler:scale'
+forecasting:
+  isReversed: true
+  contentHeading: 'Forecasting — the specialism'
+  contentBody: 'Forecasting work that survives contact with production — and cuts energy waste in the process. Better predictions mean less overproduction, for operators and for the environment.'
+  items:
+    - title: 'Time-series forecasting'
+      description: 'Energy demand, building consumption, sensor readings, operational metrics. Models ranging from ARIMA and exponential smoothing to gradient-boosted trees and deep neural networks — chosen to match your data, not our preferences.'
+      icon: 'tabler:chart-line'
+    - title: 'Foundation models for time series'
+      description: 'We track and benchmark modern time-series foundation models. We have published peer-reviewed work comparing them against classical baselines on real building-energy data.'
+      icon: 'tabler:brain'
+    - title: 'Classical statistical methods'
+      description: 'When a transparent ARIMA, regression or state-space model is the right answer, we say so. Simple beats sophisticated when the simple one is honest about uncertainty.'
+      icon: 'tabler:math-function'
+  image:
+    src: '~/assets/images/placeholder.png'
+    alt: 'Data analytics dashboard with time-series'
+toolbox:
+  isAfterContent: true
+  contentHeading: 'Around it, the data science toolbox'
+  contentBody: 'Forecasting rarely ships alone. Around it we build the pipelines, models and infrastructure that earn their place in production.'
+  items:
+    - title: 'ML pipelines for production'
+      description: "End-to-end pipelines — ingestion, training, evaluation, deployment, monitoring and retraining — designed for your team and your infrastructure. Not notebooks left on someone's laptop."
+      icon: 'tabler:cpu'
+    # TODO: review claim — drafted from the energy page (IoT/sensor platforms, Big Building Data)
+    - title: 'Sensor and IoT data'
+      description: 'Pipelines, time-series databases and dashboards for high-volume sensor data — built for buildings with thousands of sensors and for the engineers who keep them running.'
+      icon: 'tabler:access-point'
+    # TODO: review claim — drafted item, confirm we want to offer this explicitly
+    - title: 'Exploratory analysis and model evaluation'
+      description: 'Honest exploratory analysis and rigorous benchmarks before anything ships — evaluation tied to the decision you need to make, not to a leaderboard.'
+      icon: 'tabler:chart-dots'
+  image:
+    src: '~/assets/images/placeholder.png'
+    alt: 'Data pipelines and infrastructure'
 tech:
   tagline: Stack
   title: 'Technologies we use'
@@ -55,35 +71,44 @@ tech:
     - { name: 'pandas', icon: 'simple-icons:pandas' }
     - { name: 'Jupyter', icon: 'simple-icons:jupyter' }
     - { name: 'Docker', icon: 'simple-icons:docker' }
-howWeWork:
-  isAfterContent: true
-  contentHeading: 'How we work'
+caseStudy:
+  isReversed: true
+  tagline: 'Case study'
+  contentHeading: 'Foundation models vs. classical baselines — measured, not assumed'
+  contentBody: 'A peer-reviewed comparison of modern time-series foundation models against classical methods on real building-energy data — benchmarked with onTime, the open-source library we develop.'
   items:
-    - title: 'Start with the decision, not the data'
-      description: 'Before any model, we agree on what you need to decide and at what cost of being wrong. A simple baseline that answers the right question beats a sophisticated model that does not.'
-      icon: 'tabler:bulb'
-    - title: 'Honest about uncertainty'
-      description: 'Every forecast comes with confidence intervals and a clear note on where the model is and is not reliable. No black boxes, no over-claimed accuracy.'
-      icon: 'tabler:scale-outline'
-    - title: 'Production from day one'
-      description: 'Models are designed for deployment, observability and retraining from the very first sprint. We hand over a system, not a slide deck.'
-      icon: 'tabler:rocket'
-    - title: 'Boring, reproducible infrastructure'
-      description: 'Containerised pipelines, version-controlled data and infrastructure-as-code. So next year you can still rerun, reproduce and audit every result.'
-      icon: 'tabler:cube'
+    - title: 'The question'
+      description: 'Do modern time-series foundation models actually beat classical statistical methods on real building-energy data — or is the hype ahead of the evidence?'
+      icon: 'tabler:question-mark'
+    - title: 'What we did'
+      description: 'An independent benchmark of foundation models against classical baselines on real building-energy data, run on our open-source onTime library — peer-reviewed and published as part of a PhD at HES-SO (2025).'
+      icon: 'tabler:flask'
+    # TODO: supply the headline finding + publication link — do not invent the paper's conclusion
+    - title: 'The result'
+      description: 'A measured, peer-reviewed answer — published and reproducible, so the conclusion can be checked rather than taken on faith.'
+      icon: 'tabler:trophy'
   image:
+    # TODO: replace with a figure from the publication
     src: '~/assets/images/placeholder.png'
-    alt: 'Notebook with statistical work'
-cta:
-  title: 'Have a forecasting or ML problem?'
-  subtitle: 'Send the question you are actually trying to answer. We will tell you whether modelling is the right tool — and if so, what kind, with what data, and at what cost.'
-  actions:
-    - variant: primary
-      text: 'Talk to us'
-      href: '/contact'
-      icon: 'tabler:mail'
-    - text: 'Book a 20-min call'
-      href: 'https://example.com/book-a-call'
-      icon: 'tabler:calendar'
-      target: _blank
+    alt: 'Benchmark comparing forecasting models on building-energy data'
+nextSteps:
+  tagline: 'Get started'
+  title: 'What happens next'
+  subtitle: 'No brief, no obligation — you talk to an engineer, not a salesperson.'
+  items:
+    - title: 'Send the question you are actually trying to answer'
+      description: 'A sentence or two is plenty — pick a couple of tags below and describe the decision the model should support. No clean dataset required.'
+    - title: 'An honest read on whether modelling is the right tool'
+      description: 'And if so, what kind — with what data, and at what cost. If a simple baseline or no model at all is the better answer, we say so.'
+    - title: 'A small first study before a big bet'
+      description: 'If it is a fit, we scope a small, well-defined first study — so you can judge the work on real data before committing further.'
+quickStart:
+  title: 'Start a conversation'
+  categories:
+    - 'Forecasting'
+    - 'Machine learning'
+    - 'Data pipelines'
+    - 'Not sure yet'
+  button: 'Send'
+  consent: 'By sending this, you agree we may store and use your message to reply. We don’t share it.'
 ---

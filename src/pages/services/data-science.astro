@@ -4,31 +4,17 @@ import Hero from '~/components/widgets/Hero.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import TechLogos from '~/components/widgets/TechLogos.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import QuickStart from '~/components/widgets/QuickStart.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/data-science');
 if (!page) throw new Error('Missing page entry: services/data-science');
-const { metadata, hero, capabilities, proof, tech, howWeWork, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, forecasting, toolbox, tech, proof, caseStudy, howWeWork, nextSteps, quickStart } =
+  page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
-
-  <Content
-    isReversed={capabilities.isReversed}
-    items={capabilities.items}
-    image={capabilities.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{capabilities.contentHeading}</h3>
-      {capabilities.contentBody}
-    </Fragment>
-  </Content>
+  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
   <Features2
     title={proof.title}
@@ -37,28 +23,43 @@ const { metadata, hero, capabilities, proof, tech, howWeWork, cta } = page.data 
     columns={proof.columns}
     items={proof.items}
   />
-
-  <TechLogos
-    title={tech.title}
-    tagline={tech.tagline}
-    subtitle={tech.subtitle}
-    items={tech.items}
-  />
-
-  <Content
-    isAfterContent={howWeWork.isAfterContent}
-    items={howWeWork.items}
-    image={howWeWork.image}
-  >
+  
+  <Content isReversed={forecasting.isReversed} items={forecasting.items} image={forecasting.image}>
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{howWeWork.contentHeading}</h3>
-      {howWeWork.contentBody}
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{forecasting.contentHeading}</h3>
+      {forecasting.contentBody}
     </Fragment>
   </Content>
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
+  <Content isAfterContent={toolbox.isAfterContent} items={toolbox.items} image={toolbox.image}>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{toolbox.contentHeading}</h3>
+      {toolbox.contentBody}
+    </Fragment>
+  </Content>
+
+  <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
+
+  <Content
+    isReversed={caseStudy.isReversed}
+    tagline={caseStudy.tagline}
+    items={caseStudy.items}
+    image={caseStudy.image}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
+      {caseStudy.contentBody}
+    </Fragment>
+  </Content>
+
+  <QuickStart
+    tagline={nextSteps.tagline}
+    title={nextSteps.title}
+    subtitle={nextSteps.subtitle}
+    steps={nextSteps.items}
+    formTitle={quickStart.title}
+    categories={quickStart.categories}
+    button={quickStart.button}
+    consent={quickStart.consent}
   />
 </Layout>
