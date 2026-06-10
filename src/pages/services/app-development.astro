@@ -15,9 +15,11 @@ const { metadata, hero, web, mobile, backend, tech, proof, caseStudy, nextSteps,
 ---
 
 <Layout metadata={metadata}>
-  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-  <Features2 title={proof.title} tagline={proof.tagline} columns={proof.columns} items={proof.items} />
+    <Features2 title={proof.title} tagline={proof.tagline} columns={proof.columns} items={proof.items} />
+  </div>
 
   <Content isReversed={web.isReversed} items={web.items} image={web.image}>
     <Fragment slot="content">
@@ -42,17 +44,19 @@ const { metadata, hero, web, mobile, backend, tech, proof, caseStudy, nextSteps,
 
   <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
 
-  <Content
-    isReversed={caseStudy.isReversed}
-    tagline={caseStudy.tagline}
-    items={caseStudy.items}
-    image={caseStudy.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
-      {caseStudy.contentBody}
-    </Fragment>
-  </Content>
+  <div class="bg-section">
+    <Content
+      isReversed={caseStudy.isReversed}
+      tagline={caseStudy.tagline}
+      items={caseStudy.items}
+      image={caseStudy.image}
+    >
+      <Fragment slot="content">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
+        {caseStudy.contentBody}
+      </Fragment>
+    </Content>
+  </div>
 
   <QuickStart
     tagline={nextSteps.tagline}

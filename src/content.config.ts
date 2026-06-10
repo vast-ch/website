@@ -203,6 +203,7 @@ const pageSchema = z.object({
   backend: content.optional(),
   capabilities: content.optional(),
   forecasting: content.optional(),
+  tabular: content.optional(),
   toolbox: content.optional(),
   howWeWork: content.optional(),
   whatWeAdviseOn: content.optional(),

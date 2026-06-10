@@ -26,6 +26,11 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
+  redirects: {
+    '/services/data-science': '/services/data-science-machine-learning',
+    '/services/web-development': '/services/app-development',
+  },
+
   integrations: [
     sitemap(),
     mdx(),

@@ -1,7 +1,7 @@
 ---
 metadata:
-  title: 'Services — Web and mobile, forecasting, advisory and digitalization'
-  description: 'Focused services from a Swiss engineering studio: web and mobile development, forecasting and machine learning, and advisory plus digitalization solutions.'
+  title: 'Services — Web and mobile, data science, advisory and digitalization'
+  description: 'Focused services from a Swiss engineering studio: web and mobile development, data science and machine learning, and advisory plus digitalization solutions.'
 hero:
   tagline: Services
   title: 'What we do'
@@ -16,14 +16,14 @@ services:
       icon: 'tabler:code'
       callToAction:
         text: 'Learn more'
-        href: '/services/web-development'
+        href: '/services/app-development'
         icon: 'tabler:chevron-right'
-    - title: 'Forecasting and machine learning'
-      description: 'Time-series forecasting, foundation models, classical statistical methods, ML pipelines built for production. PhD-led, peer-reviewed.'
+    - title: 'Data science and machine learning'
+      description: 'Time-series forecasting, tabular data modelling, classical statistical methods, ML pipelines built for production. PhD-led, peer-reviewed.'
       icon: 'tabler:chart-line'
       callToAction:
         text: 'Learn more'
-        href: '/services/data-science'
+        href: '/services/data-science-machine-learning'
         icon: 'tabler:chevron-right'
     - title: 'Advisory and digitalization solutions'
       description: 'Independent architecture reviews, stack and vendor choices, and hands-on digitalization — process digitization, workflow automation and custom internal tools. Short engagements, written conclusions.'

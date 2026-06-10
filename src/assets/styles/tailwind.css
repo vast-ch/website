@@ -45,6 +45,10 @@
   background-color: var(--aw-color-bg-page);
 }
 
+@utility bg-section {
+  background-color: var(--aw-color-bg-section);
+}
+
 @utility text-page {
   color: var(--aw-color-text-page);
 }

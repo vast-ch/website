@@ -12,22 +12,26 @@ const { metadata, hero, whatWeAdviseOn, digitalization, whenItFits, howItWorks, 
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
+  <div class="bg-section">
+    <Hero
+      tagline={hero.tagline}
+      title={hero.title}
+      subtitle={hero.subtitle}
+    />
 
-  <Content
-    isReversed={whatWeAdviseOn.isReversed}
-    items={whatWeAdviseOn.items}
-    image={whatWeAdviseOn.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whatWeAdviseOn.contentHeading}</h3>
-      {whatWeAdviseOn.contentBody}
-    </Fragment>
-  </Content>
+    <Content
+      isReversed={whatWeAdviseOn.isReversed}
+      items={whatWeAdviseOn.items}
+      image={whatWeAdviseOn.image}
+    >
+      <Fragment slot="content">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+          {whatWeAdviseOn.contentHeading}
+        </h3>
+        {whatWeAdviseOn.contentBody}
+      </Fragment>
+    </Content>
+  </div>
 
   <Features2
     title={digitalization.title}
@@ -45,16 +49,18 @@ const { metadata, hero, whatWeAdviseOn, digitalization, whenItFits, howItWorks, 
     items={whenItFits.items}
   />
 
-  <Content
-    isAfterContent={howItWorks.isAfterContent}
-    items={howItWorks.items}
-    image={howItWorks.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{howItWorks.contentHeading}</h3>
-      {howItWorks.contentBody}
-    </Fragment>
-  </Content>
+  <div class="bg-section">
+    <Content
+      isAfterContent={howItWorks.isAfterContent}
+      items={howItWorks.items}
+      image={howItWorks.image}
+    >
+      <Fragment slot="content">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{howItWorks.contentHeading}</h3>
+        {howItWorks.contentBody}
+      </Fragment>
+    </Content>
+  </div>
 
   <CallToAction
     actions={cta.actions}

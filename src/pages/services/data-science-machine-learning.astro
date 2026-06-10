@@ -9,21 +9,23 @@ import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/data-science');
 if (!page) throw new Error('Missing page entry: services/data-science');
-const { metadata, hero, forecasting, toolbox, tech, proof, caseStudy, howWeWork, nextSteps, quickStart } =
+const { metadata, hero, forecasting, tabular, toolbox, tech, proof, caseStudy, nextSteps, quickStart } =
   page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-  <Features2
-    title={proof.title}
-    tagline={proof.tagline}
-    subtitle={proof.subtitle}
-    columns={proof.columns}
-    items={proof.items}
-  />
-  
+    <Features2
+      title={proof.title}
+      tagline={proof.tagline}
+      subtitle={proof.subtitle}
+      columns={proof.columns}
+      items={proof.items}
+    />
+  </div>
+
   <Content isReversed={forecasting.isReversed} items={forecasting.items} image={forecasting.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{forecasting.contentHeading}</h3>
@@ -31,7 +33,14 @@ const { metadata, hero, forecasting, toolbox, tech, proof, caseStudy, howWeWork,
     </Fragment>
   </Content>
 
-  <Content isAfterContent={toolbox.isAfterContent} items={toolbox.items} image={toolbox.image}>
+  <Content isAfterContent={tabular.isAfterContent} items={tabular.items} image={tabular.image}>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{tabular.contentHeading}</h3>
+      {tabular.contentBody}
+    </Fragment>
+  </Content>
+
+  <Content isReversed={toolbox.isReversed} items={toolbox.items} image={toolbox.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{toolbox.contentHeading}</h3>
       {toolbox.contentBody}
@@ -40,17 +49,19 @@ const { metadata, hero, forecasting, toolbox, tech, proof, caseStudy, howWeWork,
 
   <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
 
-  <Content
-    isReversed={caseStudy.isReversed}
-    tagline={caseStudy.tagline}
-    items={caseStudy.items}
-    image={caseStudy.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
-      {caseStudy.contentBody}
-    </Fragment>
-  </Content>
+  <div class="bg-section">
+    <Content
+      isReversed={caseStudy.isReversed}
+      tagline={caseStudy.tagline}
+      items={caseStudy.items}
+      image={caseStudy.image}
+    >
+      <Fragment slot="content">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
+        {caseStudy.contentBody}
+      </Fragment>
+    </Content>
+  </div>
 
   <QuickStart
     tagline={nextSteps.tagline}

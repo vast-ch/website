@@ -13,22 +13,24 @@ const { metadata, hero, examples, categories, approach, tech, whenItFits, cta } 
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
+  <div class="bg-section">
+    <Hero
+      tagline={hero.tagline}
+      title={hero.title}
+      subtitle={hero.subtitle}
+    />
 
-  <Content
-    isReversed={examples.isReversed}
-    items={examples.items}
-    image={examples.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{examples.contentHeading}</h3>
-      {examples.contentBody}
-    </Fragment>
-  </Content>
+    <Content
+      isReversed={examples.isReversed}
+      items={examples.items}
+      image={examples.image}
+    >
+      <Fragment slot="content">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{examples.contentHeading}</h3>
+        {examples.contentBody}
+      </Fragment>
+    </Content>
+  </div>
 
   <Features2
     title={categories.title}
@@ -56,13 +58,15 @@ const { metadata, hero, examples, categories, approach, tech, whenItFits, cta } 
     items={tech.items}
   />
 
-  <Features2
-    title={whenItFits.title}
-    tagline={whenItFits.tagline}
-    subtitle={whenItFits.subtitle}
-    columns={whenItFits.columns}
-    items={whenItFits.items}
-  />
+  <div class="bg-section">
+    <Features2
+      title={whenItFits.title}
+      tagline={whenItFits.tagline}
+      subtitle={whenItFits.subtitle}
+      columns={whenItFits.columns}
+      items={whenItFits.items}
+    />
+  </div>
 
   <CallToAction
     actions={cta.actions}

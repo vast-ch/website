@@ -21,10 +21,10 @@ export const headerData = {
           description: 'Software built around your metrics.',
         },
         {
-          text: 'Data science and forecasting',
-          href: getPermalink('/services/data-science'),
+          text: 'Data science and machine learning',
+          href: getPermalink('/services/data-science-machine-learning'),
           icon: 'tabler:chart-line',
-          description: 'Time-series forecasting and ML grounded in research.',
+          description: 'Support your decisions with data',
         },
         {
           text: 'Small tools & prototypes',
@@ -92,8 +92,8 @@ export const footerData = {
     {
       title: 'Services',
       links: [
-        { text: 'Web and app development', href: getPermalink('/services/web-development') },
-        { text: 'Data science and forecasting', href: getPermalink('/services/data-science') },
+        { text: 'Web and app development', href: getPermalink('/services/app-development') },
+        { text: 'Data science and machine learning', href: getPermalink('/services/data-science-machine-learning') },
         { text: 'Small tools & prototypes', href: getPermalink('/services/small-tools') },
         { text: 'Advisory & digitalization', href: getPermalink('/services/advisory') },
       ],
