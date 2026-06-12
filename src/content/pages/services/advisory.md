@@ -7,7 +7,6 @@ hero:
   title: 'Independent advice and practical digitalization'
   subtitle: 'Two sides of the same work: clear-eyed advice on the decisions that shape your software, and hands-on digitalization of the processes still living in spreadsheets and paper. For founders, operators and teams that want a senior partner without an agency in the middle.'
 whatWeAdviseOn:
-  isReversed: true
   contentHeading: 'What we advise on'
   contentBody: 'Concrete questions, concrete answers. We do not sell strategy decks.'
   items:

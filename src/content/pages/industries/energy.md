@@ -24,7 +24,6 @@ problems:
       description: 'A portfolio, a CO₂ target and a finite budget: which buildings first? We merge RegBL/GWR registry data, GEAK labels and measured consumption into a ranking your board can act on and your engineers can defend.'
       icon: 'tabler:building'
 deliverables:
-  isReversed: true
   contentHeading: 'What we deliver'
   contentBody: 'Problems map to engagements, and engagements end in something you can run, audit or act on. The technology behind them lives on the service pages.'
   items:

@@ -33,7 +33,6 @@ industries:
         href: '/industries/sport-industry'
         icon: 'tabler:chevron-right'
 whyTheseIndustries:
-  isReversed: true
   contentHeading: 'Why we picked these'
   contentBody: 'We would rather be excellent in a few places than mediocre in many.'
   items:

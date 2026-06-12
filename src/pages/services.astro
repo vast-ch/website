@@ -12,7 +12,9 @@ const { metadata, hero, services, industries, techStack, cta } = page.data as Re
 ---
 
 <Layout metadata={metadata}>
-  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  </div>
 
   <Features3 title={services.title} subtitle={services.subtitle} columns={services.columns} items={services.items} />
 

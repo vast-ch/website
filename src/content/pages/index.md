@@ -34,7 +34,6 @@ services:
       description: 'Independent architecture reviews, stack and vendor choices, and hands-on digitalization — process digitization, workflow automation and custom internal tools. Short engagements with written conclusions you can defend.'
       icon: 'tabler:bulb'
 whyUs:
-  isReversed: true
   tagline: 'Why vast.ch'
   title: 'A Swiss team you can actually reach'
   contentHeading: 'Senior, focused, Swiss.'

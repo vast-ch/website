@@ -24,7 +24,6 @@ problems:
       description: 'The Innosuisse or Horizon proposal promised a platform, a pilot or a dataset — and the lab has researchers, not software engineers. We deliver the work package without disturbing the science.'
       icon: 'tabler:puzzle'
 deliverables:
-  isReversed: true
   contentHeading: 'What we deliver'
   contentBody: 'Each engagement ends in something a reviewer, a funder or your next hire can pick up. The technology behind it lives on the service pages.'
   items:

@@ -12,7 +12,9 @@ const { metadata, hero, whatsHard, proof, approach, cta } = page.data as Require
 ---
 
 <Layout metadata={metadata}>
-  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  </div>
 
   <Content isReversed={whatsHard.isReversed} items={whatsHard.items} image={whatsHard.image}>
     <Fragment slot="content">

@@ -9,7 +9,7 @@ interface Props {
   id?: string;
 }
 
-const { caseStudy, tagline = 'Case study', isReversed = true, id } = Astro.props;
+const { caseStudy, tagline = 'Case study', isReversed = false, id } = Astro.props;
 ---
 
 <Content id={id} isReversed={isReversed} tagline={tagline} items={caseStudy.items} image={caseStudy.image}>

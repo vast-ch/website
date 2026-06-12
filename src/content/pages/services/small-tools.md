@@ -7,7 +7,6 @@ hero:
   title: 'Small things, shipped fast'
   subtitle: 'Micro-utilities that turn a daily annoyance into a few minutes saved, and rapid prototypes that prove an idea in days — not months. Built quickly, open-sourced when we can, useful every day.'
 examples:
-  isReversed: true
   contentHeading: 'Tools we have actually shipped'
   contentBody: 'Small things we built to fix our own annoyances — and then shared, because someone else probably has the same one.'
   items:

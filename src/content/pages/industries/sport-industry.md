@@ -7,7 +7,6 @@ hero:
   title: 'Software built for the way sport actually happens'
   subtitle: 'Mobile applications, performance data and digital tooling for clubs, federations, equipment brands and athletes — designed from Interlaken, where many of our own users live and train. Real software, real users, real conditions.'
 whatsHard:
-  isReversed: true
   contentHeading: 'What makes this hard'
   contentBody: 'Sport software fails in places that desktop test suites never see. We design for those places first.'
   items:

@@ -27,7 +27,6 @@ proof:
       icon: 'tabler:stairs'
 
 web:
-  isReversed: true
   contentHeading: 'Web applications'
   contentBody: 'We pick the right tool for the lifetime of the product, not the launch.'
   items:
@@ -45,7 +44,7 @@ web:
     alt: 'Code editor with typed source code'
 
 mobile:
-  isAfterContent: true
+  isReversed: true
   contentHeading: 'Mobile applications'
   contentBody: 'Cross-platform mobile apps shipped in production.'
   items:
@@ -63,7 +62,6 @@ mobile:
     alt: 'Mobile application development'
 
 backend:
-  isReversed: true
   contentHeading: 'Backends and APIs'
   contentBody: 'Efficient, tested and documented backends, the unglamorous half that decides whether the product lasts.'
   items:

@@ -12,7 +12,9 @@ const { metadata, hero, industries, whyTheseIndustries, cta } = page.data as Req
 ---
 
 <Layout metadata={metadata}>
-  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  </div>
 
   <Features3
     title={industries.title}

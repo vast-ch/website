@@ -45,12 +45,12 @@ const columnsClass =
     subtitle={subtitle}
     tagline={tagline}
     classes={{
-      container: 'max-w-xl sm:mx-auto lg:max-w-2xl',
-      title: 'text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading',
-      subtitle: 'max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400',
+      container: 'max-w-3xl',
+      title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
+      subtitle: 'text-xl text-muted dark:text-slate-400',
     }}
   />
-  <div class="mx-auto max-w-7xl p-4 md:px-8">
+  <div class="mx-auto max-w-7xl">
     <div class={`md:flex ${isReversed ? 'md:flex-row-reverse' : ''} md:gap-16`}>
       <div class="md:basis-1/2 self-center">
         {content && <div class="mb-12 text-lg dark:text-slate-400" set:html={content} />}
@@ -77,7 +77,7 @@ const columnsClass =
                     </div>
                     <div class="mt-0.5">
                       {itemTitle && (
-                        <h3 class="text-lg font-medium leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2">
+                        <h3 class="text-lg font-semibold leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2">
                           {itemTitle}
                         </h3>
                       )}
@@ -140,7 +140,7 @@ const columnsClass =
                       </div>
                       <div class="mt-0.5">
                         {itemTitle && (
-                          <h3 class="text-lg font-medium leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2">
+                          <h3 class="text-lg font-semibold leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2">
                             {itemTitle}
                           </h3>
                         )}

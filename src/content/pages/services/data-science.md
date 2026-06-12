@@ -24,7 +24,6 @@ proof:
       description: 'Forecasts ship with confidence intervals, models with their known failure modes. Decisions need error bars, not just point estimates.'
       icon: 'tabler:chart-candle'
 forecasting:
-  isReversed: true
   contentHeading: 'Time series forecasting'
   contentBody: 'Forecasting work that survives contact with production. Better predictions mean less overproduction, for operators and for the environment.'
   items:
@@ -42,7 +41,7 @@ forecasting:
     alt: 'Data analytics dashboard with time-series'
 # TODO: review claims — section drafted, confirm scope and examples
 tabular:
-  isAfterContent: true
+  isReversed: true
   contentHeading: 'Tabular data modelling'
   contentBody: 'Most industrial data lives in tables, sensor aggregates, maintenance logs, lab results, business records. We build models that turn them into decisions.'
   items:
@@ -59,7 +58,6 @@ tabular:
     src: '~/assets/images/placeholder.png'
     alt: 'Tabular data modelling on structured industrial data'
 toolbox:
-  isReversed: true
   contentHeading: 'From prototype to production'
   contentBody: 'A model is only half the work. Around it: the data pipelines that feed it, the benchmarks that justify it and the monitoring that keeps it honest once deployed.'
   items:
