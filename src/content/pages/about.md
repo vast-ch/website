@@ -4,15 +4,26 @@ metadata:
   description: 'vast.ch is a small Swiss engineering studio. Co-founders Frédéric Montet (PhD, ML), Michal Bryxí (Ember, frontend) and Yannick Lagger (mobile, FHIR). Based in Interlaken, Brig and Fribourg.'
 hero:
   tagline: 'About us'
-  title: 'A small Swiss team building'
-  titleAccent: 'software that matters'
-  subtitle: 'vast.ch is a small engineering studio based in Switzerland. We design and build web and mobile applications, train forecasting models, and advise founders and product teams on the technical decisions that shape their work.'
-  image:
-    src: '~/assets/images/placeholder.png'
-    alt: 'The Swiss Alps'
+  title: 'Your team to build software that matters'
+  subtitle: 'vast.ch is an engineering studio based in Switzerland. We design and build web and mobile applications, train forecasting models, and advise founders and product teams on the technical decisions that shape their work.'
+mission:
+  tagline: 'Our mission'
+  isReversed: false
+  contentHeading: 'Engineering as it should be'
+  contentBody: 'We started vast.ch because we believe good software comes from small teams who care — about the craft, about the people who use it and about the problem it solves. Our mission is to help Swiss organisations turn ideas and data into reliable products, and to leave every codebase and team stronger than we found them.'
+  items:
+    - title: 'Technology in service of people'
+      description: 'A forecast, an app or a tool only counts if someone’s day gets better because of it.'
+    - title: 'Built to be owned'
+      description: 'Maintainable code, documented decisions and proper handovers — you are never locked in.'
+    - title: 'Honest by default'
+      description: 'Realistic estimates, early warnings and clear opinions, even when they are inconvenient.'
 team:
   title: 'The team'
   subtitle: 'The engineers who built vast.ch around the projects we actually want to work on.'
+  image:
+    src: '~/assets/images/placeholder.png'
+    alt: 'The vast.ch team'
   columns: 3
   items:
     - title: 'Frédéric Montet'
@@ -42,24 +53,6 @@ team:
         href: 'https://www.linkedin.com/in/yannick-lagger-302070193/?locale=en_US'
         target: _blank
         icon: 'tabler:brand-linkedin'
-receipts:
-  title: 'What we have actually shipped'
-  tagline: 'The receipts'
-  subtitle: 'A decade of combined output — peer-reviewed research, open-source tools and apps in production stores.'
-  columns: 2
-  items:
-    - title: 'Peer-reviewed publications'
-      description: 'PhD in Computer Science (HES-SO, 2025) and multiple journal and conference papers on building-energy forecasting, Big Building Data and foundation models for time series.'
-      icon: 'tabler:school'
-    - title: 'Open-source tools in active use'
-      description: 'onTime (Python time-series benchmarking), vscode-fhir-tools (clinical data tooling used internationally), Ember addons and infrastructure-as-code modules.'
-      icon: 'tabler:brand-github'
-    - title: 'Apps in production'
-      description: 'Own products on the App Store and Google Play — including Flightbook, used by paragliding pilots and instructors and shipped in four languages.'
-      icon: 'tabler:apps'
-    - title: 'Industrial and research projects'
-      description: 'Engagements with universities, research institutes, healthcare interoperability teams and Swiss SMEs — across energy, smart buildings, healthcare and mobility.'
-      icon: 'tabler:briefcase'
 values:
   title: 'How we work'
   subtitle: 'The principles that shape every project we take on.'
@@ -70,33 +63,33 @@ values:
       description: 'We pick the stack that fits the problem and the people who will maintain it after we leave. Long-term simplicity beats short-term cleverness.'
     - title: 'Built for Switzerland'
       description: 'Based in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a calendar that respects how things actually get done here. We meet you where you are.'
-offices:
-  title: 'Where we are'
-  tagline: Locations
-  subtitle: 'We are based across Switzerland and registered in Fribourg — happy to meet in person or work fully remotely.'
-  columns: 3
-  items:
-    - title: Interlaken
-      description: 'Berner Oberland — between the lakes, where vast.ch started.'
-      icon: 'tabler:mountain'
-    - title: Brig
-      description: 'Valais — at the foot of the Simplon, our connection to the south.'
-      icon: 'tabler:map-pin'
-    - title: Fribourg
-      description: 'Registered office at Innovation Lab Fribourg, on the Swiss language border.'
-      icon: 'tabler:building'
-languages:
-  title: 'Languages we work in'
-  tagline: Languages
-  columns: 3
-  items:
-    - title: 'Swiss German'
-      description: 'Schweizerdeutsch und Hochdeutsch — for meetings, documents and day-to-day work.'
-      icon: 'tabler:message-language'
-    - title: 'French'
-      description: 'Français — pour les projets en Suisse romande et au-delà.'
-      icon: 'tabler:message-language'
-    - title: 'English'
-      description: 'For international teams, technical writing and everything in between.'
-      icon: 'tabler:message-language'
+partners:
+  tagline: 'Partners'
+  title: 'Who we work with'
+  subtitle: 'The universities, research institutions and companies we collaborate and build with.'
+  images:
+    - src: '~/assets/images/placeholder.png'
+      alt: 'HEIA-FR'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'HES-SO'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'UNIFR'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'GradeSens'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'Exoscale'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'Infomaniak'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'Anthropic'
+    - src: '~/assets/images/placeholder.png'
+      alt: 'Apache'
+cta:
+  title: 'Want to build something together?'
+  subtitle: 'Tell us about your project, your data or the decision you are facing — we will tell you honestly whether we can help.'
+  actions:
+    - variant: primary
+      text: 'Contact us'
+      href: '/contact'
+      icon: 'tabler:mail'
 ---

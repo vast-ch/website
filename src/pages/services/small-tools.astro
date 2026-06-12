@@ -9,22 +9,16 @@ import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/small-tools');
 if (!page) throw new Error('Missing page entry: services/small-tools');
-const { metadata, hero, examples, categories, approach, tech, whenItFits, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, examples, categories, approach, tech, whenItFits, cta } = page.data as Required<
+  typeof page.data
+>;
 ---
 
 <Layout metadata={metadata}>
   <div class="bg-section">
-    <Hero
-      tagline={hero.tagline}
-      title={hero.title}
-      subtitle={hero.subtitle}
-    />
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-    <Content
-      isReversed={examples.isReversed}
-      items={examples.items}
-      image={examples.image}
-    >
+    <Content isReversed={examples.isReversed} items={examples.items} image={examples.image}>
       <Fragment slot="content">
         <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{examples.contentHeading}</h3>
         {examples.contentBody}
@@ -40,23 +34,14 @@ const { metadata, hero, examples, categories, approach, tech, whenItFits, cta } 
     items={categories.items}
   />
 
-  <Content
-    isAfterContent={approach.isAfterContent}
-    items={approach.items}
-    image={approach.image}
-  >
+  <Content isAfterContent={approach.isAfterContent} items={approach.items} image={approach.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{approach.contentHeading}</h3>
       {approach.contentBody}
     </Fragment>
   </Content>
 
-  <TechLogos
-    title={tech.title}
-    tagline={tech.tagline}
-    subtitle={tech.subtitle}
-    items={tech.items}
-  />
+  <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
 
   <div class="bg-section">
     <Features2
@@ -68,9 +53,5 @@ const { metadata, hero, examples, categories, approach, tech, whenItFits, cta } 
     />
   </div>
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
-  />
+  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>

@@ -12,17 +12,9 @@ const { metadata, hero, whatsHard, proof, approach, cta } = page.data as Require
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
+  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-  <Content
-    isReversed={whatsHard.isReversed}
-    items={whatsHard.items}
-    image={whatsHard.image}
-  >
+  <Content isReversed={whatsHard.isReversed} items={whatsHard.items} image={whatsHard.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whatsHard.contentHeading}</h3>
       {whatsHard.contentBody}
@@ -37,20 +29,12 @@ const { metadata, hero, whatsHard, proof, approach, cta } = page.data as Require
     items={proof.items}
   />
 
-  <Content
-    isAfterContent={approach.isAfterContent}
-    items={approach.items}
-    image={approach.image}
-  >
+  <Content isAfterContent={approach.isAfterContent} items={approach.items} image={approach.image}>
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{approach.contentHeading}</h3>
       {approach.contentBody}
     </Fragment>
   </Content>
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
-  />
+  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>

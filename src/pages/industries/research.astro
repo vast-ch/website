@@ -3,39 +3,47 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import Brands from '~/components/widgets/Brands.astro';
+import QuickStart from '~/components/widgets/QuickStart.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'industries/research');
 if (!page) throw new Error('Missing page entry: industries/research');
-const { metadata, hero, whatsHard, proof, whoItsFor, approach, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, problems, deliverables, proof, partners, whoItsFor, nextSteps, quickStart } =
+  page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} actions={hero.actions} />
 
-  <Content
-    isReversed={whatsHard.isReversed}
-    items={whatsHard.items}
-    image={whatsHard.image}
-  >
+    <Features2
+      title={problems.title}
+      tagline={problems.tagline}
+      subtitle={problems.subtitle}
+      columns={problems.columns}
+      items={problems.items}
+    />
+  </div>
+
+  <Content isReversed={deliverables.isReversed} items={deliverables.items} image={deliverables.image}>
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whatsHard.contentHeading}</h3>
-      {whatsHard.contentBody}
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{deliverables.contentHeading}</h3>
+      {deliverables.contentBody}
     </Fragment>
   </Content>
 
-  <Features2
-    title={proof.title}
-    tagline={proof.tagline}
-    subtitle={proof.subtitle}
-    columns={proof.columns}
-    items={proof.items}
-  />
+  <div class="bg-section">
+    <Features2
+      title={proof.title}
+      tagline={proof.tagline}
+      subtitle={proof.subtitle}
+      columns={proof.columns}
+      items={proof.items}
+    />
+
+    <Brands tagline={partners.tagline} title={partners.title} subtitle={partners.subtitle} images={partners.images} />
+  </div>
 
   <Features2
     title={whoItsFor.title}
@@ -45,20 +53,14 @@ const { metadata, hero, whatsHard, proof, whoItsFor, approach, cta } = page.data
     items={whoItsFor.items}
   />
 
-  <Content
-    isAfterContent={approach.isAfterContent}
-    items={approach.items}
-    image={approach.image}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{approach.contentHeading}</h3>
-      {approach.contentBody}
-    </Fragment>
-  </Content>
-
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
+  <QuickStart
+    tagline={nextSteps.tagline}
+    title={nextSteps.title}
+    subtitle={nextSteps.subtitle}
+    steps={nextSteps.items}
+    formTitle={quickStart.title}
+    categories={quickStart.categories}
+    button={quickStart.button}
+    consent={quickStart.consent}
   />
 </Layout>

@@ -3,12 +3,14 @@ import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
 import Headline from '~/components/ui/Headline.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
 import type { Features as Props } from '~/types';
 
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
+  image = await Astro.slots.render('image'),
   items = [],
   columns = 3,
   defaultIcon,
@@ -31,6 +33,27 @@ const columnsClass =
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
   <Headline title={title} subtitle={subtitle} tagline={tagline} classes={classes?.headline as Record<string, string>} />
+
+  {
+    image && (
+      <div class="relative m-auto max-w-5xl mb-8 md:mb-12 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        {typeof image === 'string' ? (
+          <Fragment set:html={image} />
+        ) : (
+          <Image
+            class="mx-auto w-full rounded-lg shadow-lg"
+            widths={[400, 768, 1024]}
+            sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, 1024px"
+            width={1024}
+            height={576}
+            layout="responsive"
+            format="webp"
+            {...image}
+          />
+        )}
+      </div>
+    )
+  }
 
   {
     items.length > 0 && (

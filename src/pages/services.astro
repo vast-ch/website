@@ -12,18 +12,9 @@ const { metadata, hero, services, industries, techStack, cta } = page.data as Re
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline={hero.tagline}
-    title={hero.title}
-    subtitle={hero.subtitle}
-  />
+  <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-  <Features3
-    title={services.title}
-    subtitle={services.subtitle}
-    columns={services.columns}
-    items={services.items}
-  />
+  <Features3 title={services.title} subtitle={services.subtitle} columns={services.columns} items={services.items} />
 
   <Features3
     title={industries.title}
@@ -41,9 +32,5 @@ const { metadata, hero, services, industries, techStack, cta } = page.data as Re
     items={techStack.items}
   />
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
-  />
+  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>

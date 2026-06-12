@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import CaseStudies from '~/components/widgets/CaseStudies.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'case-studies');
+if (!page) throw new Error('Missing page entry: case-studies');
+const { metadata, hero, cta } = page.data as Required<typeof page.data>;
+
+const caseStudies = (await getCollection('case-studies')).sort(
+  (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99) || a.id.localeCompare(b.id)
+);
+---
+
+<Layout metadata={metadata}>
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  </div>
+
+  <CaseStudies caseStudies={caseStudies} />
+
+  <CallToAction isBanner title={cta.title} subtitle={cta.subtitle} actions={cta.actions} />
+</Layout>

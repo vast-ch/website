@@ -96,8 +96,4 @@ cta:
       text: 'Get in touch'
       href: '/contact#form'
       icon: 'tabler:mail'
-    - text: 'Book a 20-min call'
-      href: 'https://example.com/book-a-call'
-      icon: 'tabler:calendar'
-      target: _blank
 ---

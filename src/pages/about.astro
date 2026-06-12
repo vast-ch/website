@@ -1,42 +1,50 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
+import Brands from '~/components/widgets/Brands.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'about');
 if (!page) throw new Error('Missing page entry: about');
-const { metadata, hero, team, receipts, values, offices, languages } = page.data as Required<typeof page.data>;
+const { metadata, hero, mission, team, values, partners, cta } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <Hero tagline={hero.tagline} image={hero.image} subtitle={hero.subtitle}>
-    <Fragment slot="title">
-      {hero.title}
-      <span class="text-accent dark:text-white">{hero.titleAccent}</span>
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} subtitle={hero.subtitle}>
+      <Fragment slot="title">
+        {hero.title}
+        <span class="text-accent dark:text-white">{hero.titleAccent}</span>
+      </Fragment>
+    </Hero>
+  </div>
+
+  <Content tagline={mission.tagline} isReversed={mission.isReversed} items={mission.items}>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{mission.contentHeading}</h3>
+      {mission.contentBody}
     </Fragment>
-  </Hero>
+  </Content>
 
-  <Features2 title={team.title} subtitle={team.subtitle} columns={team.columns} items={team.items} />
-
-  <Features2
-    title={receipts.title}
-    tagline={receipts.tagline}
-    subtitle={receipts.subtitle}
-    columns={receipts.columns}
-    items={receipts.items}
-  />
+  <div class="bg-section">
+    <Features2
+      title={team.title}
+      subtitle={team.subtitle}
+      image={team.image}
+      columns={team.columns}
+      items={team.items}
+    />
+  </div>
 
   <Steps2 title={values.title} subtitle={values.subtitle} items={values.items} />
 
-  <Features2
-    title={offices.title}
-    tagline={offices.tagline}
-    subtitle={offices.subtitle}
-    columns={offices.columns}
-    items={offices.items}
-  />
+  <div class="bg-section">
+    <Brands tagline={partners.tagline} title={partners.title} subtitle={partners.subtitle} images={partners.images} />
+  </div>
 
-  <Features2 title={languages.title} tagline={languages.tagline} columns={languages.columns} items={languages.items} />
+  <CallToAction isBanner title={cta.title} subtitle={cta.subtitle} actions={cta.actions} />
 </Layout>

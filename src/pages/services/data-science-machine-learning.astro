@@ -5,12 +5,16 @@ import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import TechLogos from '~/components/widgets/TechLogos.astro';
 import QuickStart from '~/components/widgets/QuickStart.astro';
+import CaseStudyHighlight from '~/components/widgets/CaseStudyHighlight.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/data-science');
 if (!page) throw new Error('Missing page entry: services/data-science');
 const { metadata, hero, forecasting, tabular, toolbox, tech, proof, caseStudy, nextSteps, quickStart } =
   page.data as Required<typeof page.data>;
+
+const caseStudyEntry = await getEntry('case-studies', caseStudy);
+if (!caseStudyEntry) throw new Error(`Missing case study entry: ${caseStudy}`);
 ---
 
 <Layout metadata={metadata}>
@@ -50,17 +54,7 @@ const { metadata, hero, forecasting, tabular, toolbox, tech, proof, caseStudy, n
   <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
 
   <div class="bg-section">
-    <Content
-      isReversed={caseStudy.isReversed}
-      tagline={caseStudy.tagline}
-      items={caseStudy.items}
-      image={caseStudy.image}
-    >
-      <Fragment slot="content">
-        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{caseStudy.contentHeading}</h3>
-        {caseStudy.contentBody}
-      </Fragment>
-    </Content>
+    <CaseStudyHighlight caseStudy={caseStudyEntry.data} />
   </div>
 
   <QuickStart

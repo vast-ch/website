@@ -1,27 +1,32 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
-import Features2 from '~/components/widgets/Features2.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import QuickStart from '~/components/widgets/QuickStart.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'contact');
 if (!page) throw new Error('Missing page entry: contact');
-const { metadata, heroText, contactForm, directContact } = page.data as Required<typeof page.data>;
+const { metadata, hero, directContact, quickStart } = page.data as Required<typeof page.data>;
 ---
 
 <Layout metadata={metadata}>
-  <HeroText tagline={heroText.tagline} title={heroText.title} subtitle={heroText.subtitle} />
+  <div class="bg-section">
+    <Hero tagline={hero.tagline} subtitle={hero.subtitle}>
+      <Fragment slot="title">
+        {hero.title}
+        <span class="text-accent dark:text-white">{hero.titleAccent}</span>
+      </Fragment>
+    </Hero>
+  </div>
 
-  <ContactUs
-    id={contactForm.id}
-    title={contactForm.title}
-    subtitle={contactForm.subtitle}
-    inputs={contactForm.inputs}
-    textarea={contactForm.textarea}
-    disclaimer={contactForm.disclaimer}
-    description={contactForm.description}
+  <QuickStart
+    id={quickStart.id}
+    title={directContact.title}
+    subtitle={directContact.subtitle}
+    contacts={directContact.items}
+    formTitle={quickStart.title}
+    categories={quickStart.categories}
+    button={quickStart.button}
+    consent={quickStart.consent}
   />
-
-  <Features2 title={directContact.title} columns={directContact.columns} items={directContact.items} />
 </Layout>

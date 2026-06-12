@@ -2,7 +2,7 @@
 
 ## Context
 
-The hero of `src/content/pages/services/data-science.md` was just rewritten (uncommitted) to a two-part positioning: *"Specialised in forecasting. Fluent across machine learning."* The page body no longer matches that claim — a single flat 4-item grid mixes three forecasting items with one toolbox item. Meanwhile the app-development page (`web-development.md` + `app-development.astro`) was recently reworked into the site's most evolved pattern: segmented offer sections, a concrete case study, and a `QuickStart` ending instead of the generic CTA. This plan brings the data-science page up to that pattern, as agreed:
+The hero of `src/content/pages/services/data-science.md` was just rewritten (uncommitted) to a two-part positioning: _"Specialised in forecasting. Fluent across machine learning."_ The page body no longer matches that claim — a single flat 4-item grid mixes three forecasting items with one toolbox item. Meanwhile the app-development page (`web-development.md` + `app-development.astro`) was recently reworked into the site's most evolved pattern: segmented offer sections, a concrete case study, and a `QuickStart` ending instead of the generic CTA. This plan brings the data-science page up to that pattern, as agreed:
 
 1. Split the offer into **Forecasting (the specialism)** + **the data-science toolbox around it**
 2. Add a **case study** on the published foundation-model benchmark
@@ -77,18 +77,14 @@ Mirror `src/pages/services/app-development.astro`:
 ## Implementation Steps
 
 **Task 1 — Schema**
+
 1. Add `forecasting` and `toolbox` keys to `pageSchema` in `src/content.config.ts` (~line 204)
 
-**Task 2 — Content** (`src/content/pages/services/data-science.md`)
-2. Split `capabilities` into `forecasting` + `toolbox` sections as specified above
-3. Add the `caseStudy` section with TODO markers for the result metric and publication link
-4. Replace `cta` with `nextSteps` + `quickStart`
+**Task 2 — Content** (`src/content/pages/services/data-science.md`) 2. Split `capabilities` into `forecasting` + `toolbox` sections as specified above 3. Add the `caseStudy` section with TODO markers for the result metric and publication link 4. Replace `cta` with `nextSteps` + `quickStart`
 
-**Task 3 — Template** (`src/pages/services/data-science.astro`)
-5. Update imports and destructuring; render the 8 sections in the target order
+**Task 3 — Template** (`src/pages/services/data-science.astro`) 5. Update imports and destructuring; render the 8 sections in the target order
 
-**Task 4 — Verify**
-6. Run `npm run check` and `npm run build`; view the page in dev
+**Task 4 — Verify** 6. Run `npm run check` and `npm run build`; view the page in dev
 
 ## Reused existing components (no new code)
 

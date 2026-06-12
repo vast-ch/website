@@ -8,22 +8,16 @@ import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/advisory');
 if (!page) throw new Error('Missing page entry: services/advisory');
-const { metadata, hero, whatWeAdviseOn, digitalization, whenItFits, howItWorks, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, whatWeAdviseOn, digitalization, whenItFits, howItWorks, cta } = page.data as Required<
+  typeof page.data
+>;
 ---
 
 <Layout metadata={metadata}>
   <div class="bg-section">
-    <Hero
-      tagline={hero.tagline}
-      title={hero.title}
-      subtitle={hero.subtitle}
-    />
+    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
 
-    <Content
-      isReversed={whatWeAdviseOn.isReversed}
-      items={whatWeAdviseOn.items}
-      image={whatWeAdviseOn.image}
-    >
+    <Content isReversed={whatWeAdviseOn.isReversed} items={whatWeAdviseOn.items} image={whatWeAdviseOn.image}>
       <Fragment slot="content">
         <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
           {whatWeAdviseOn.contentHeading}
@@ -50,11 +44,7 @@ const { metadata, hero, whatWeAdviseOn, digitalization, whenItFits, howItWorks, 
   />
 
   <div class="bg-section">
-    <Content
-      isAfterContent={howItWorks.isAfterContent}
-      items={howItWorks.items}
-      image={howItWorks.image}
-    >
+    <Content isAfterContent={howItWorks.isAfterContent} items={howItWorks.items} image={howItWorks.image}>
       <Fragment slot="content">
         <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{howItWorks.contentHeading}</h3>
         {howItWorks.contentBody}
@@ -62,9 +52,5 @@ const { metadata, hero, whatWeAdviseOn, digitalization, whenItFits, howItWorks, 
     </Content>
   </div>
 
-  <CallToAction
-    actions={cta.actions}
-    title={cta.title}
-    subtitle={cta.subtitle}
-  />
+  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>

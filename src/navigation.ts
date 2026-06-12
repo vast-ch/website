@@ -1,8 +1,5 @@
 import { getPermalink } from './utils/permalinks';
 
-// TODO: replace with the real Calendly/cal.com scheduling link
-export const CALENDAR_URL = 'https://example.com/book-a-call';
-
 export const headerData = {
   links: [
     {
@@ -26,44 +23,25 @@ export const headerData = {
           icon: 'tabler:chart-line',
           description: 'Support your decisions with data',
         },
-        {
-          text: 'Small tools & prototypes',
-          href: getPermalink('/services/small-tools'),
-          icon: 'tabler:tool',
-          description: 'Quick utilities that turn an annoyance into time saved.',
-        },
-        {
-          text: 'Advisory & digitalization',
-          href: getPermalink('/services/advisory'),
-          icon: 'tabler:bulb',
-          description: 'Independent reviews and hands-on digitalization.',
-        },
+        /*
+          {
+            text: 'Small tools & prototypes',
+            href: getPermalink('/services/small-tools'),
+            icon: 'tabler:tool',
+            description: 'Quick utilities that turn an annoyance into time saved.',
+          },
+          {
+            text: 'Advisory & digitalization',
+            href: getPermalink('/services/advisory'),
+            icon: 'tabler:bulb',
+            description: 'Independent reviews and hands-on digitalization.',
+          },
+        */
       ],
     },
     {
-      text: 'Industries',
-      href: getPermalink('/industries'),
-      megamenu: true,
-      links: [
-        {
-          text: 'Energy and buildings',
-          href: getPermalink('/industries/energy'),
-          icon: 'tabler:bolt',
-          description: 'Forecasting and ML for energy and smart buildings.',
-        },
-        {
-          text: 'Applied research',
-          href: getPermalink('/industries/research'),
-          icon: 'tabler:school',
-          description: 'Research software engineering, reproducible by design.',
-        },
-        {
-          text: 'Sport industry',
-          href: getPermalink('/industries/sport-industry'),
-          icon: 'tabler:run',
-          description: 'Mobile apps for clubs, federations and athletes.',
-        },
-      ],
+      text: 'Case studies',
+      href: getPermalink('/case-studies'),
     },
     {
       text: 'About',
@@ -74,10 +52,7 @@ export const headerData = {
       href: getPermalink('/contact'),
     },
   ],
-  actions: [
-    { variant: 'primary', text: 'Book a call', href: CALENDAR_URL, target: '_blank' },
-    { text: 'Contact us', href: getPermalink('/contact') },
-  ],
+  actions: [{ variant: 'primary' as const, text: 'Contact us', href: getPermalink('/contact') }],
 };
 
 export const footerData = {
@@ -87,6 +62,7 @@ export const footerData = {
       links: [
         { text: 'About', href: getPermalink('/about') },
         { text: 'Contact', href: getPermalink('/contact') },
+        { text: 'Terms', href: getPermalink('/terms') },
       ],
     },
     {
@@ -94,20 +70,21 @@ export const footerData = {
       links: [
         { text: 'Web and app development', href: getPermalink('/services/app-development') },
         { text: 'Data science and machine learning', href: getPermalink('/services/data-science-machine-learning') },
-        { text: 'Small tools & prototypes', href: getPermalink('/services/small-tools') },
-        { text: 'Advisory & digitalization', href: getPermalink('/services/advisory') },
       ],
     },
     {
-      title: 'Industries',
+      title: 'Case studies',
       links: [
-        { text: 'Energy and buildings', href: getPermalink('/industries/energy') },
-        { text: 'Applied research', href: getPermalink('/industries/research') },
-        { text: 'Sport industry', href: getPermalink('/industries/sport-industry') },
+        { text: 'Flightbook — shipped, in production', href: getPermalink('/case-studies#flightbook') },
+        {
+          text: 'Foundation models vs. classical baselines',
+          href: getPermalink('/case-studies#foundation-models-benchmark'),
+        },
+        { text: 'See all case studies', href: getPermalink('/case-studies') },
       ],
     },
   ],
-  secondaryLinks: [{ text: 'Terms', href: getPermalink('/terms') }],
+  secondaryLinks: [],
   socialLinks: [
     {
       ariaLabel: 'LinkedIn',

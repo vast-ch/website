@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { CASE_STUDY_SERVICES, CASE_STUDY_INDUSTRIES } from './utils/case-studies';
 
 const metadataDefinition = () =>
   z
@@ -119,6 +120,7 @@ const featuresGrid = z.object({
   title: z.string().optional(),
   subtitle: z.string().optional(),
   columns: z.number().optional(),
+  image: image.optional(),
   items: z.array(item),
 });
 
@@ -141,18 +143,6 @@ const steps = z.object({
   items: z.array(z.object({ title: z.string(), description: z.string() })),
 });
 
-const contactForm = z.object({
-  id: z.string().optional(),
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  inputs: z.array(
-    z.object({ type: z.string(), name: z.string(), label: z.string(), required: z.boolean().optional() })
-  ),
-  textarea: z.object({ label: z.string() }),
-  disclaimer: z.object({ label: z.string() }),
-  description: z.string().optional(),
-});
-
 const cta = z.object({
   title: z.string().optional(),
   subtitle: z.string().optional(),
@@ -167,7 +157,15 @@ const tech = z.object({
   items: z.array(z.object({ name: z.string(), icon: z.string() })).max(6),
 });
 
+const brands = z.object({
+  title: z.string().optional(),
+  tagline: z.string().optional(),
+  subtitle: z.string().optional(),
+  images: z.array(image),
+});
+
 const quickStart = z.object({
+  id: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
   categories: z.array(z.string()),
@@ -184,13 +182,14 @@ const pageSchema = z.object({
   whyUs: content.optional(),
   industries: featuresGrid.optional(),
   team: featuresGrid.optional(),
-  receipts: featuresGrid.optional(),
+  mission: content.optional(),
   values: steps.optional(),
-  offices: featuresGrid.optional(),
-  languages: featuresGrid.optional(),
   techStack: featuresGrid.optional(),
   whyTheseIndustries: content.optional(),
   whatsHard: content.optional(),
+  problems: featuresGrid.optional(),
+  deliverables: content.optional(),
+  partners: brands.optional(),
   proof: featuresGrid.optional(),
   whoItsFor: featuresGrid.optional(),
   whenItFits: featuresGrid.optional(),
@@ -208,11 +207,10 @@ const pageSchema = z.object({
   howWeWork: content.optional(),
   whatWeAdviseOn: content.optional(),
   howItWorks: content.optional(),
-  caseStudy: content.optional(),
+  caseStudy: z.string().optional(),
   nextSteps: steps.optional(),
   quickStart: quickStart.optional(),
   directContact: featuresGrid.optional(),
-  contactForm: contactForm.optional(),
   tech: tech.optional(),
   cta: cta.optional(),
 });
@@ -222,7 +220,22 @@ const pagesCollection = defineCollection({
   schema: pageSchema,
 });
 
+const caseStudiesCollection = defineCollection({
+  loader: glob({ pattern: ['*.md'], base: 'src/content/case-studies' }),
+  schema: z.object({
+    title: z.string(),
+    excerpt: z.string(),
+    client: z.string().optional(),
+    services: z.array(z.enum(CASE_STUDY_SERVICES)).min(1),
+    industries: z.array(z.enum(CASE_STUDY_INDUSTRIES)).default([]),
+    image: image.optional(),
+    items: z.array(item).min(1),
+    order: z.number().optional(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   pages: pagesCollection,
+  'case-studies': caseStudiesCollection,
 };
