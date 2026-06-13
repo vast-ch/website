@@ -5,16 +5,17 @@ import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import TechLogos from '~/components/widgets/TechLogos.astro';
 import QuickStart from '~/components/widgets/QuickStart.astro';
-import CaseStudyHighlight from '~/components/widgets/CaseStudyHighlight.astro';
+import CaseStudiesCarousel from '~/components/widgets/CaseStudiesCarousel.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'services/data-science');
 if (!page) throw new Error('Missing page entry: services/data-science');
-const { metadata, hero, forecasting, tabular, toolbox, tech, proof, caseStudy, nextSteps, quickStart } =
+const { metadata, hero, forecasting, tabular, toolbox, tech, proof, caseStudies, nextSteps, quickStart } =
   page.data as Required<typeof page.data>;
 
-const caseStudyEntry = await getEntry('case-studies', caseStudy);
-if (!caseStudyEntry) throw new Error(`Missing case study entry: ${caseStudy}`);
+const featured = await Promise.all(caseStudies.map((csId) => getEntry('case-studies', csId)));
+const missing = caseStudies.filter((_, i) => !featured[i]);
+if (missing.length) throw new Error(`Missing case study entries: ${missing.join(', ')}`);
 ---
 
 <Layout metadata={metadata}>
@@ -54,7 +55,7 @@ if (!caseStudyEntry) throw new Error(`Missing case study entry: ${caseStudy}`);
   <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
 
   <div class="bg-section">
-    <CaseStudyHighlight caseStudy={caseStudyEntry.data} />
+    <CaseStudiesCarousel caseStudies={featured.map((e) => e!)} />
   </div>
 
   <QuickStart

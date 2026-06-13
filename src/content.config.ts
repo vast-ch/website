@@ -207,7 +207,7 @@ const pageSchema = z.object({
   howWeWork: content.optional(),
   whatWeAdviseOn: content.optional(),
   howItWorks: content.optional(),
-  caseStudy: z.string().optional(),
+  caseStudies: z.array(z.string()).optional(),
   nextSteps: steps.optional(),
   quickStart: quickStart.optional(),
   directContact: featuresGrid.optional(),

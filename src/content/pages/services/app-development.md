@@ -89,8 +89,9 @@ tech:
     - { name: 'Ionic', icon: 'simple-icons:ionic' }
     - { name: 'NestJS', icon: 'simple-icons:nestjs' }
 
-# Rendered from the case-studies collection (src/content/case-studies/)
-caseStudy: 'flightbook'
+# Curated selection rendered as a carousel from the case-studies collection.
+# 3rd pick (nuudel-to-ics) is cross-tag — adjust the list freely.
+caseStudies: ['flightbook', 'big-building-data', 'nuudel-to-ics']
 nextSteps:
   tagline: 'Get started'
   title: 'What happens next'

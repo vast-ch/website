@@ -37,7 +37,11 @@ const {
   <div class="md:flex md:gap-12 md:items-start">
     <div class="mb-10 md:mb-0 md:basis-1/2">
       <div class="mb-12">
-        {title && <h2 class="mb-2 text-3xl md:text-4xl font-bold tracking-tighter font-heading dark:text-white">{title}</h2>}
+        {
+          title && (
+            <h2 class="mb-2 text-3xl md:text-4xl font-bold tracking-tighter font-heading dark:text-white">{title}</h2>
+          )
+        }
         {subtitle && <p class="mb-6 text-xl text-muted dark:text-slate-400">{subtitle}</p>}
       </div>
       {

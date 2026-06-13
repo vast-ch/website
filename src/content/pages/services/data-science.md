@@ -85,8 +85,9 @@ tech:
     - { name: 'pandas', icon: 'simple-icons:pandas' }
     - { name: 'Jupyter', icon: 'simple-icons:jupyter' }
     - { name: 'Docker', icon: 'simple-icons:docker' }
-# Rendered from the case-studies collection (src/content/case-studies/)
-caseStudy: 'foundation-models-benchmark'
+# Curated selection rendered as a carousel from the case-studies collection.
+# 3rd pick (big-building-data) is cross-tag — adjust the list freely.
+caseStudies: ['foundation-models-benchmark', 'district-heating-forecasting', 'big-building-data']
 nextSteps:
   tagline: 'Get started'
   title: 'What happens next'

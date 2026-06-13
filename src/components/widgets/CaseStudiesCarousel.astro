@@ -1,0 +1,161 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import Button from '~/components/ui/Button.astro';
+import Image from '~/components/common/Image.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  caseStudies: Array<CollectionEntry<'case-studies'>>;
+  moreHref?: string;
+  moreText?: string;
+  id?: string;
+}
+
+const {
+  title,
+  subtitle,
+  tagline = 'Case studies',
+  caseStudies = [],
+  moreHref = '/case-studies',
+  moreText = 'See more case studies',
+  id,
+} = Astro.props;
+
+const hasArrows = caseStudies.length > 1;
+
+const arrowClass =
+  'inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-600 dark:bg-slate-900';
+---
+
+<WidgetWrapper id={id} containerClass="max-w-7xl mx-auto">
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+
+  <div data-cs-carousel>
+    <div class="flex items-center gap-2 sm:gap-4">
+      {
+        hasArrows && (
+          <button type="button" class={arrowClass} aria-label="Previous case study" data-cs-prev>
+            <Icon name="tabler:chevron-left" class="h-5 w-5" />
+          </button>
+        )
+      }
+
+      <div class="min-w-0 flex-1">
+        <div
+          class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2"
+          role="region"
+          aria-label="Case studies"
+          tabindex="0"
+          data-cs-track
+        >
+          {
+            caseStudies.map((cs) => (
+              <div class="w-full shrink-0 snap-start" data-cs-slide>
+                <div class="mx-auto max-w-5xl px-1 md:flex md:items-center md:gap-12 lg:gap-16">
+                  <div class="md:basis-1/2">
+                    <h3 class="mb-2 text-2xl font-bold tracking-tight sm:text-3xl dark:text-white">{cs.data.title}</h3>
+                    <p class="mb-8 text-lg text-muted dark:text-slate-400" set:html={cs.data.excerpt} />
+                    <div class="space-y-6">
+                      {cs.data.items.map(({ title: itemTitle, description, icon }) => (
+                        <div class="flex max-w-none flex-row">
+                          <div class="flex justify-center">
+                            <Icon
+                              name={icon || 'tabler:check'}
+                              class="mr-2 flex h-7 w-7 items-center justify-center rounded-full bg-primary p-1 text-white rtl:mr-0 rtl:ml-2 dark:text-black"
+                            />
+                          </div>
+                          <div class="mt-0.5">
+                            {itemTitle && (
+                              <h4 class="ml-2 text-lg font-medium leading-6 rtl:mr-2 rtl:ml-0 dark:text-white">
+                                {itemTitle}
+                              </h4>
+                            )}
+                            {description && (
+                              <p
+                                class="mt-1 ml-2 text-muted rtl:mr-2 rtl:ml-0 dark:text-slate-400"
+                                set:html={description}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
+                    {cs.data.image && (
+                      <Image
+                        class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+                        width={500}
+                        height={500}
+                        widths={[400, 768]}
+                        sizes="(max-width: 768px) 100vw, 432px"
+                        layout="responsive"
+                        format="webp"
+                        {...cs.data.image}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {
+        hasArrows && (
+          <button type="button" class={arrowClass} aria-label="Next case study" data-cs-next>
+            <Icon name="tabler:chevron-right" class="h-5 w-5" />
+          </button>
+        )
+      }
+    </div>
+
+    {
+      moreHref && (
+        <div class="mt-8 flex justify-center">
+          <Button variant="secondary" text={moreText} href={moreHref} icon="tabler:arrow-right" />
+        </div>
+      )
+    }
+  </div>
+</WidgetWrapper>
+
+<script>
+  function initCaseStudyCarousels() {
+    document.querySelectorAll<HTMLElement>('[data-cs-carousel]').forEach((root) => {
+      const track = root.querySelector<HTMLElement>('[data-cs-track]');
+      const prev = root.querySelector<HTMLButtonElement>('[data-cs-prev]');
+      const next = root.querySelector<HTMLButtonElement>('[data-cs-next]');
+      if (!track) return;
+
+      const step = () => {
+        const slide = track.querySelector<HTMLElement>('[data-cs-slide]');
+        const gap = parseFloat(getComputedStyle(track).columnGap || '0') || 0;
+        return slide ? slide.offsetWidth + gap : track.clientWidth;
+      };
+
+      const update = () => {
+        const max = track.scrollWidth - track.clientWidth;
+        if (prev) prev.disabled = track.scrollLeft <= 0;
+        if (next) next.disabled = track.scrollLeft >= max - 1;
+      };
+
+      prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+      next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+      track.addEventListener('scroll', update, { passive: true });
+      // ResizeObserver is tied to the element, so it is garbage-collected with it
+      // on view-transition swaps — no leaked window listeners across navigations.
+      new ResizeObserver(update).observe(track);
+    });
+  }
+
+  // Runs on first load and after every view transition (ClientRouter).
+  document.addEventListener('astro:page-load', initCaseStudyCarousels);
+</script>
