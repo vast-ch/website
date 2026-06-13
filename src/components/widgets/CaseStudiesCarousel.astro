@@ -2,7 +2,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
-import Button from '~/components/ui/Button.astro';
 import Image from '~/components/common/Image.astro';
 import { TAXONOMY_LABELS } from '~/utils/case-studies';
 
@@ -11,18 +10,10 @@ interface Props {
   subtitle?: string;
   caseStudies: Array<CollectionEntry<'case-studies'>>;
   moreHref?: string;
-  moreText?: string;
   id?: string;
 }
 
-const {
-  title = 'Case studies',
-  subtitle,
-  caseStudies = [],
-  moreHref = '/case-studies',
-  moreText = 'See more case studies',
-  id,
-} = Astro.props;
+const { title = 'Case studies', subtitle, caseStudies = [], moreHref = '/case-studies', id } = Astro.props;
 
 const tagsOf = (cs: CollectionEntry<'case-studies'>): string[] => [...cs.data.services, ...cs.data.industries];
 
@@ -113,9 +104,16 @@ const arrowClass =
 
       const update = () => {
         const max = track.scrollWidth - track.clientWidth;
-        controls?.classList.toggle('hidden', max <= 2);
-        if (prev) prev.disabled = track.scrollLeft <= 0;
-        if (next) next.disabled = track.scrollLeft >= max - 1;
+        const scrollable = max > 2;
+        const atStart = track.scrollLeft <= 0;
+        const atEnd = track.scrollLeft >= max - 1;
+        controls?.classList.toggle('hidden', !scrollable);
+        if (prev) prev.disabled = atStart;
+        if (next) next.disabled = atEnd;
+        // Fade the clipped card on whichever side still has content to scroll,
+        // so it dissolves into the background instead of being cut off abruptly.
+        track.style.setProperty('--cs-fade-l', scrollable && !atStart ? '14%' : '0px');
+        track.style.setProperty('--cs-fade-r', scrollable && !atEnd ? '14%' : '0px');
       };
 
       prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
@@ -130,3 +128,29 @@ const arrowClass =
   // Runs on first load and after every view transition (ClientRouter).
   document.addEventListener('astro:page-load', initCaseStudyCarousels);
 </script>
+
+<style>
+  /* Progressive fade on the scroll edges so a half-visible card blends into the
+     background instead of ending on a hard cut. --cs-fade-l/r are toggled by the
+     script (0 when that edge has nothing more to scroll). */
+  [data-cs-track] {
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--cs-fade-l, 0px),
+      #000 calc(100% - var(--cs-fade-r, 0px)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--cs-fade-l, 0px),
+      #000 calc(100% - var(--cs-fade-r, 0px)),
+      transparent 100%
+    );
+  }
+  [data-cs-track]::-webkit-scrollbar {
+    display: none;
+  }
+</style>
