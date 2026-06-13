@@ -2,14 +2,13 @@
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
-import Headline from '~/components/ui/Headline.astro';
 import Button from '~/components/ui/Button.astro';
 import Image from '~/components/common/Image.astro';
+import { TAXONOMY_LABELS } from '~/utils/case-studies';
 
 interface Props {
   title?: string;
   subtitle?: string;
-  tagline?: string;
   caseStudies: Array<CollectionEntry<'case-studies'>>;
   moreHref?: string;
   moreText?: string;
@@ -17,113 +16,83 @@ interface Props {
 }
 
 const {
-  title,
+  title = 'Case studies',
   subtitle,
-  tagline = 'Case studies',
   caseStudies = [],
   moreHref = '/case-studies',
   moreText = 'See more case studies',
   id,
 } = Astro.props;
 
-const hasArrows = caseStudies.length > 1;
+const tagsOf = (cs: CollectionEntry<'case-studies'>): string[] => [...cs.data.services, ...cs.data.industries];
 
 const arrowClass =
   'inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-600 dark:bg-slate-900';
 ---
 
 <WidgetWrapper id={id} containerClass="max-w-7xl mx-auto">
-  <Headline title={title} subtitle={subtitle} tagline={tagline} />
-
   <div data-cs-carousel>
-    <div class="flex items-center gap-2 sm:gap-4">
-      {
-        hasArrows && (
-          <button type="button" class={arrowClass} aria-label="Previous case study" data-cs-prev>
-            <Icon name="tabler:chevron-left" class="h-5 w-5" />
-          </button>
-        )
-      }
-
-      <div class="min-w-0 flex-1">
-        <div
-          class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2"
-          role="region"
-          aria-label="Case studies"
-          tabindex="0"
-          data-cs-track
-        >
-          {
-            caseStudies.map((cs) => (
-              <div class="w-full shrink-0 snap-start" data-cs-slide>
-                <div class="mx-auto max-w-5xl px-1 md:flex md:items-center md:gap-12 lg:gap-16">
-                  <div class="md:basis-1/2">
-                    <h3 class="mb-2 text-2xl font-bold tracking-tight sm:text-3xl dark:text-white">{cs.data.title}</h3>
-                    <p class="mb-8 text-lg text-muted dark:text-slate-400" set:html={cs.data.excerpt} />
-                    <div class="space-y-6">
-                      {cs.data.items.map(({ title: itemTitle, description, icon }) => (
-                        <div class="flex max-w-none flex-row">
-                          <div class="flex justify-center">
-                            <Icon
-                              name={icon || 'tabler:check'}
-                              class="mr-2 flex h-7 w-7 items-center justify-center rounded-full bg-primary p-1 text-white rtl:mr-0 rtl:ml-2 dark:text-black"
-                            />
-                          </div>
-                          <div class="mt-0.5">
-                            {itemTitle && (
-                              <h4 class="ml-2 text-lg font-medium leading-6 rtl:mr-2 rtl:ml-0 dark:text-white">
-                                {itemTitle}
-                              </h4>
-                            )}
-                            {description && (
-                              <p
-                                class="mt-1 ml-2 text-muted rtl:mr-2 rtl:ml-0 dark:text-slate-400"
-                                set:html={description}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
-                    {cs.data.image && (
-                      <Image
-                        class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
-                        width={500}
-                        height={500}
-                        widths={[400, 768]}
-                        sizes="(max-width: 768px) 100vw, 432px"
-                        layout="responsive"
-                        format="webp"
-                        {...cs.data.image}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
+    <div class="mb-8 flex items-center justify-between gap-4">
+      <div>
+        <h2 class="font-heading text-3xl font-bold tracking-tight md:text-4xl dark:text-white">{title}</h2>
+        {subtitle && <p class="mt-2 text-muted dark:text-slate-400">{subtitle}</p>}
       </div>
-
-      {
-        hasArrows && (
-          <button type="button" class={arrowClass} aria-label="Next case study" data-cs-next>
-            <Icon name="tabler:chevron-right" class="h-5 w-5" />
-          </button>
-        )
-      }
+      <div class="flex shrink-0 gap-2" data-cs-controls>
+        <button type="button" class={arrowClass} aria-label="Previous case studies" data-cs-prev>
+          <Icon name="tabler:chevron-left" class="h-5 w-5" />
+        </button>
+        <button type="button" class={arrowClass} aria-label="Next case studies" data-cs-next>
+          <Icon name="tabler:chevron-right" class="h-5 w-5" />
+        </button>
+      </div>
     </div>
 
-    {
-      moreHref && (
-        <div class="mt-8 flex justify-center">
-          <Button variant="secondary" text={moreText} href={moreHref} icon="tabler:arrow-right" />
-        </div>
-      )
-    }
+    <div
+      class="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2"
+      role="region"
+      aria-label="Case studies"
+      tabindex="0"
+      data-cs-track
+    >
+      {
+        caseStudies.map((cs) => (
+          <a
+            href={`${moreHref}#${cs.id}`}
+            class="group flex shrink-0 basis-[85%] snap-start flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:shadow-lg sm:basis-[60%] lg:basis-[42%] dark:border-gray-700 dark:bg-slate-900"
+            data-cs-slide
+          >
+            {cs.data.image && (
+              <Image
+                class="w-full"
+                width={600}
+                height={338}
+                widths={[400, 768]}
+                sizes="(max-width: 640px) 85vw, (max-width: 1024px) 60vw, 480px"
+                layout="responsive"
+                format="webp"
+                {...cs.data.image}
+              />
+            )}
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex flex-wrap gap-2">
+                {tagsOf(cs).map((slug) => (
+                  <span class="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                    {TAXONOMY_LABELS[slug as keyof typeof TAXONOMY_LABELS]}
+                  </span>
+                ))}
+              </div>
+              <h3 class="mt-3 text-xl font-bold">{cs.data.title}</h3>
+              {cs.data.client && <p class="mt-1 text-sm text-muted">{cs.data.client}</p>}
+              <p class="mt-2 text-muted" set:html={cs.data.excerpt} />
+              <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-primary">
+                Read more
+                <Icon name="tabler:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
   </div>
 </WidgetWrapper>
 
@@ -131,6 +100,7 @@ const arrowClass =
   function initCaseStudyCarousels() {
     document.querySelectorAll<HTMLElement>('[data-cs-carousel]').forEach((root) => {
       const track = root.querySelector<HTMLElement>('[data-cs-track]');
+      const controls = root.querySelector<HTMLElement>('[data-cs-controls]');
       const prev = root.querySelector<HTMLButtonElement>('[data-cs-prev]');
       const next = root.querySelector<HTMLButtonElement>('[data-cs-next]');
       if (!track) return;
@@ -143,6 +113,7 @@ const arrowClass =
 
       const update = () => {
         const max = track.scrollWidth - track.clientWidth;
+        controls?.classList.toggle('hidden', max <= 2);
         if (prev) prev.disabled = track.scrollLeft <= 0;
         if (next) next.disabled = track.scrollLeft >= max - 1;
       };
