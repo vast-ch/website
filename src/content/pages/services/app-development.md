@@ -93,7 +93,7 @@ tech:
 # 3rd pick (nuudel-to-ics) is cross-tag — adjust the list freely.
 caseStudies: ['flightbook', 'big-building-data', 'nuudel-to-ics']
 nextSteps:
-  tagline: 'Get started'
+  tagline: 'Contact'
   title: 'What happens next'
   subtitle: 'No brief, no obligation — you talk to an engineer, not a salesperson.'
   items:

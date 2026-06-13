@@ -89,7 +89,7 @@ tech:
 # 3rd pick (big-building-data) is cross-tag — adjust the list freely.
 caseStudies: ['foundation-models-benchmark', 'district-heating-forecasting', 'big-building-data']
 nextSteps:
-  tagline: 'Get started'
+  tagline: 'Contact'
   title: 'What happens next'
   subtitle: 'No brief, no obligation — you talk to an engineer, not a salesperson.'
   items:

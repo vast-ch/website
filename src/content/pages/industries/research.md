@@ -95,7 +95,7 @@ whoItsFor:
       description: 'Innosuisse, SNSF, EU and similar grants often include a software-engineering component. We can be the named engineering partner on the proposal.'
       icon: 'tabler:certificate'
 nextSteps:
-  tagline: 'Getting started'
+  tagline: 'Contact'
   title: 'How an engagement starts'
   subtitle: 'A deliberately small first step — and an honest read on whether we are the right partner.'
   items:

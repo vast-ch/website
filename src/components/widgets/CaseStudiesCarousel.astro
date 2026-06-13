@@ -2,18 +2,27 @@
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
 import Image from '~/components/common/Image.astro';
 import { TAXONOMY_LABELS } from '~/utils/case-studies';
 
 interface Props {
   title?: string;
   subtitle?: string;
+  tagline?: string;
   caseStudies: Array<CollectionEntry<'case-studies'>>;
   moreHref?: string;
   id?: string;
 }
 
-const { title = 'Case studies', subtitle, caseStudies = [], moreHref = '/case-studies', id } = Astro.props;
+const {
+  title = 'Take a look at our work',
+  subtitle,
+  tagline = 'Case studies',
+  caseStudies = [],
+  moreHref = '/case-studies',
+  id,
+} = Astro.props;
 
 const tagsOf = (cs: CollectionEntry<'case-studies'>): string[] => [...cs.data.services, ...cs.data.industries];
 
@@ -24,10 +33,12 @@ const arrowClass =
 <WidgetWrapper id={id} containerClass="max-w-7xl mx-auto">
   <div data-cs-carousel>
     <div class="mb-8 flex items-center justify-between gap-4">
-      <div>
-        <h2 class="font-heading text-3xl font-bold tracking-tight md:text-4xl dark:text-white">{title}</h2>
-        {subtitle && <p class="mt-2 text-muted dark:text-slate-400">{subtitle}</p>}
-      </div>
+      <Headline
+        tagline={tagline}
+        title={title}
+        subtitle={subtitle}
+        classes={{ container: 'mb-0 md:mb-0 md:mx-0 max-w-2xl text-left' }}
+      />
       <div class="flex shrink-0 gap-2" data-cs-controls>
         <button type="button" class={arrowClass} aria-label="Previous case studies" data-cs-prev>
           <Icon name="tabler:chevron-left" class="h-5 w-5" />

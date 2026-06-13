@@ -18,7 +18,7 @@ interface Props {
 }
 
 const {
-  tagline,
+  tagline = 'Contact',
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   steps = [],
@@ -32,18 +32,15 @@ const {
 ---
 
 <WidgetWrapper id={id} containerClass="max-w-7xl mx-auto">
-  <Headline tagline={tagline} classes={{ container: 'max-w-xl sm:mx-auto lg:max-w-2xl' }} />
 
   <div class="md:flex md:gap-12 md:items-start">
     <div class="mb-10 md:mb-0 md:basis-1/2">
-      <div class="mb-12">
-        {
-          title && (
-            <h2 class="mb-2 text-3xl md:text-4xl font-bold tracking-tighter font-heading dark:text-white">{title}</h2>
-          )
-        }
-        {subtitle && <p class="mb-6 text-xl text-muted dark:text-slate-400">{subtitle}</p>}
-      </div>
+      <Headline
+        tagline={tagline}
+        title={title}
+        subtitle={subtitle}
+        classes={{ container: 'mb-12 md:mb-12 md:mx-0 max-w-2xl text-left' }}
+      />
       {
         steps.length > 0 && (
           <ul class="space-y-6">

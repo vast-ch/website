@@ -109,7 +109,7 @@ whoItsFor:
       description: 'Manufacturers and IoT companies with energy-intensive processes or large sensor fleets.'
       icon: 'tabler:cpu'
 nextSteps:
-  tagline: 'Getting started'
+  tagline: 'Contact'
   title: 'How an engagement starts'
   subtitle: 'A deliberately small first step — so you can judge the work before committing to it.'
   items:
