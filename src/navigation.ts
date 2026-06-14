@@ -3,10 +3,6 @@ import { getPermalink } from './utils/permalinks';
 export const headerData = {
   links: [
     {
-      text: 'Home',
-      href: getPermalink('/'),
-    },
-    {
       text: 'Services',
       href: getPermalink('/services'),
       megamenu: true,
@@ -47,24 +43,12 @@ export const headerData = {
       text: 'About',
       href: getPermalink('/about'),
     },
-    {
-      text: 'Contact',
-      href: getPermalink('/contact'),
-    },
   ],
   actions: [{ variant: 'primary' as const, text: 'Contact us', href: getPermalink('/contact') }],
 };
 
 export const footerData = {
   links: [
-    {
-      title: 'Company',
-      links: [
-        { text: 'About', href: getPermalink('/about') },
-        { text: 'Contact', href: getPermalink('/contact') },
-        { text: 'Terms', href: getPermalink('/terms') },
-      ],
-    },
     {
       title: 'Services',
       links: [
@@ -81,6 +65,14 @@ export const footerData = {
           href: getPermalink('/case-studies#foundation-models-benchmark'),
         },
         { text: 'See all case studies', href: getPermalink('/case-studies') },
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { text: 'About', href: getPermalink('/about') },
+        { text: 'Contact', href: getPermalink('/contact') },
+        { text: 'Terms', href: getPermalink('/terms') },
       ],
     },
   ],
