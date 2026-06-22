@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
+import HeroOverlay from '~/components/widgets/HeroOverlay.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
@@ -14,14 +14,13 @@ const { metadata, hero, mission, team, values, partners, cta } = page.data as Re
 ---
 
 <Layout metadata={metadata}>
-  <div class="bg-section">
-    <Hero tagline={hero.tagline} subtitle={hero.subtitle}>
-      <Fragment slot="title">
-        {hero.title}
-        <span class="text-accent dark:text-white">{hero.titleAccent}</span>
-      </Fragment>
-    </Hero>
-  </div>
+  <HeroOverlay
+    tagline={hero.tagline}
+    title={hero.title}
+    titleAccent={hero.titleAccent}
+    subtitle={hero.subtitle}
+    image={{ src: '~/assets/images/placeholder.png', alt: hero.title }}
+  />
 
   <Content tagline={mission.tagline} isReversed={mission.isReversed} items={mission.items}>
     <Fragment slot="content">

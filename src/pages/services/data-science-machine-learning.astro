@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
+import HeroOverlay from '~/components/widgets/HeroOverlay.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import TechLogos from '~/components/widgets/TechLogos.astro';
@@ -19,9 +19,14 @@ if (missing.length) throw new Error(`Missing case study entries: ${missing.join(
 ---
 
 <Layout metadata={metadata}>
-  <div class="bg-section">
-    <Hero tagline={hero.tagline} title={hero.title} subtitle={hero.subtitle} />
+  <HeroOverlay
+    tagline={hero.tagline}
+    title={hero.title}
+    subtitle={hero.subtitle}
+    image={{ src: '~/assets/images/placeholder.png', alt: hero.title }}
+  />
 
+  <div class="bg-section">
     <Features2
       title={proof.title}
       tagline={proof.tagline}

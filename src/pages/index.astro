@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
+import HeroOverlay from '~/components/widgets/HeroOverlay.astro';
+import ServicesShowcase from '~/components/widgets/ServicesShowcase.astro';
 import CaseStudiesCarousel from '~/components/widgets/CaseStudiesCarousel.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
@@ -17,21 +17,16 @@ if (missing.length) throw new Error(`Missing case study entries: ${missing.join(
 ---
 
 <Layout metadata={metadata}>
-  <Hero actions={hero.actions} image={{ src: '~/assets/images/placeholder.png', alt: hero.imageAlt }}>
-    <Fragment slot="title">
-      {hero.title}
-      <span class="text-accent dark:text-white">{hero.titleAccent}</span>
-    </Fragment>
-    <Fragment slot="subtitle" set:html={hero.subtitle} />
-  </Hero>
-
-  <Features
-    id={services.id}
-    tagline={services.tagline}
-    title={services.title}
-    subtitle={services.subtitle}
-    items={services.items}
+  <HeroOverlay
+    fullScreen
+    title={hero.title}
+    titleAccent={hero.titleAccent}
+    subtitle={hero.subtitle}
+    actions={hero.actions}
+    image={{ src: '~/assets/images/placeholder.png', alt: hero.imageAlt }}
   />
+
+  <ServicesShowcase id={services.id} tagline={services.tagline} title={services.title} items={services.items} />
 
   <CaseStudiesCarousel caseStudies={featured.map((e) => e!)} />
 

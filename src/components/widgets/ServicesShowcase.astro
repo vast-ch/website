@@ -1,0 +1,120 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+
+import type { Features as Props } from '~/types';
+
+// Interactive "What we do" section: left-aligned tagline/title, then two
+// title-only service boxes that act as tabs. Selecting a box reveals its panel
+// on the right. The panels are placeholder images for now — each service will
+// get its own animation there later; the tab → panel wiring is already in place.
+const { id, tagline, title, items = [] } = Astro.props;
+---
+
+<WidgetWrapper id={id} containerClass="max-w-7xl mx-auto flex flex-col h-[100svh] min-h-[600px] max-h-[1024px]">
+  <Headline tagline={tagline} title={title} classes={{ container: 'mb-8 md:mb-10 text-left md:mx-0 max-w-3xl' }} />
+
+  <div data-services-showcase class="flex min-h-0 flex-1 flex-col gap-6 lg:flex-row lg:gap-8">
+    <div class="flex flex-col gap-4 lg:w-2/5 lg:shrink-0 lg:self-start" role="tablist" aria-label={title}>
+      {
+        items.map((item, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`service-tab-${i}`}
+            aria-controls={`service-panel-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            data-service-tab={i}
+            class="group flex flex-col rounded-2xl border border-gray-200 bg-white p-6 text-left transition hover:border-gray-300 aria-selected:border-gray-900 aria-selected:bg-gray-50 aria-selected:shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:aria-selected:border-slate-300 dark:aria-selected:bg-slate-800"
+          >
+            <span class="flex items-center gap-4">
+              {item.icon && (
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white dark:text-black">
+                  <Icon name={item.icon} class="h-6 w-6" />
+                </span>
+              )}
+              <span class="text-lg font-semibold sm:text-xl">{item.title}</span>
+              <Icon
+                name="tabler:chevron-right"
+                class="ml-auto h-5 w-5 shrink-0 text-gray-400 transition group-aria-selected:rotate-90 group-aria-selected:text-gray-900 dark:text-slate-500 dark:group-aria-selected:text-white"
+              />
+            </span>
+            {item.description && (
+              <span class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-aria-selected:grid-rows-[1fr]">
+                <span class="overflow-hidden">
+                  <span class="mt-3 block text-base text-muted dark:text-slate-400">{item.description}</span>
+                </span>
+              </span>
+            )}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-gray-100 shadow-sm dark:bg-slate-800">
+      {
+        items.map((item, i) => (
+          <div
+            id={`service-panel-${i}`}
+            role="tabpanel"
+            aria-labelledby={`service-tab-${i}`}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+            data-service-panel={i}
+            class:list={[
+              'absolute inset-0 transition-opacity duration-300 ease-out',
+              i === 0 ? 'opacity-100' : 'pointer-events-none opacity-0',
+            ]}
+          >
+            <Image
+              class="h-full w-full object-cover"
+              layout="cover"
+              widths={[400, 768, 1024]}
+              sizes="(max-width: 1024px) 100vw, 720px"
+              width={1280}
+              height={720}
+              format="webp"
+              src="~/assets/images/placeholder.png"
+              alt={`${item.title} — preview`}
+            />
+            <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/45 p-6 text-center text-white">
+              {item.icon && (
+                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30 backdrop-blur">
+                  <Icon name={item.icon} class="h-8 w-8" />
+                </span>
+              )}
+              <span class="text-xl font-bold sm:text-2xl">{item.title}</span>
+              <span class="text-sm font-medium uppercase tracking-wide text-white/70">Animation preview</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</WidgetWrapper>
+
+<script>
+  function initServicesShowcase() {
+    document.querySelectorAll<HTMLElement>('[data-services-showcase]').forEach((root) => {
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-service-tab]'));
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-service-panel]'));
+      if (!tabs.length) return;
+
+      const activate = (index: number) => {
+        tabs.forEach((tab) => tab.setAttribute('aria-selected', String(Number(tab.dataset.serviceTab) === index)));
+        panels.forEach((panel) => {
+          const on = Number(panel.dataset.servicePanel) === index;
+          panel.classList.toggle('opacity-100', on);
+          panel.classList.toggle('opacity-0', !on);
+          panel.classList.toggle('pointer-events-none', !on);
+          panel.setAttribute('aria-hidden', String(!on));
+        });
+      };
+
+      tabs.forEach((tab) => tab.addEventListener('click', () => activate(Number(tab.dataset.serviceTab))));
+    });
+  }
+
+  document.addEventListener('astro:page-load', initServicesShowcase);
+</script>

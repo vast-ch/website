@@ -11,7 +11,7 @@ hero:
   actions:
     - variant: primary
       text: 'Our services'
-      href: '/services'
+      href: '#services'
       icon: 'tabler:arrow-right'
     - text: 'Start a project'
       href: '/contact#form'
@@ -60,5 +60,4 @@ cta:
     - variant: primary
       text: 'Contact us'
       href: '/contact'
-      icon: 'tabler:mail'
 ---
