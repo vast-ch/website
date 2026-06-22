@@ -89,7 +89,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       >
         {
           links.map(({ text, href, links, megamenu }) => (
-            <li class={links?.length ? 'dropdown' : ''}>
+            <li class={links?.length ? 'dropdown md:relative' : ''}>
               {links?.length ? (
                 <>
                   <button
@@ -100,7 +100,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                     <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
                   </button>
                   {megamenu ? (
-                    <ul class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute md:hidden font-medium md:bg-white/90 drop-shadow-xl pl-4 md:w-[640px] md:left-1/2 md:-translate-x-1/2 md:grid md:grid-cols-2 md:gap-3 md:p-3">
+                    <ul class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute md:top-full md:right-0 md:hidden font-medium md:bg-white/90 drop-shadow-xl pl-4 md:w-[400px] md:grid md:grid-cols-2 md:gap-3 md:p-3">
                       {links.map(({ text: text2, href: href2, icon, description }) => (
                         <li>
                           <a
