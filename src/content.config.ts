@@ -130,6 +130,7 @@ const content = z.object({
   tagline: z.string().optional(),
   title: z.string().optional(),
   contentHeading: z.string().optional(),
+  contentTagline: z.string().optional(),
   contentBody: z.string().optional(),
   accentBackground: z.boolean().optional(),
   items: z.array(item),

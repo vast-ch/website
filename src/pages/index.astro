@@ -2,15 +2,18 @@
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Features from '~/components/widgets/Features.astro';
-import Features3 from '~/components/widgets/Features3.astro';
+import CaseStudiesCarousel from '~/components/widgets/CaseStudiesCarousel.astro';
 import Content from '~/components/widgets/Content.astro';
-import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'index');
 if (!page) throw new Error('Missing page entry: index');
-const { metadata, hero, services, whyUs, stats, industries, cta } = page.data as Required<typeof page.data>;
+const { metadata, hero, services, whyUs, caseStudies, cta } = page.data as Required<typeof page.data>;
+
+const featured = await Promise.all(caseStudies.map((csId) => getEntry('case-studies', csId)));
+const missing = caseStudies.filter((_, i) => !featured[i]);
+if (missing.length) throw new Error(`Missing case study entries: ${missing.join(', ')}`);
 ---
 
 <Layout metadata={metadata}>
@@ -30,14 +33,15 @@ const { metadata, hero, services, whyUs, stats, industries, cta } = page.data as
     items={services.items}
   />
 
+  <CaseStudiesCarousel caseStudies={featured.map((e) => e!)} />
+
   <Content
     isReversed={whyUs.isReversed}
-    tagline={whyUs.tagline}
-    title={whyUs.title}
     items={whyUs.items}
     image={whyUs.image}
   >
     <Fragment slot="content">
+      {whyUs.contentTagline && <p class="text-base text-secondary font-bold tracking-wide uppercase">{whyUs.contentTagline}</p>}
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{whyUs.contentHeading}</h3>
       {whyUs.contentBody}
     </Fragment>
@@ -50,15 +54,5 @@ const { metadata, hero, services, whyUs, stats, industries, cta } = page.data as
     }
   </Content>
 
-  <Stats title={stats.title} stats={stats.items} />
-
-  <Features3
-    title={industries.title}
-    tagline={industries.tagline}
-    subtitle={industries.subtitle}
-    columns={industries.columns}
-    items={industries.items}
-  />
-
-  <CallToAction actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
+  <CallToAction isBanner actions={cta.actions} title={cta.title} subtitle={cta.subtitle} />
 </Layout>
