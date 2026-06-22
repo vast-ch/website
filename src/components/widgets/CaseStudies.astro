@@ -34,112 +34,125 @@ const industryFilters = CASE_STUDY_INDUSTRIES.filter((slug) => isUsed(slug)).map
   label: TAXONOMY_LABELS[slug],
 }));
 
-const pillClass =
-  'cursor-pointer rounded-full border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm transition hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-white focus-visible:ring-2 focus-visible:ring-primary';
+const checkboxLabelClass = 'flex cursor-pointer items-center gap-2.5 text-sm leading-tight';
+const checkboxClass = 'h-4 w-4 shrink-0 cursor-pointer accent-primary';
 ---
 
 <WidgetWrapper id={id} containerClass="max-w-7xl mx-auto">
   <Headline title={title} subtitle={subtitle} tagline={tagline} />
 
-  {
-    (serviceFilters.length > 0 || industryFilters.length > 0) && (
-      <div
-        class="mb-10 flex flex-wrap justify-center gap-x-12 gap-y-6"
-        role="group"
-        aria-label="Filter case studies"
-        data-cs-filters
-      >
-        {serviceFilters.length > 0 && (
-          <div class="flex flex-col items-start gap-3">
-            <h3 class="text-sm font-semibold uppercase tracking-wider text-muted">Services</h3>
-            <div class="flex flex-wrap gap-2">
-              {serviceFilters.map(({ slug, label }) => (
-                <button type="button" data-filter={slug} aria-pressed="false" class={pillClass}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        {industryFilters.length > 0 && (
-          <div class="flex flex-col items-start gap-3">
-            <h3 class="text-sm font-semibold uppercase tracking-wider text-muted">Industries</h3>
-            <div class="flex flex-wrap gap-2">
-              {industryFilters.map(({ slug, label }) => (
-                <button type="button" data-filter={slug} aria-pressed="false" class={pillClass}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
-
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3" data-cs-grid>
+  <div class="flex flex-col gap-8 lg:flex-row lg:items-start">
     {
-      caseStudies.map((cs) => (
-        <details
-          id={cs.id}
-          class="group relative flex flex-col scroll-mt-24 overflow-hidden rounded-lg border border-[#ffffff29] bg-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur dark:bg-slate-900 dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
-          data-cs-card
-          data-tags={tagsOf(cs).join(' ')}
+      (serviceFilters.length > 0 || industryFilters.length > 0) && (
+        <aside
+          class="lg:sticky lg:top-24 lg:w-64 lg:shrink-0"
+          role="group"
+          aria-label="Filter case studies"
+          data-cs-filters
         >
-          <summary class="flex flex-1 cursor-pointer list-none flex-col [&::-webkit-details-marker]:hidden">
-            {cs.data.image && (
-              <Image
-                class="w-full"
-                width={600}
-                height={338}
-                widths={[400, 768]}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                layout="responsive"
-                format="webp"
-                {...cs.data.image}
-              />
-            )}
-            <div class="flex flex-1 flex-col p-6">
-              <div class="flex flex-wrap gap-2">
-                {tagsOf(cs).map((slug) => (
-                  <span class="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-                    {TAXONOMY_LABELS[slug as keyof typeof TAXONOMY_LABELS]}
+          <div class="rounded-lg border border-gray-200 bg-section p-6 dark:border-slate-700">
+            <h2 class="mb-5 border-b border-gray-200 pb-3 text-lg font-bold dark:border-slate-700">Filters</h2>
+            <div class="flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:gap-x-12 lg:flex-col lg:gap-6">
+              {serviceFilters.length > 0 && (
+                <div class="flex flex-col items-start gap-3">
+                  <h3 class="text-xs font-semibold uppercase tracking-wider text-muted">Services</h3>
+                  <div class="flex flex-col gap-2.5">
+                    {serviceFilters.map(({ slug, label }) => (
+                      <label class={checkboxLabelClass}>
+                        <input type="checkbox" data-filter={slug} class={checkboxClass} />
+                        <span>{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {industryFilters.length > 0 && (
+                <div class="flex flex-col items-start gap-3">
+                  <h3 class="text-xs font-semibold uppercase tracking-wider text-muted">Industries</h3>
+                  <div class="flex flex-col gap-2.5">
+                    {industryFilters.map(({ slug, label }) => (
+                      <label class={checkboxLabelClass}>
+                        <input type="checkbox" data-filter={slug} class={checkboxClass} />
+                        <span>{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </aside>
+      )
+    }
+
+    <div class="min-w-0 flex-1">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3" data-cs-grid>
+        {
+          caseStudies.map((cs) => (
+            <details
+              id={cs.id}
+              class="group relative flex flex-col scroll-mt-24 overflow-hidden rounded-lg border border-[#ffffff29] bg-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur dark:bg-slate-900 dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+              data-cs-card
+              data-tags={tagsOf(cs).join(' ')}
+            >
+              <summary class="flex flex-1 cursor-pointer list-none flex-col [&::-webkit-details-marker]:hidden">
+                {cs.data.image && (
+                  <Image
+                    class="w-full"
+                    width={600}
+                    height={338}
+                    widths={[400, 768]}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                    layout="responsive"
+                    format="webp"
+                    {...cs.data.image}
+                  />
+                )}
+                <div class="flex flex-1 flex-col p-6">
+                  <div class="flex flex-wrap gap-2">
+                    {tagsOf(cs).map((slug) => (
+                      <span class="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                        {TAXONOMY_LABELS[slug as keyof typeof TAXONOMY_LABELS]}
+                      </span>
+                    ))}
+                  </div>
+                  <h3 class="mt-3 text-xl font-bold">{cs.data.title}</h3>
+                  {cs.data.client && <p class="mt-1 text-sm text-muted">{cs.data.client}</p>}
+                  <p class="mt-2 text-muted" set:html={cs.data.excerpt} />
+                  <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-primary">
+                    Details
+                    <Icon name="tabler:chevron-down" class="h-4 w-4 transition-transform group-open:rotate-180" />
                   </span>
+                </div>
+              </summary>
+
+              <div class="mx-6 mb-6 space-y-6 border-t border-gray-200 pt-6 dark:border-slate-700">
+                {cs.data.items.map(({ title: itemTitle, description, icon }) => (
+                  <div class="flex flex-row max-w-none">
+                    <div class="flex justify-center">
+                      <Icon
+                        name={icon || 'tabler:check'}
+                        class="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white dark:text-black p-1 mr-2 rtl:mr-0 rtl:ml-2"
+                      />
+                    </div>
+                    <div class="mt-0.5">
+                      {itemTitle && (
+                        <h4 class="text-lg font-semibold leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2">
+                          {itemTitle}
+                        </h4>
+                      )}
+                      {description && (
+                        <p class="mt-3 text-muted dark:text-slate-400 ml-2 rtl:ml-0 rtl:mr-2" set:html={description} />
+                      )}
+                    </div>
+                  </div>
                 ))}
               </div>
-              <h3 class="mt-3 text-xl font-bold">{cs.data.title}</h3>
-              {cs.data.client && <p class="mt-1 text-sm text-muted">{cs.data.client}</p>}
-              <p class="mt-2 text-muted" set:html={cs.data.excerpt} />
-              <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-primary">
-                Details
-                <Icon name="tabler:chevron-down" class="h-4 w-4 transition-transform group-open:rotate-180" />
-              </span>
-            </div>
-          </summary>
-
-          <div class="mx-6 mb-6 space-y-6 border-t border-gray-200 pt-6 dark:border-slate-700">
-            {cs.data.items.map(({ title: itemTitle, description, icon }) => (
-              <div class="flex flex-row max-w-none">
-                <div class="flex justify-center">
-                  <Icon
-                    name={icon || 'tabler:check'}
-                    class="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white dark:text-black p-1 mr-2 rtl:mr-0 rtl:ml-2"
-                  />
-                </div>
-                <div class="mt-0.5">
-                  {itemTitle && (
-                    <h4 class="text-lg font-semibold leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2">{itemTitle}</h4>
-                  )}
-                  {description && (
-                    <p class="mt-3 text-muted dark:text-slate-400 ml-2 rtl:ml-0 rtl:mr-2" set:html={description} />
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </details>
-      ))
-    }
+            </details>
+          ))
+        }
+      </div>
+    </div>
   </div>
 </WidgetWrapper>
 
@@ -147,26 +160,23 @@ const pillClass =
   function initCaseStudyFilters() {
     const root = document.querySelector<HTMLElement>('[data-cs-filters]');
     if (!root) return;
-    const pills = Array.from(root.querySelectorAll<HTMLButtonElement>('button[data-filter]'));
+    const boxes = Array.from(root.querySelectorAll<HTMLInputElement>('input[type="checkbox"][data-filter]'));
     const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-cs-card]'));
 
-    // Multiple pills can be active at once. A card is shown when it matches any
-    // active filter; when none are selected, every card is shown.
+    // Multiple boxes can be checked at once. A card is shown when it matches any
+    // checked filter; when none are checked, every card is shown.
     const apply = () => {
-      const active = pills.filter((p) => p.getAttribute('aria-pressed') === 'true').map((p) => p.dataset.filter ?? '');
+      const active = boxes.filter((b) => b.checked).map((b) => b.dataset.filter ?? '');
       cards.forEach((card) => {
         const tags = (card.dataset.tags ?? '').split(' ');
         card.classList.toggle('hidden', active.length > 0 && !active.some((slug) => tags.includes(slug)));
       });
     };
 
-    pills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        // Each pill toggles independently of the others.
-        pill.setAttribute('aria-pressed', String(pill.getAttribute('aria-pressed') !== 'true'));
-        apply();
-      });
-    });
+    boxes.forEach((box) => box.addEventListener('change', apply));
+
+    // Re-sync in case the browser restored checkbox states (back/forward nav).
+    apply();
   }
 
   // Deep links (e.g. /case-studies#flightbook) land on the card expanded.
