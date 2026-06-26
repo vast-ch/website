@@ -6,7 +6,7 @@ metadata:
 hero:
   title: 'Software, data and technical guidance '
   titleAccent: 'from the Swiss Alps'
-  subtitle: '<span class="font-semibold">vast.ch</span> is a Swiss engineering office. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization — in German, French and English.'
+  subtitle: '<span class="font-semibold">vast.ch</span> is a Swiss engineering office. We build production-grade web and mobile applications, develop forecasting and machine-learning models, and pair independent advisory work with hands-on digitalization.'
   imageAlt: 'vast.ch — Swiss software engineering studio'
   actions:
     - variant: primary
@@ -21,16 +21,18 @@ services:
   title: 'Focused services'
   subtitle: 'A small, senior practice rather than a long menu — so each project gets the attention it deserves.'
   items:
-    - title: 'Web and mobile application development'
+    - title: 'Application development'
       description: 'Production TypeScript across the stack. Web (Astro, Ember, Angular), mobile (Ionic + Capacitor for iOS and Android), backends (NestJS, REST). Apps in production on the App Store and Google Play.'
       icon: 'tabler:code'
+      animation: 'appdev'
       callToAction:
         text: 'Learn more'
         href: '/services/app-development'
         icon: 'tabler:chevron-right'
-    - title: 'Data science and machine learning'
+    - title: 'Data science'
       description: 'Time-series forecasting from classical statistical models to modern foundation models, and tabular data modelling. PhD-led, grounded in peer-reviewed research and real production constraints — not just notebooks.'
       icon: 'tabler:chart-line'
+      animation: 'forecast'
       callToAction:
         text: 'Learn more'
         href: '/services/data-science-machine-learning'
@@ -51,7 +53,7 @@ whyUs:
     - title: 'Built for Switzerland'
       description: 'Based in Interlaken, Brig and Fribourg, working in Swiss German, French and English, and a respect for how things actually get done here. We meet you where you are.'
   image:
-    src: '~/assets/images/placeholder.png'
+    src: '~/assets/images/index/take-off.jpg'
     alt: 'A team collaborating on engineering work'
 cta:
   title: 'Want to build something together?'

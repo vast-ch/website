@@ -80,6 +80,7 @@ const item = z.object({
   description: z.string(),
   icon: z.string().optional(),
   callToAction: action.optional(),
+  animation: z.string().optional(),
 });
 
 const image = z.object({

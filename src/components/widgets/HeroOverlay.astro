@@ -26,12 +26,11 @@ const {
   id,
 } = Astro.props;
 
-// CTAs are styled bespoke for legibility over the dark image rather than reusing
-// the on-page Button variants (whose dark text / black fill disappear here).
-const primaryClass =
-  'inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 text-base font-semibold text-black transition hover:bg-gray-200 sm:w-auto md:px-8';
-const ghostClass =
-  'inline-flex w-full items-center justify-center rounded-full border border-white/70 px-6 py-3.5 text-base font-medium text-white transition hover:bg-white/10 sm:w-auto md:px-8';
+// CTAs reuse the site's standard button utilities so they match the buttons used
+// elsewhere on the page; the light scrim over the image keeps their dark text/fill
+// legible. `w-full sm:w-auto` preserves the full-width stacked layout on mobile.
+const primaryClass = 'btn-primary w-full sm:w-auto';
+const secondaryClass = 'btn-secondary w-full sm:w-auto';
 ---
 
 <section
@@ -50,20 +49,23 @@ const ghostClass =
           ) : (
             <Image
               class="absolute inset-0 h-full w-full object-cover"
+              style="object-position: center 50%;"
               layout="cover"
               widths={[400, 768, 1024, 2040]}
               sizes="(max-width: 1280px) 100vw, 1280px"
               loading="eager"
               fetchpriority="high"
+              {/* Keep the source 3:4 aspect (3024x4032) so the CDN doesn't center-crop it to
+                  landscape; object-fit: cover + object-position frame it per viewport instead. */}
               width={1280}
-              height={720}
+              height={1707}
               format="webp"
               {...image}
             />
           ))
       }
 
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/45 to-black/55" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-white/40 via-white/75 to-white/60" aria-hidden="true"></div>
 
       <div
         class:list={[
@@ -71,23 +73,23 @@ const ghostClass =
           fullScreen ? 'h-full' : 'min-h-[24rem] md:min-h-[28rem]',
         ]}
       >
-        {tagline && <p class="mb-4 text-base font-bold uppercase tracking-wide text-white/80" set:html={tagline} />}
+        {tagline && <p class="mb-4 text-base font-bold uppercase tracking-wide text-black/80" set:html={tagline} />}
         {
           title && (
-            <h1 class="mb-4 font-heading text-4xl font-bold leading-tighter tracking-tighter text-white sm:text-5xl md:text-6xl">
+            <h1 class="mb-4 font-heading text-4xl font-bold leading-tighter tracking-tighter text-black sm:text-5xl md:text-6xl">
               <Fragment set:html={title} />
-              {titleAccent && <span class="text-white/80">{' '}{titleAccent}</span>}
+              {titleAccent && <span class="text-black/80">{' '}{titleAccent}</span>}
             </h1>
           )
         }
-        {subtitle && <p class="mb-8 max-w-2xl text-lg text-gray-100 sm:text-xl" set:html={subtitle} />}
+        {subtitle && <p class="mb-8 max-w-2xl text-lg text-gray-700 sm:text-xl" set:html={subtitle} />}
         {
           Array.isArray(actions) && actions.length > 0 && (
             <div class="flex w-full max-w-xs flex-col gap-4 sm:max-w-md sm:flex-row sm:justify-center">
               {actions.map((action) => (
                 <a
                   href={action.href}
-                  class={action.variant === 'primary' ? primaryClass : ghostClass}
+                  class={action.variant === 'primary' ? primaryClass : secondaryClass}
                   {...(action.target ? { target: action.target, rel: 'noopener noreferrer' } : {})}
                 >
                   <Fragment set:html={action.text} />

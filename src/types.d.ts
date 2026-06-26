@@ -122,6 +122,8 @@ export interface Item {
   classes?: Record<string, string>;
   callToAction?: CallToAction;
   image?: Image;
+  /** Key of the animated visual to render for this item (e.g. 'forecast'). */
+  animation?: string;
 }
 
 export interface Price {
@@ -246,6 +248,8 @@ export interface Content extends Omit<Headline, 'classes'>, Widget {
   columns?: number;
   isReversed?: boolean;
   isAfterContent?: boolean;
+  /** Stretch the side image to the full height of the text column (md+ screens). */
+  imageMatchHeight?: boolean;
   callToAction?: CallToAction;
 }
 

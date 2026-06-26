@@ -3,13 +3,16 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import Headline from '~/components/ui/Headline.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import ForecastAnimation from '~/components/widgets/ForecastAnimation.astro';
+import AppDevAnimation from '~/components/widgets/AppDevAnimation.astro';
 
 import type { Features as Props } from '~/types';
 
-// Interactive "What we do" section: left-aligned tagline/title, then two
-// title-only service boxes that act as tabs. Selecting a box reveals its panel
-// on the right. The panels are placeholder images for now — each service will
-// get its own animation there later; the tab → panel wiring is already in place.
+// Interactive "What we do" section: left-aligned tagline/title, then title-only
+// service boxes that act as tabs. Selecting a box reveals its panel on the right.
+// Each panel renders the animation named by `item.animation` (e.g. 'forecast',
+// 'appdev'), falling back to a placeholder image when none is set. Inactive panels
+// are `inert` so their controls stay out of the tab order while hidden.
 const { id, tagline, title, items = [] } = Astro.props;
 ---
 
@@ -61,32 +64,41 @@ const { id, tagline, title, items = [] } = Astro.props;
             role="tabpanel"
             aria-labelledby={`service-tab-${i}`}
             aria-hidden={i === 0 ? 'false' : 'true'}
+            inert={i !== 0}
             data-service-panel={i}
             class:list={[
               'absolute inset-0 transition-opacity duration-300 ease-out',
               i === 0 ? 'opacity-100' : 'pointer-events-none opacity-0',
             ]}
           >
-            <Image
-              class="h-full w-full object-cover"
-              layout="cover"
-              widths={[400, 768, 1024]}
-              sizes="(max-width: 1024px) 100vw, 720px"
-              width={1280}
-              height={720}
-              format="webp"
-              src="~/assets/images/placeholder.png"
-              alt={`${item.title} — preview`}
-            />
-            <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/45 p-6 text-center text-white">
-              {item.icon && (
-                <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30 backdrop-blur">
-                  <Icon name={item.icon} class="h-8 w-8" />
-                </span>
-              )}
-              <span class="text-xl font-bold sm:text-2xl">{item.title}</span>
-              <span class="text-sm font-medium uppercase tracking-wide text-white/70">Animation preview</span>
-            </div>
+            {item.animation === 'forecast' ? (
+              <ForecastAnimation />
+            ) : item.animation === 'appdev' ? (
+              <AppDevAnimation />
+            ) : (
+              <Fragment>
+                <Image
+                  class="h-full w-full object-cover"
+                  layout="cover"
+                  widths={[400, 768, 1024]}
+                  sizes="(max-width: 1024px) 100vw, 720px"
+                  width={1280}
+                  height={720}
+                  format="webp"
+                  src="~/assets/images/placeholder.png"
+                  alt={`${item.title} — preview`}
+                />
+                <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/45 p-6 text-center text-white">
+                  {item.icon && (
+                    <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30 backdrop-blur">
+                      <Icon name={item.icon} class="h-8 w-8" />
+                    </span>
+                  )}
+                  <span class="text-xl font-bold sm:text-2xl">{item.title}</span>
+                  <span class="text-sm font-medium uppercase tracking-wide text-white/70">Animation preview</span>
+                </div>
+              </Fragment>
+            )}
           </div>
         ))
       }
@@ -109,6 +121,7 @@ const { id, tagline, title, items = [] } = Astro.props;
           panel.classList.toggle('opacity-0', !on);
           panel.classList.toggle('pointer-events-none', !on);
           panel.setAttribute('aria-hidden', String(!on));
+          panel.toggleAttribute('inert', !on);
         });
       };
 

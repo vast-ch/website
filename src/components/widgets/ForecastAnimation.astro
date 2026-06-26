@@ -1,0 +1,688 @@
+---
+/**
+ * ForecastAnimation.astro — the data-science visual for the "What we do" panel.
+ *
+ * A 4-step stepper through a data-science pipeline:
+ *   1. Consolidate — many sources (incl. geodata) merged into one dataset
+ *   2. EDA         — an exploratory-analysis notebook with plots
+ *   3. Classify    — a neural net + gradient-boosted trees
+ *   4. Forecast    — the time-series "ridge-as-forecast" chart
+ *
+ * Navigation (arrows / arrow keys / progress segments) and the full-width top
+ * progress bar are provided by the shared `mountStepper` helper. Each scene runs
+ * its entrance the first time it is reached; the forecast plays its intro then.
+ */
+---
+
+<div class="anim-root" data-forecast-anim>
+  <div class="stage">
+    <div class="card">
+      <svg viewBox="0 0 1000 1414" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="nav" data-prev type="button" aria-label="Previous step">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+    </button>
+    <span class="counter" data-counter>1 / 4</span>
+    <button class="nav" data-next type="button" aria-label="Next step">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .anim-root {
+    --ink: #0b0b0c;
+    --muted: #6b6f76;
+    --line: #e6e7ea;
+    --fc: #3f7d5e;
+    --fc-soft: rgba(63, 125, 94, 0.14);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 2%, 18px);
+    height: 100%;
+    width: 100%;
+    padding: clamp(12px, 3%, 28px);
+  }
+
+  .stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1 / 1.414; /* portrait √2 (A-series) */
+    max-width: 100%;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(11, 11, 12, 0.04),
+      0 18px 40px -24px rgba(11, 11, 12, 0.22);
+  }
+  .card svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .controls {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 1px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    border-radius: 999px;
+    cursor: pointer;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease,
+      color 0.15s ease,
+      opacity 0.15s ease;
+  }
+  .nav svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+  }
+  .nav:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: var(--ink);
+    color: #fff;
+  }
+  .nav:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .counter {
+    min-width: 48px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+
+<script>
+  import { animate } from 'motion';
+  import { mountStepper } from './stepper';
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const EASE = [0.2, 0.7, 0.2, 1];
+
+  function buildForecastAnim(root: HTMLElement) {
+    if (root.dataset.ready) return;
+    root.dataset.ready = '1';
+    const svg = root.querySelector('svg');
+    if (!svg) return;
+
+    const el = (t: string, a: Record<string, any> = {}) => {
+      const e = document.createElementNS(NS, t);
+      for (const k in a) e.setAttribute(k, a[k]);
+      return e;
+    };
+    const g = () => {
+      const e = el('g') as SVGGElement;
+      svg.appendChild(e);
+      return e;
+    };
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // entrance helpers — fade/slide (origin-independent) and centre pops
+    const fadeIn = (elems: any[], delay = 0, step = 0.1, dy = 16) =>
+      elems.forEach((e, i) => {
+        const a = animate(e, { opacity: [0, 1], y: [dy, 0] }, { duration: 0.5, delay: delay + i * step, ease: EASE });
+        a.finished.then(() => ((e.style.opacity = '1'), (e.style.transform = ''))).catch(() => {});
+      });
+    const popIn = (elems: any[], delay = 0, step = 0.05) =>
+      elems.forEach((e, i) => {
+        e.style.transformBox = 'fill-box';
+        e.style.transformOrigin = 'center';
+        const a = animate(e, { scale: [0, 1] }, { delay: delay + i * step, type: 'spring', stiffness: 540, damping: 16 });
+        a.finished.then(() => (e.style.scale = '1')).catch(() => {});
+      });
+
+    /* ============ shared background ============ */
+    const defs = el('defs');
+    svg.appendChild(defs);
+    defs.innerHTML = `
+      <linearGradient id="vh-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f7f9fb"/><stop offset=".55" stop-color="#fdfdfe"/><stop offset="1" stop-color="#ffffff"/>
+      </linearGradient>
+      <radialGradient id="vh-glow" cx="42%" cy="34%" r="46%">
+        <stop offset="0" stop-color="#eef3f0"/><stop offset="1" stop-color="#eef3f0" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="vh-mass" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#eef0f2"/><stop offset="1" stop-color="#f6f7f8" stop-opacity=".4"/>
+      </linearGradient>
+      <linearGradient id="vh-fcmass" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3f7d5e" stop-opacity=".10"/><stop offset="1" stop-color="#3f7d5e" stop-opacity="0"/>
+      </linearGradient>`;
+    svg.appendChild(el('rect', { x: 0, y: 0, width: 1000, height: 1414, fill: 'url(#vh-sky)' }));
+    svg.appendChild(el('rect', { x: 0, y: 0, width: 1000, height: 1414, fill: 'url(#vh-glow)' }));
+
+    type Scene = { group: SVGGElement; enter: (anim: boolean) => void };
+
+    /* ===================== 1 · CONSOLIDATE ===================== */
+    function sceneConsolidate(): Scene {
+      const grp = g();
+      const srcY = 300,
+        srcH = 168;
+      // unified dataset table (centre-bottom) — "one dataset"
+      const UX = 300,
+        UY = 880,
+        UW = 400,
+        UH = 300;
+      const uni = el('g') as SVGGElement;
+      uni.appendChild(el('rect', { x: UX, y: UY, width: UW, height: UH, rx: 16, fill: '#fff', stroke: '#d7dadf', 'stroke-width': 2 }));
+      uni.appendChild(el('rect', { x: UX, y: UY, width: UW, height: 56, rx: 16, fill: 'var(--fc)' }));
+      uni.appendChild(el('rect', { x: UX, y: UY + 40, width: UW, height: 16, fill: 'var(--fc)' }));
+      for (let r = 0; r < 4; r++)
+        for (let c = 0; c < 3; c++)
+          uni.appendChild(el('rect', { x: UX + 26 + c * 120, y: UY + 80 + r * 50, width: 96, height: 30, rx: 6, fill: r === 0 ? '#dfe7e3' : '#eef0f2' }));
+      grp.appendChild(uni);
+
+      // sources
+      const s1 = el('g') as SVGGElement; // table
+      const s1x = 96;
+      s1.appendChild(el('rect', { x: s1x, y: srcY, width: 200, height: srcH, rx: 12, fill: '#fff', stroke: '#d7dadf', 'stroke-width': 2 }));
+      s1.appendChild(el('rect', { x: s1x, y: srcY, width: 200, height: 34, rx: 12, fill: '#eef0f2' }));
+      for (let i = 0; i < 4; i++) s1.appendChild(el('rect', { x: s1x + 18, y: srcY + 58 + i * 26, width: 164, height: 10, rx: 5, fill: '#e7e9ec' }));
+      grp.appendChild(s1);
+
+      const s2 = el('g') as SVGGElement; // database cylinder
+      const s2x = 410,
+        s2w = 180;
+      s2.appendChild(el('path', { d: `M${s2x},${srcY + 24} v120 a${s2w / 2},22 0 0 0 ${s2w},0 v-120`, fill: '#fff', stroke: '#d7dadf', 'stroke-width': 2 }));
+      s2.appendChild(el('ellipse', { cx: s2x + s2w / 2, cy: srcY + 24, rx: s2w / 2, ry: 22, fill: '#fff', stroke: '#d7dadf', 'stroke-width': 2 }));
+      s2.appendChild(el('ellipse', { cx: s2x + s2w / 2, cy: srcY + 70, rx: s2w / 2, ry: 20, fill: 'none', stroke: '#e1e4e8', 'stroke-width': 2 }));
+      s2.appendChild(el('ellipse', { cx: s2x + s2w / 2, cy: srcY + 112, rx: s2w / 2, ry: 20, fill: 'none', stroke: '#e1e4e8', 'stroke-width': 2 }));
+      grp.appendChild(s2);
+
+      const s3 = el('g') as SVGGElement; // geodata map tile + pin
+      const s3x = 704;
+      s3.appendChild(el('rect', { x: s3x, y: srcY, width: 200, height: srcH, rx: 12, fill: '#f1f6f3', stroke: '#d7dadf', 'stroke-width': 2 }));
+      s3.appendChild(el('path', { d: `M${s3x + 14},${srcY + 118} q56,-66 104,-30 t78,-16`, fill: 'none', stroke: '#cfe0d6', 'stroke-width': 6 }));
+      s3.appendChild(el('line', { x1: s3x + 12, y1: srcY + 60, x2: s3x + 188, y2: srcY + 60, stroke: '#e3ece6', 'stroke-width': 2 }));
+      s3.appendChild(el('line', { x1: s3x + 70, y1: srcY + 14, x2: s3x + 70, y2: srcY + 154, stroke: '#e3ece6', 'stroke-width': 2 }));
+      const pinX = s3x + 124,
+        pinY = srcY + 56;
+      s3.appendChild(el('path', { d: `M${pinX},${pinY} c-26,0 -34,30 0,66 c34,-36 26,-66 0,-66 z`, fill: 'var(--fc)' }));
+      s3.appendChild(el('circle', { cx: pinX, cy: pinY + 24, r: 11, fill: '#fff' }));
+      grp.appendChild(s3);
+
+      // connectors source → unified
+      const conns = [
+        el('path', { d: `M196,${srcY + srcH} C 210,680 280,780 ${UX + 80},${UY}`, fill: 'none', stroke: '#cdd1d6', 'stroke-width': 2.5 }),
+        el('path', { d: `M500,${srcY + 156} C 500,700 500,780 500,${UY}`, fill: 'none', stroke: '#cdd1d6', 'stroke-width': 2.5 }),
+        el('path', { d: `M804,${srcY + srcH} C 790,680 720,780 ${UX + UW - 80},${UY}`, fill: 'none', stroke: '#cdd1d6', 'stroke-width': 2.5 }),
+      ];
+      conns.forEach((c) => grp.appendChild(c));
+
+      const risers = [s1, s2, s3, uni];
+      const pre = () => {
+        risers.forEach((r) => (r.style.opacity = '0'));
+        conns.forEach((c) => (c.style.opacity = '0'));
+      };
+      pre();
+      return {
+        group: grp,
+        enter(anim) {
+          if (!anim) {
+            risers.forEach((r) => (r.style.opacity = '1'));
+            conns.forEach((c) => (c.style.opacity = '1'));
+            return;
+          }
+          fadeIn(risers, 0, 0.12, 18);
+          conns.forEach((c, i) => {
+            const a = animate(c, { opacity: [0, 1] }, { duration: 0.5, delay: 0.45 + i * 0.1 });
+            a.finished.then(() => (c.style.opacity = '1')).catch(() => {});
+          });
+        },
+      };
+    }
+
+    /* ===================== 2 · EDA notebook ===================== */
+    function sceneEDA(): Scene {
+      const grp = g();
+      const NX = 120,
+        NY = 250,
+        NW = 760,
+        NH = 1010;
+      grp.appendChild(el('rect', { x: NX, y: NY, width: NW, height: NH, rx: 16, fill: '#fff', stroke: '#d7dadf', 'stroke-width': 2 }));
+      grp.appendChild(el('rect', { x: NX, y: NY, width: NW, height: 50, rx: 16, fill: '#f1f3f5' }));
+      grp.appendChild(el('rect', { x: NX, y: NY + 34, width: NW, height: 16, fill: '#f1f3f5' }));
+      [NX + 30, NX + 56, NX + 82].forEach((cx, i) => grp.appendChild(el('circle', { cx, cy: NY + 25, r: 7, fill: i === 0 ? '#dfe2e6' : '#e7e9ec' })));
+
+      // code cell
+      const codeY = NY + 86;
+      const code: any[] = [];
+      grp.appendChild(el('rect', { x: NX + 30, y: codeY, width: 8, height: 110, rx: 4, fill: 'var(--fc)' }));
+      [340, 470, 250, 400].forEach((w, i) => {
+        const r = el('rect', { x: NX + 56, y: codeY + 8 + i * 28, width: w, height: 12, rx: 6, fill: i === 0 ? '#cfd3d8' : '#e7e9ec' });
+        code.push(r);
+        grp.appendChild(r);
+      });
+
+      // output 1 — histogram (bars grow from the baseline)
+      const hbX = NX + 56,
+        hbBase = NY + 470,
+        hbH = 150;
+      grp.appendChild(el('line', { x1: hbX, y1: hbBase, x2: hbX + 300, y2: hbBase, stroke: '#d7dadf', 'stroke-width': 2 }));
+      const bars: any[] = [];
+      [0.45, 0.7, 1.0, 0.85, 0.6, 0.35, 0.2].forEach((f, i) => {
+        const bw = 34,
+          bh = hbH * f;
+        const b: any = el('rect', { x: hbX + 6 + i * 42, y: hbBase - bh, width: bw, height: bh, rx: 5, fill: i === 2 ? 'var(--fc)' : '#cdd6d1' });
+        b.style.transformBox = 'fill-box';
+        b.style.transformOrigin = 'center bottom';
+        b.style.transform = 'scaleY(0)';
+        bars.push(b);
+        grp.appendChild(b);
+      });
+
+      // output 2 — scatter plot (dots pop in)
+      const spX = NX + 430,
+        spY = NY + 320,
+        spW = 270,
+        spH = 300;
+      grp.appendChild(el('line', { x1: spX, y1: spY, x2: spX, y2: spY + spH, stroke: '#d7dadf', 'stroke-width': 2 }));
+      grp.appendChild(el('line', { x1: spX, y1: spY + spH, x2: spX + spW, y2: spY + spH, stroke: '#d7dadf', 'stroke-width': 2 }));
+      const dots: any[] = [];
+      let seed = 7;
+      const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
+      for (let i = 0; i < 26; i++) {
+        const px = spX + 24 + rnd() * (spW - 44);
+        const py = spY + spH - 20 - rnd() * (spH - 50);
+        const c = el('circle', { cx: px, cy: py, r: 9, fill: rnd() > 0.5 ? 'var(--fc)' : '#b9c2bc', opacity: 0.92 });
+        dots.push(c);
+        grp.appendChild(c);
+      }
+
+      const pre = () => {
+        code.forEach((c) => (c.style.opacity = '0'));
+        dots.forEach((d) => (d.style.scale = '0'));
+        bars.forEach((b) => (b.style.transform = 'scaleY(0)'));
+      };
+      pre();
+      return {
+        group: grp,
+        enter(anim) {
+          if (!anim) {
+            code.forEach((c) => (c.style.opacity = '1'));
+            bars.forEach((b) => (b.style.transform = 'scaleY(1)'));
+            dots.forEach((d) => (d.style.scale = '1'));
+            return;
+          }
+          fadeIn(code, 0, 0.08, 8);
+          bars.forEach((b, i) => {
+            b.style.transition = `transform 0.5s cubic-bezier(0.2,0.7,0.2,1) ${0.3 + i * 0.05}s`;
+            b.style.transform = 'scaleY(1)';
+          });
+          popIn(dots, 0.6, 0.025);
+        },
+      };
+    }
+
+    /* ===================== 3 · CLASSIFY (NN + GBT) ===================== */
+    function sceneClassify(): Scene {
+      const grp = g();
+
+      // two bounded model panels, well separated so nothing interlaces
+      const LP = { x: 84, y: 300, w: 384, h: 384 };
+      const RP = { x: 532, y: 300, w: 384, h: 384 };
+      const leftBox = el('rect', { x: LP.x, y: LP.y, width: LP.w, height: LP.h, rx: 16, fill: '#fff', stroke: '#e6e7ea', 'stroke-width': 2 });
+      const rightBox = el('rect', { x: RP.x, y: RP.y, width: RP.w, height: RP.h, rx: 16, fill: '#fff', stroke: '#e6e7ea', 'stroke-width': 2 });
+      grp.appendChild(leftBox);
+      grp.appendChild(rightBox);
+      const nnLabel = el('text', { x: LP.x + 8, y: LP.y - 18, fill: '#9aa0a7', 'font-size': 23, 'font-weight': 600, 'letter-spacing': 1.5 });
+      nnLabel.textContent = 'NEURAL NET';
+      grp.appendChild(nnLabel);
+      const gbtLabel = el('text', { x: RP.x + 8, y: RP.y - 18, fill: '#9aa0a7', 'font-size': 21, 'font-weight': 600, 'letter-spacing': 0.5 });
+      gbtLabel.textContent = 'GRADIENT-BOOSTED TREES';
+      grp.appendChild(gbtLabel);
+
+      // --- neural net (inside the left panel) ---
+      const cols = [168, 276, 384];
+      const counts = [3, 4, 2];
+      const cyMid = LP.y + LP.h / 2;
+      const rowGap = 62;
+      const layerPts = counts.map((cnt, li) => {
+        const top = cyMid - ((cnt - 1) * rowGap) / 2;
+        return Array.from({ length: cnt }, (_, r) => ({ x: cols[li], y: top + r * rowGap }));
+      });
+      const edges: any[] = [];
+      for (let li = 0; li < layerPts.length - 1; li++)
+        layerPts[li].forEach((a) =>
+          layerPts[li + 1].forEach((b) => {
+            const e = el('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: '#dfe3e7', 'stroke-width': 1.5 });
+            edges.push(e);
+            grp.appendChild(e);
+          })
+        );
+      const nnNodes: any[] = [];
+      layerPts.forEach((col, li) =>
+        col.forEach((p) => {
+          const c = el('circle', { cx: p.x, cy: p.y, r: 15, fill: li === layerPts.length - 1 ? 'var(--fc)' : '#fff', stroke: '#0b0b0c', 'stroke-width': 3 });
+          nnNodes.push(c);
+          grp.appendChild(c);
+        })
+      );
+
+      // --- gradient-boosted trees (inside the right panel) ---
+      const trees: any[] = [];
+      const mkTree = (tx: number) => {
+        const t = el('g') as SVGGElement;
+        const root2 = { x: tx, y: 396 };
+        const kids = [
+          { x: tx - 46, y: 486 },
+          { x: tx + 46, y: 486 },
+        ];
+        const leaves = [
+          { x: tx - 70, y: 584 },
+          { x: tx - 24, y: 584 },
+          { x: tx + 24, y: 584 },
+          { x: tx + 70, y: 584 },
+        ];
+        const line = (a: any, b: any) => t.appendChild(el('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: '#cdd1d6', 'stroke-width': 2.5 }));
+        kids.forEach((k) => line(root2, k));
+        line(kids[0], leaves[0]);
+        line(kids[0], leaves[1]);
+        line(kids[1], leaves[2]);
+        line(kids[1], leaves[3]);
+        t.appendChild(el('rect', { x: root2.x - 15, y: root2.y - 15, width: 30, height: 30, rx: 7, fill: '#0b0b0c' }));
+        kids.forEach((p) => t.appendChild(el('rect', { x: p.x - 12, y: p.y - 12, width: 24, height: 24, rx: 6, fill: '#fff', stroke: '#c5c9cf', 'stroke-width': 2.5 })));
+        leaves.forEach((p) => t.appendChild(el('rect', { x: p.x - 11, y: p.y - 11, width: 22, height: 22, rx: 5, fill: '#fff', stroke: '#c5c9cf', 'stroke-width': 2.5 })));
+        trees.push(t);
+        grp.appendChild(t);
+      };
+      mkTree(628);
+      mkTree(820);
+      const plus = el('text', { x: 724, y: 500, fill: '#9aa0a7', 'font-size': 40, 'font-weight': 700, 'text-anchor': 'middle' });
+      plus.textContent = '+';
+      grp.appendChild(plus);
+
+      // --- both models converge into one decision ---
+      const connNN = el('path', { d: 'M276,684 C 276,750 430,772 500,790', fill: 'none', stroke: '#cdd1d6', 'stroke-width': 2.5 });
+      const connGBT = el('path', { d: 'M724,684 C 724,750 570,772 500,790', fill: 'none', stroke: '#cdd1d6', 'stroke-width': 2.5 });
+      const arrowLine = el('line', { x1: 500, y1: 790, x2: 500, y2: 840, stroke: '#0b0b0c', 'stroke-width': 3 });
+      const arrowHead = el('path', { d: 'M489,838 L511,838 L500,853 Z', fill: '#0b0b0c' });
+      const flowEls = [connNN, connGBT, arrowLine, arrowHead];
+      flowEls.forEach((e) => grp.appendChild(e));
+
+      // --- the decision: predicted class (emphasised) ---
+      const chipA = el('g') as SVGGElement;
+      chipA.appendChild(el('rect', { x: 300, y: 880, width: 400, height: 78, rx: 14, fill: '#fff', stroke: '#e1e4e8', 'stroke-width': 2 }));
+      const aT = el('text', { x: 340, y: 930, fill: '#9aa0a7', 'font-size': 32 });
+      aT.textContent = 'Class A';
+      const aP = el('text', { x: 636, y: 930, fill: '#b5bac0', 'font-size': 28, 'text-anchor': 'middle' });
+      aP.textContent = '0.18';
+      chipA.appendChild(aT);
+      chipA.appendChild(aP);
+      grp.appendChild(chipA);
+
+      const chipB = el('g') as SVGGElement;
+      chipB.appendChild(el('rect', { x: 300, y: 978, width: 400, height: 102, rx: 18, fill: 'var(--fc)' }));
+      const bT = el('text', { x: 340, y: 1042, fill: '#fff', 'font-size': 38, 'font-weight': 700 });
+      bT.textContent = 'Class B';
+      const bP = el('text', { x: 556, y: 1042, fill: '#fff', 'font-size': 30, 'text-anchor': 'middle', opacity: 0.9 });
+      bP.textContent = '0.82';
+      chipB.appendChild(bT);
+      chipB.appendChild(bP);
+      chipB.appendChild(el('circle', { cx: 648, cy: 1029, r: 26, fill: '#fff' }));
+      chipB.appendChild(el('path', { d: 'M635,1029 l9,11 l17,-21', fill: 'none', stroke: 'var(--fc)', 'stroke-width': 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+      grp.appendChild(chipB);
+
+      const fades = [leftBox, rightBox, nnLabel, gbtLabel, plus];
+      const all = [...fades, ...edges, ...trees, ...flowEls, chipA, chipB];
+      all.forEach((e) => (e.style.opacity = '0'));
+      nnNodes.forEach((nEl) => (nEl.style.scale = '0'));
+
+      return {
+        group: grp,
+        enter(anim) {
+          if (!anim) {
+            all.forEach((e) => (e.style.opacity = '1'));
+            nnNodes.forEach((nEl) => (nEl.style.scale = '1'));
+            return;
+          }
+          fadeIn(fades, 0, 0.08, 10);
+          edges.forEach((e, i) => {
+            const a = animate(e, { opacity: [0, 1] }, { duration: 0.4, delay: 0.25 + i * 0.012 });
+            a.finished.then(() => (e.style.opacity = '1')).catch(() => {});
+          });
+          popIn(nnNodes, 0.4, 0.025);
+          fadeIn(trees, 0.5, 0.14, 12);
+          fadeIn(flowEls, 0.95, 0.05, 0);
+          fadeIn([chipA], 1.15, 0, 8);
+          fadeIn([chipB], 1.4, 0, 14); // the decision lands last
+        },
+      };
+    }
+
+    /* ===================== 4 · FORECAST ===================== */
+    function sceneForecast(): Scene {
+      const grp = g();
+      const xL = 90,
+        xR = 910,
+        plotW = xR - xL;
+      const yTop = 520,
+        yBase = 1250;
+      const nowT = 0.6,
+        nowX = xL + nowT * plotW;
+
+      let seed = 20260622;
+      const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
+      const n = 240,
+        hraw: number[] = [];
+      const waves = [
+        { f: 1.0, amp: 1.0, ph: rnd() * 6 },
+        { f: 2.3, amp: 0.34, ph: rnd() * 6 },
+        { f: 4.1, amp: 0.1, ph: rnd() * 6 },
+      ];
+      for (let i = 0; i <= n; i++) {
+        const t = i / n;
+        let y = 0;
+        waves.forEach((w) => (y += w.amp * Math.sin(w.f * Math.PI * t + w.ph)));
+        y += (rnd() - 0.5) * 0.015;
+        y += 1.2 * Math.exp(-Math.pow((t - 0.42) / 0.24, 2));
+        hraw.push(y);
+      }
+      const lo = Math.min(...hraw),
+        hi = Math.max(...hraw);
+      const X = (t: number) => xL + t * plotW;
+      const Y = (v: number) => yBase - (0.12 + ((v - lo) / (hi - lo)) * 0.8) * (yBase - yTop);
+      const pts = hraw.map((v, i) => [X(i / n), Y(v)] as [number, number]);
+      const yAtT = (t: number) => {
+        const k = Math.max(0, Math.min(1, t)) * n,
+          i = Math.floor(k),
+          f = k - i;
+        return pts[i][1] + (pts[Math.min(i + 1, n)][1] - pts[i][1]) * f;
+      };
+      const smooth = (arr: [number, number][]) => {
+        let d = `M ${arr[0][0]},${arr[0][1]}`;
+        for (let i = 0; i < arr.length - 1; i++) {
+          const p0 = arr[i - 1] || arr[i],
+            p1 = arr[i],
+            p2 = arr[i + 1],
+            p3 = arr[i + 2] || p2;
+          d += ` C ${p1[0] + (p2[0] - p0[0]) / 6},${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6},${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]},${p2[1]}`;
+        }
+        return d;
+      };
+      const obs = pts.filter((p) => p[0] <= nowX);
+      obs.push([nowX, yAtT(nowT)]);
+      const fc = ([[nowX, yAtT(nowT)]] as [number, number][]).concat(pts.filter((p) => p[0] > nowX));
+
+      grp.appendChild(el('rect', { x: nowX, y: yTop - 20, width: xR - nowX + 30, height: yBase - (yTop - 20), fill: '#3f7d5e', opacity: 0.035 }));
+      for (let i = 0; i <= 4; i++) {
+        const y = yTop + ((yBase - yTop) * i) / 4;
+        grp.appendChild(el('line', { x1: xL, y1: y, x2: xR, y2: y, stroke: '#eef0f2', 'stroke-width': 1.2 }));
+      }
+      grp.appendChild(el('line', { x1: xL, y1: yBase, x2: xR, y2: yBase, stroke: '#d7dadf', 'stroke-width': 1.5 }));
+
+      // legend
+      grp.appendChild(el('line', { x1: xL, y1: 300, x2: xL + 46, y2: 300, stroke: '#0b0b0c', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+      grp.appendChild(el('circle', { cx: xL + 23, cy: 300, r: 6, fill: '#0b0b0c' }));
+      const lg1 = el('text', { x: xL + 62, y: 310, fill: '#4b5158', 'font-size': 28 });
+      lg1.textContent = 'Measured';
+      grp.appendChild(lg1);
+      grp.appendChild(el('line', { x1: xL + 320, y1: 300, x2: xL + 366, y2: 300, stroke: '#3f7d5e', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+      const lg2 = el('text', { x: xL + 382, y: 310, fill: '#3f7d5e', 'font-size': 28 });
+      lg2.textContent = 'Forecast';
+      grp.appendChild(lg2);
+
+      grp.appendChild(el('path', { d: smooth(obs) + ` L ${nowX},${yBase} L ${xL},${yBase} Z`, fill: 'url(#vh-mass)' }));
+      grp.appendChild(el('path', { d: smooth(fc) + ` L ${xR},${yBase} L ${nowX},${yBase} Z`, fill: 'url(#vh-fcmass)' }));
+
+      const top: [number, number][] = [],
+        bot: [number, number][] = [];
+      fc.forEach((p) => {
+        const s = 22 * ((p[0] - nowX) / (xR - nowX));
+        top.push([p[0], p[1] - s * 3.2]);
+        bot.push([p[0], p[1] + s * 3.2]);
+      });
+      const band: any = el('path', { d: smooth(top) + ' L ' + smooth(bot.reverse()).slice(2) + ' Z', fill: 'var(--fc-soft)' });
+      band.style.transformBox = 'fill-box';
+      band.style.transformOrigin = 'left center';
+      grp.appendChild(band);
+
+      const fcLine: any = el('path', { d: smooth(fc), fill: 'none', stroke: 'var(--fc)', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+      grp.appendChild(fcLine);
+      grp.appendChild(el('path', { d: smooth(obs), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+
+      const dots: any[] = [];
+      const ND = 11;
+      for (let k = 0; k <= ND; k++) {
+        const t = (k * nowT) / ND;
+        const c: any = el('circle', { cx: X(t), cy: yAtT(t), r: 7, fill: '#fff', stroke: '#0b0b0c', 'stroke-width': 3 });
+        c.style.transformBox = 'fill-box';
+        c.style.transformOrigin = 'center';
+        grp.appendChild(c);
+        dots.push(c);
+      }
+      grp.appendChild(el('line', { x1: nowX, y1: yTop - 20, x2: nowX, y2: yBase, stroke: '#c5c9cf', 'stroke-width': 1.5, 'stroke-dasharray': '4 6' }));
+      const nowdot: any = el('circle', { cx: nowX, cy: yAtT(nowT), r: 9, fill: '#0b0b0c' });
+      nowdot.style.transformBox = 'fill-box';
+      nowdot.style.transformOrigin = 'center';
+      grp.appendChild(nowdot);
+      const nowlab = el('text', { x: nowX, y: yBase + 46, fill: '#4b5158', 'font-size': 28, 'text-anchor': 'middle', 'font-weight': 600 });
+      nowlab.textContent = 'now';
+      grp.appendChild(nowlab);
+      (
+        [
+          ['past', 0.16],
+          ['forecast', 0.82],
+        ] as [string, number][]
+      ).forEach(([txt, p]) => {
+        const t = el('text', { x: X(p), y: yBase + 46, fill: '#9aa0a7', 'font-size': 26, 'text-anchor': 'middle' });
+        t.textContent = txt;
+        grp.appendChild(t);
+      });
+      const glide = el('circle', { r: 8, fill: '#0b0b0c', opacity: 0 });
+      grp.appendChild(glide);
+
+      const showFinal = () => {
+        fcLine.style.opacity = '1';
+        band.style.opacity = '1';
+        dots.forEach((d) => (d.style.scale = '1'));
+        nowdot.style.scale = '1';
+      };
+      // pre-state
+      fcLine.style.opacity = '0';
+      band.style.opacity = '0';
+      dots.forEach((d) => (d.style.scale = '0'));
+      nowdot.style.scale = '0';
+
+      return {
+        group: grp,
+        enter(anim) {
+          if (!anim) {
+            showFinal();
+            return;
+          }
+          animate(0, 1, {
+            duration: 1.6,
+            ease: 'easeOut',
+            onUpdate: (k: number) => {
+              const x = xL + k * (nowX - xL);
+              glide.setAttribute('cx', String(x));
+              glide.setAttribute('cy', String(yAtT((x - xL) / plotW)));
+              glide.setAttribute('opacity', k < 1 ? '1' : '0');
+            },
+          });
+          const pop = animate(dots, { scale: [0, 1] }, { delay: 0.4, type: 'spring', stiffness: 560, damping: 14 });
+          pop.finished.then(() => dots.forEach((d) => (d.style.scale = '1'))).catch(() => {});
+          const nowPop = animate(nowdot, { scale: [0, 1] }, { delay: 1.0, type: 'spring', stiffness: 520, damping: 16 });
+          nowPop.finished.then(() => (nowdot.style.scale = '1')).catch(() => {});
+          const fade = animate([fcLine, band], { opacity: [0, 1] }, { delay: 1.2, duration: 0.7 });
+          fade.finished
+            .then(() => {
+              fcLine.style.opacity = '1';
+              band.style.opacity = '1';
+              animate(band, { transform: ['scaleY(.92)', 'scaleY(1.08)', 'scaleY(.92)'] }, { duration: 4.4, repeat: Infinity, ease: 'easeInOut' });
+            })
+            .catch(() => {});
+        },
+      };
+    }
+
+    /* ============ assemble + stepper ============ */
+    const scenes: Scene[] = [sceneConsolidate(), sceneEDA(), sceneClassify(), sceneForecast()];
+    scenes.forEach((sc) => (sc.group.style.opacity = '0'));
+    const played = scenes.map(() => false);
+
+    mountStepper({
+      root,
+      svg,
+      steps: ['Data consolidation', 'Exploratory Data Analysis', 'Classifications', 'Regressions'],
+      reduce,
+      onStage: (s, _prev, anim) => {
+        scenes.forEach((sc, i) => {
+          if (i === s) return;
+          if (anim) {
+            const a = animate(sc.group, { opacity: 0 }, { duration: 0.25 });
+            a.finished.then(() => (sc.group.style.opacity = '0')).catch(() => {});
+          } else sc.group.style.opacity = '0';
+        });
+        const cur = scenes[s];
+        if (!played[s]) {
+          played[s] = true;
+          cur.group.style.opacity = '1';
+          cur.enter(anim);
+        } else if (anim) {
+          const a = animate(cur.group, { opacity: [0, 1] }, { duration: 0.3 });
+          a.finished.then(() => (cur.group.style.opacity = '1')).catch(() => {});
+        } else {
+          cur.group.style.opacity = '1';
+        }
+      },
+    });
+  }
+
+  const init = () => document.querySelectorAll<HTMLElement>('[data-forecast-anim]').forEach(buildForecastAnim);
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>

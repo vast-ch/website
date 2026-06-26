@@ -23,7 +23,7 @@ if (missing.length) throw new Error(`Missing case study entries: ${missing.join(
     titleAccent={hero.titleAccent}
     subtitle={hero.subtitle}
     actions={hero.actions}
-    image={{ src: '~/assets/images/placeholder.png', alt: hero.imageAlt }}
+    image={{ src: '~/assets/images/index/index-hero.jpeg', alt: hero.imageAlt }}
   />
 
   <ServicesShowcase id={services.id} tagline={services.tagline} title={services.title} items={services.items} />
@@ -34,6 +34,7 @@ if (missing.length) throw new Error(`Missing case study entries: ${missing.join(
     isReversed={whyUs.isReversed}
     items={whyUs.items}
     image={whyUs.image}
+    imageMatchHeight
   >
     <Fragment slot="content">
       {whyUs.contentTagline && <p class="text-base text-secondary font-bold tracking-wide uppercase">{whyUs.contentTagline}</p>}
