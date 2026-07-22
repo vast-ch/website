@@ -1,7 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
-import { CASE_STUDY_SERVICES, CASE_STUDY_INDUSTRIES } from './utils/case-studies';
 
 const metadataDefinition = () =>
   z
@@ -222,22 +221,7 @@ const pagesCollection = defineCollection({
   schema: pageSchema,
 });
 
-const caseStudiesCollection = defineCollection({
-  loader: glob({ pattern: ['*.md'], base: 'src/content/case-studies' }),
-  schema: z.object({
-    title: z.string(),
-    excerpt: z.string(),
-    client: z.string().optional(),
-    services: z.array(z.enum(CASE_STUDY_SERVICES)).min(1),
-    industries: z.array(z.enum(CASE_STUDY_INDUSTRIES)).default([]),
-    image: image.optional(),
-    items: z.array(item).min(1),
-    order: z.number().optional(),
-  }),
-});
-
 export const collections = {
   post: postCollection,
   pages: pagesCollection,
-  'case-studies': caseStudiesCollection,
 };
