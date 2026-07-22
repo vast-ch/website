@@ -2,7 +2,6 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroOverlay from '~/components/widgets/HeroOverlay.astro';
 import ServicesShowcase from '~/components/widgets/ServicesShowcase.astro';
-import CaseStudiesCarousel from '~/components/widgets/CaseStudiesCarousel.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { getEntry } from 'astro:content';
@@ -10,10 +9,6 @@ import { getEntry } from 'astro:content';
 const page = await getEntry('pages', 'index');
 if (!page) throw new Error('Missing page entry: index');
 const { metadata, hero, services, whyUs, caseStudies, cta } = page.data as Required<typeof page.data>;
-
-const featured = await Promise.all(caseStudies.map((csId) => getEntry('case-studies', csId)));
-const missing = caseStudies.filter((_, i) => !featured[i]);
-if (missing.length) throw new Error(`Missing case study entries: ${missing.join(', ')}`);
 ---
 
 <Layout metadata={metadata}>
@@ -27,8 +22,6 @@ if (missing.length) throw new Error(`Missing case study entries: ${missing.join(
   />
 
   <ServicesShowcase id={services.id} tagline={services.tagline} title={services.title} items={services.items} />
-
-  <CaseStudiesCarousel caseStudies={featured.map((e) => e!)} />
 
   <Content
     isReversed={whyUs.isReversed}

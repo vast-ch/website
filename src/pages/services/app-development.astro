@@ -13,10 +13,6 @@ if (!page) throw new Error('Missing page entry: services/app-development');
 const { metadata, hero, web, mobile, backend, tech, proof, caseStudies, nextSteps, quickStart } = page.data as Required<
   typeof page.data
 >;
-
-const featured = await Promise.all(caseStudies.map((csId) => getEntry('case-studies', csId)));
-const missing = caseStudies.filter((_, i) => !featured[i]);
-if (missing.length) throw new Error(`Missing case study entries: ${missing.join(', ')}`);
 ---
 
 <Layout metadata={metadata}>
@@ -58,10 +54,6 @@ if (missing.length) throw new Error(`Missing case study entries: ${missing.join(
   </Content>
 
   <TechLogos title={tech.title} tagline={tech.tagline} subtitle={tech.subtitle} items={tech.items} />
-
-  <div class="bg-section">
-    <CaseStudiesCarousel caseStudies={featured.map((e) => e!)} />
-  </div>
 
   <QuickStart
     tagline={nextSteps.tagline}

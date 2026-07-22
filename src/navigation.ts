@@ -19,25 +19,7 @@ export const headerData = {
           icon: 'tabler:chart-line',
           description: 'Support your decisions with data',
         },
-        /*
-          {
-            text: 'Small tools & prototypes',
-            href: getPermalink('/services/small-tools'),
-            icon: 'tabler:tool',
-            description: 'Quick utilities that turn an annoyance into time saved.',
-          },
-          {
-            text: 'Advisory & digitalization',
-            href: getPermalink('/services/advisory'),
-            icon: 'tabler:bulb',
-            description: 'Independent reviews and hands-on digitalization.',
-          },
-        */
       ],
-    },
-    {
-      text: 'Case studies',
-      href: getPermalink('/case-studies'),
     },
     {
       text: 'About',
@@ -54,17 +36,6 @@ export const footerData = {
       links: [
         { text: 'Web and app development', href: getPermalink('/services/app-development') },
         { text: 'Data science and machine learning', href: getPermalink('/services/data-science-machine-learning') },
-      ],
-    },
-    {
-      title: 'Case studies',
-      links: [
-        { text: 'Flightbook — shipped, in production', href: getPermalink('/case-studies#flightbook') },
-        {
-          text: 'Foundation models vs. classical baselines',
-          href: getPermalink('/case-studies#foundation-models-benchmark'),
-        },
-        { text: 'See all case studies', href: getPermalink('/case-studies') },
       ],
     },
     {
