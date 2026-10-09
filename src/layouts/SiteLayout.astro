@@ -54,13 +54,27 @@ const isEnglishHome = locale === 'en' && page === 'home';
       description={description}
       ignoreTitleTemplate={ignoreTitleTemplate}
       robots={noindex ? { index: false, follow: false } : undefined}
-      openGraph={{ locale: OG_LOCALE[locale] }}
+      openGraph={{
+        locale: OG_LOCALE[locale],
+        images: [{ url: `~/assets/images/og/og-${locale}.jpg`, width: 1200, height: 630 }],
+      }}
     />
     {
       page &&
         LOCALES.map((l) => <link rel="alternate" hreflang={HTML_LANG[l]} href={String(getCanonical(alternates[l]))} />)
     }
     {page && <link rel="alternate" hreflang="x-default" href={String(getCanonical(alternates.en))} />}
+    <noscript>
+      <style>
+        /* Without JavaScript the menu cannot toggle, so show its links. */
+        .menu-panel[hidden] {
+          display: flex;
+        }
+        [data-menu-toggle] {
+          display: none;
+        }
+      </style>
+    </noscript>
     <SiteVerification />
     <Analytics />
 

@@ -42,7 +42,7 @@ export const findImage = async (
 };
 
 const OG_WIDTH = 1200;
-const OG_HEIGHT = 626;
+const OG_HEIGHT = 630;
 
 /**
  * Adapt OpenGraph images to absolute, optimized URLs.
@@ -61,7 +61,18 @@ export const adaptOpenGraphImages = async (
       const resolved = await findImage(image.url);
       if (!resolved) return { url: '' };
 
-      // Generate an optimized JPG via Astro's image service (Sharp by default).
+      // Cards already made at the right size and format are served as they are,
+      // so crawlers never depend on the host's image service.
+      if (
+        typeof resolved !== 'string' &&
+        resolved.width === OG_WIDTH &&
+        resolved.height === OG_HEIGHT &&
+        resolved.format === 'jpg'
+      ) {
+        return { url: String(new URL(resolved.src, astroSite)), width: OG_WIDTH, height: OG_HEIGHT };
+      }
+
+      // Otherwise generate an optimized JPG via Astro's image service.
       const optimized = await getImage({
         src: resolved,
         width: OG_WIDTH,

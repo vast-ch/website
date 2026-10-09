@@ -59,7 +59,7 @@
 
   --ink-rgb: 57 53 54; /* #393536, the logo colour */
   --ink: rgb(var(--ink-rgb));
-  --ink-muted: rgb(var(--ink-rgb) / 0.64);
+  --ink-muted: rgb(var(--ink-rgb) / 0.74);
   --ink-faint: rgb(var(--ink-rgb) / 0.4);
   --line: rgb(var(--ink-rgb) / 0.16);
 
@@ -113,6 +113,12 @@ body {
 
 ::selection {
   background: rgb(var(--ink-rgb) / 0.16);
+}
+
+:where(a, button, summary):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .mono {

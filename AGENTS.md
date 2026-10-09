@@ -1,12 +1,12 @@
-# AstroWind Agent Instructions
+# vast.ch website: agent instructions
 
-## Project Overview
+## Project overview
 
-AstroWind is a free, open-source website template built with **Astro v6** and **Tailwind CSS v4**. It generates a fully static site optimized for performance, SEO, and accessibility.
+The public website of Vast Switzerland GmbH: a small, static, bilingual (English/French) site built with **Astro 6**. Its look is a full-screen animated sky (a volumetric sea of clouds rendered in WebGL) with corner chrome set in Departure Mono and reading text set in Inter.
 
-**Stack:** Astro v6 | Tailwind CSS v4 | TypeScript 5.9 | MDX | Sharp
+**Stack:** Astro 6 | TypeScript | Tailwind CSS v4 (used only for its CSS reset) | Netlify adapter
 
-## Quick Reference
+## Quick reference
 
 | Command           | Purpose                             |
 | ----------------- | ----------------------------------- |
@@ -20,97 +20,67 @@ AstroWind is a free, open-source website template built with **Astro v6** and **
 
 ## Architecture
 
-### Directory Structure
-
 ```
 src/
-  assets/styles/tailwind.css   # Tailwind v4 config (themes, utilities, plugins)
+  i18n/                 # Locales, routes and all page copy
+    config.ts           # LOCALES, ROUTES (translated slugs), contact email, external links
+    types.ts            # Dictionary type: every locale must provide every string
+    en.ts, fr.ts        # The copy, one dictionary per locale
+  layouts/
+    SiteLayout.astro    # Page shell: metadata, hreflang, theme + menu scripts, view transitions
+    MarkdownLayout.astro# Long-form Markdown pages
   components/
-    common/        # Shared: Image, Metadata, Analytics, ToggleTheme
-    ui/            # Primitives: Button, Headline, WidgetWrapper, ItemGrid
-    widgets/       # Page sections: Hero, Features, Pricing, Header, Footer
-    blog/          # Blog: SinglePost, List, Pagination, Tags
-    CustomStyles.astro  # CSS variables for colors and fonts
-  content.config.ts    # Content Collections schema (Astro v6 location)
-  data/post/           # Blog posts (.md, .mdx)
-  layouts/             # Layout.astro, PageLayout.astro, MarkdownLayout.astro
-  pages/               # File-based routing
-  utils/               # blog.ts, images.ts, permalinks.ts, frontmatter.ts
-  config.yaml          # Site configuration (loaded as virtual module)
-  navigation.ts        # Navigation structure
-  types.d.ts           # TypeScript type definitions
-vendor/integration/    # Custom Astro integration for config loading
+    site/               # SkyCanvas.astro + sky.ts (cloud shader), SiteHeader, SiteFooter, Pictogram
+    views/              # One view per page, shared by the EN and FR route files
+    common/             # Metadata, CommonMeta, SiteVerification, Analytics
+    Favicons.astro
+  pages/                # Thin route files (EN at the root, FR under fr/)
+  assets/
+    styles/site.css     # Design tokens and all site styles
+    styles/tailwind.css # Tailwind import (reset only)
+    brand/              # 2025 logo and pictogram (source SVGs)
+    images/og/          # Social preview cards, one per locale (1200×630 JPEG)
+    favicons/
+  config.yaml           # Site URL, default SEO metadata (loaded as `astrowind:config`)
+  utils/                # permalinks.ts (canonical URLs), images.ts (social card URLs)
+vendor/integration/     # Loads config.yaml as the `astrowind:config` virtual module
+public/fonts/           # Departure Mono (SIL OFL) with its licence
 ```
 
-### Temporary site (branch `agent/temporary-website`)
+### Internationalisation
 
-The public pages are a small bilingual (EN/FR) site, separate from the AstroWind widgets:
+- Every page exists in each locale. Slugs are translated (`/approach` ↔ `/fr/approche`), so pages are resolved through their route key in `ROUTES`, never by prefixing a path.
+- All copy lives in `src/i18n/en.ts` and `fr.ts`. The `Dictionary` type makes a missing translation a type error.
+- French: write a plain space before `; : ! ?`. It becomes a narrow no-break space automatically.
+- Strings documented as HTML in `types.ts` are rendered with `set:html`. They are authored in this repo only.
 
-- `src/i18n/` — routes per locale (`config.ts`, translated slugs such as `/approach` ↔ `/fr/approche`) and all page copy in typed dictionaries (`en.ts`, `fr.ts`). The `Dictionary` type makes a missing French string a build error. French spaces before `; : ! ?` become narrow no-break spaces automatically.
-- `src/layouts/SiteLayout.astro` — page shell: fixed corner chrome, language switch, AUTO/LIGHT/DARK toggle, hreflang links, view transitions.
-- `src/components/site/` — `SkyCanvas.astro` + `sky.ts` (WebGL cloud background, persisted across navigations), header, footer, inline pictogram.
-- `src/components/views/` — one view per page, rendered by thin route files in `src/pages/` and `src/pages/fr/`.
-- `src/assets/styles/site.css` — design tokens and styles (Inter for reading, Departure Mono from `public/fonts/` for UI). Avoid the class name `prose`: it belongs to Tailwind Typography; the site uses `copy`.
+### Adding a page
 
-### Path Aliases
+1. Add a route key with both slugs to `ROUTES` in `src/i18n/config.ts`.
+2. Add its copy to the `Dictionary` type and to both dictionaries.
+3. Create a view in `src/components/views/` and two thin route files (`src/pages/<slug>.astro`, `src/pages/fr/<slug>.astro`).
+4. Link it from `SiteHeader.astro` if it belongs in the menu.
 
-Use `~/` to import from `src/`:
+### Design notes
 
-```typescript
-import Image from '~/components/common/Image.astro';
-import { SITE } from 'astrowind:config';
-```
+- Departure Mono (uppercase, `.mono`) is for UI chrome and labels; Inter is for reading.
+- Colours are tokens on `:root` / `:root.dark` in `site.css`. Muted text must keep at least 4.5:1 contrast on the veil.
+- The sky shader runs at reduced resolution and at most 30 fps. A governor lowers the resolution further on slow devices, and with `prefers-reduced-motion` it draws a single still frame. Keep it cheap: test on a phone after changing it.
+- Avoid the class name `prose`; the site uses `copy` for running text.
 
-### Configuration System
+### Path alias
 
-Site config lives in `src/config.yaml` and is loaded as a Vite virtual module `astrowind:config` by the custom integration in `vendor/integration/`. Exports: `SITE`, `I18N`, `METADATA`, `APP_BLOG`, `UI`, `ANALYTICS`.
+Use `~/` to import from `src/`.
 
-## Tailwind CSS v4
+## Git workflow
 
-Configuration is CSS-first in `src/assets/styles/tailwind.css`:
+- Work on a branch named `agent/<name>` created from `develop`.
+- Merge into `develop` only when asked. Never merge into `main` without an explicit instruction.
 
-- **Theme tokens:** `@theme { --color-primary: var(--aw-color-primary); ... }`
-- **Custom utilities:** `@utility bg-page { ... }`
-- **Dark mode:** Class-based via `@variant dark (&:where(.dark, .dark *))`
-- **Plugins:** `@plugin "@tailwindcss/typography"`
-- **Custom variant:** `@custom-variant intersect (&:not([no-intersect]))`
-
-CSS variables for colors/fonts are defined in `src/components/CustomStyles.astro` with light/dark theme variants.
-
-The Vite plugin `@tailwindcss/vite` is configured in `astro.config.ts` (not as an Astro integration).
-
-### Class Merging
-
-Components use `twMerge` from `tailwind-merge` v3 for conditional class composition.
-
-## Content Collections
-
-Defined in `src/content.config.ts` using the Astro v6 Content Layer API with `glob()` loader. Posts are in `src/data/post/` as `.md` or `.mdx` files.
-
-Post frontmatter: `title` (required), `publishDate`, `updateDate`, `draft`, `excerpt`, `image`, `category`, `tags`, `author`, `metadata`.
-
-## Component Patterns
-
-- Props extend interfaces from `~/types`
-- Use `class:list` for conditional classes
-- Use `twMerge()` when accepting className overrides
-- Use named slots for layout composition
-- Widget components accept standardized props (see `~/types`)
-
-## Image Handling
-
-`src/components/common/Image.astro` supports:
-
-- Local images via `astro:assets` (optimized by Sharp)
-- Remote images via Unpic CDN
-- Allowed domains (for providers Unpic can't detect, processed by Sharp): `cdn.pixabay.com`
-
-Hero images use `loading="eager"` and `fetchpriority="high"`.
-
-## Verification Checklist
+## Verification checklist
 
 After changes, always verify:
 
-1. `npm run build` succeeds
-2. `npm run check` passes (astro check + ESLint + Prettier)
-3. Visual check in browser: homepage, blog, dark mode, mobile menu
+1. `npm run check` passes (astro check + ESLint + Prettier). CI runs it on PRs to `main`.
+2. `npm run build` succeeds.
+3. In the browser: every page in EN and FR, light and dark, desktop and mobile, the menu, the language switch and the 404 page.
