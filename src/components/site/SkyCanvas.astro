@@ -1,0 +1,12 @@
+---
+// Full-screen animated sky: a sea of clouds below the horizon, a faint alpine
+// ridge, drifting high clouds above and stars at night. Rendered with a single
+// WebGL fragment shader at reduced resolution. The canvas persists across
+// client-side navigations so the sky never restarts between pages.
+---
+
+<canvas id="sky" class="sky" aria-hidden="true" transition:persist="sky"></canvas>
+
+<script>
+  import './sky';
+</script>

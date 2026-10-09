@@ -1,0 +1,32 @@
+---
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import Wordmark from '~/components/site/Wordmark.astro';
+import { getDictionary, route, type Locale } from '~/i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  page="home"
+  variant="home"
+  title={t.home.meta.title}
+  description={t.home.meta.description}
+  ignoreTitleTemplate
+>
+  <section class="home-hero">
+    <Wordmark class="home-wordmark" title="vast" />
+    <h1 class="home-hero-text" set:html={t.home.hero} />
+    <div class="home-links mono">
+      <a class="arrow-link" href={route('services', locale)}
+        >{t.home.links.services} <span aria-hidden="true">→</span></a
+      >
+      <a class="arrow-link" href={route('contact', locale)}>{t.home.links.contact} <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</SiteLayout>

@@ -42,6 +42,16 @@ src/
 vendor/integration/    # Custom Astro integration for config loading
 ```
 
+### Temporary site (branch `agent/temporary-website`)
+
+The public pages are a small bilingual (EN/FR) site, separate from the AstroWind widgets:
+
+- `src/i18n/` — routes per locale (`config.ts`, translated slugs such as `/approach` ↔ `/fr/approche`) and all page copy in typed dictionaries (`en.ts`, `fr.ts`). The `Dictionary` type makes a missing French string a build error. French spaces before `; : ! ?` become narrow no-break spaces automatically.
+- `src/layouts/SiteLayout.astro` — page shell: fixed corner chrome, language switch, AUTO/LIGHT/DARK toggle, hreflang links, view transitions.
+- `src/components/site/` — `SkyCanvas.astro` + `sky.ts` (WebGL cloud background, persisted across navigations), header, footer, inline logo/pictogram.
+- `src/components/views/` — one view per page, rendered by thin route files in `src/pages/` and `src/pages/fr/`.
+- `src/assets/styles/site.css` — design tokens and styles (Inter for reading, Departure Mono from `public/fonts/` for UI). Avoid the class name `prose`: it belongs to Tailwind Typography; the site uses `copy`.
+
 ### Path Aliases
 
 Use `~/` to import from `src/`:

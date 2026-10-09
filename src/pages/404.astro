@@ -1,24 +1,29 @@
 ---
-import Layout from '~/layouts/Layout.astro';
-import { getHomePermalink } from '~/utils/permalinks';
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import { getDictionary, route } from '~/i18n';
 
-const title = `Error 404`;
+// Served for every missing URL, so it speaks both languages.
+const en = getDictionary('en');
+const fr = getDictionary('fr');
 ---
 
-<Layout metadata={{ title }}>
-  <section class="flex items-center h-full p-16">
-    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-      <div class="max-w-md text-center">
-        <h2 class="mb-8 font-bold text-9xl">
-          <span class="sr-only">Error</span>
-          <span class="text-primary">404</span>
-        </h2>
-        <p class="text-3xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-        <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">
-          But don't worry, you can find plenty of other things on our homepage.
-        </p>
-        <a rel="noopener noreferrer" href={getHomePermalink()} class="btn ml-4">Back to homepage</a>
-      </div>
+<SiteLayout
+  locale="en"
+  variant="home"
+  title={en.notFound.meta.title}
+  description={en.notFound.meta.description}
+  noindex
+>
+  <section class="lost">
+    <p class="mono muted">404</p>
+    <h1>
+      {en.notFound.heading}<br />
+      <span lang="fr" class="muted">{fr.notFound.heading}</span>
+    </h1>
+    <div class="home-links mono">
+      <a class="arrow-link" href={route('home', 'en')}>{en.notFound.back} <span aria-hidden="true">→</span></a>
+      <a class="arrow-link" href={route('home', 'fr')} lang="fr">{fr.notFound.back} <span aria-hidden="true">→</span></a
+      >
     </div>
   </section>
-</Layout>
+</SiteLayout>

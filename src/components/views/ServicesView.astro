@@ -1,0 +1,91 @@
+---
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import { getDictionary, mailto, type Locale } from '~/i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const { labels } = t.services;
+---
+
+<SiteLayout locale={locale} page="services" title={t.services.meta.title} description={t.services.meta.description}>
+  <article class="content-surface">
+    <div class="copy">
+      <p class="eyebrow mono">{t.services.label}</p>
+      <h1 class="page-heading">{t.services.heading}</h1>
+      {t.services.intro.map((paragraph) => <p set:html={paragraph} />)}
+    </div>
+
+    <section class="offers" aria-labelledby="offers-label">
+      <h2 id="offers-label" class="eyebrow mono">{t.services.listLabel}</h2>
+      {
+        t.services.offers.map((offer, index) => (
+          <details class="offer" id={offer.id}>
+            <summary>
+              <span class="offer-marker mono" aria-hidden="true">
+                &gt;
+              </span>
+              <span class="offer-index mono">{String(index + 1).padStart(2, '0')}</span>
+              <span class="offer-title spark">
+                <span>{offer.title}</span>
+              </span>
+              <span class="offer-headline">{offer.headline}</span>
+            </summary>
+
+            <div class="offer-body">
+              <p class="offer-promise">{offer.promise}</p>
+
+              <div class="offer-block">
+                <span class="mono">{labels.audience}</span>
+                <p>{offer.audience}</p>
+              </div>
+
+              <div class="offer-block">
+                <span class="mono">{labels.deliverables}</span>
+                <ul class="dash-list">
+                  {offer.deliverables.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {offer.extra && (
+                <div class="offer-block">
+                  <span class="mono">{offer.extra.label}</span>
+                  <p>{offer.extra.text}</p>
+                </div>
+              )}
+
+              <div class="offer-block">
+                <span class="mono">{labels.how}</span>
+                <p>{offer.how}</p>
+              </div>
+
+              <div class="offer-block">
+                <span class="mono">{labels.pricing}</span>
+                <p>{offer.pricing}</p>
+              </div>
+
+              <div class="offer-block">
+                <span class="mono">{labels.why}</span>
+                <p>{offer.why}</p>
+              </div>
+
+              <div class="offer-cta">
+                <p>{offer.cta}</p>
+                <a class="arrow-link mono" href={mailto(offer.title)}>
+                  {labels.write} <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </details>
+        ))
+      }
+    </section>
+
+    <p class="copy muted outro" set:html={t.services.outro} />
+  </article>
+</SiteLayout>

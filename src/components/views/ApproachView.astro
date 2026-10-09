@@ -1,0 +1,52 @@
+---
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import { getDictionary, type Locale } from '~/i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const a = t.approach;
+---
+
+<SiteLayout locale={locale} page="approach" title={a.meta.title} description={a.meta.description}>
+  <article class="content-surface copy">
+    <p class="eyebrow mono">{a.label}</p>
+    <h1 class="page-heading">{a.heading}</h1>
+
+    {
+      a.principles.map((principle) => (
+        <p class="entry">
+          <span class="subheading">{principle.title}</span>
+          <span set:html={principle.text} />
+        </p>
+      ))
+    }
+
+    <h2 class="section-heading" id="where-to-start">{a.start.heading}</h2>
+    <p>{a.start.intro}</p>
+    <ol class="steps">
+      {
+        a.start.steps.map((step) => (
+          <li>
+            <p>
+              <span class="subheading">{step.title}</span>
+              <span set:html={step.text} />
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <figure class="quote">
+      <figcaption class="mono muted">{a.oneLiner.label}</figcaption>
+      <blockquote>
+        <p>{a.oneLiner.text}</p>
+      </blockquote>
+    </figure>
+
+    <p class="lead" set:html={a.outro} />
+  </article>
+</SiteLayout>

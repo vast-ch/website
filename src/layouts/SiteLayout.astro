@@ -1,0 +1,235 @@
+---
+import '~/assets/styles/tailwind.css';
+import '@fontsource-variable/inter/opsz.css';
+import '@fontsource-variable/inter/opsz-italic.css';
+import '~/assets/styles/site.css';
+
+import { ClientRouter } from 'astro:transitions';
+
+import CommonMeta from '~/components/common/CommonMeta.astro';
+import Favicons from '~/components/Favicons.astro';
+import Metadata from '~/components/common/Metadata.astro';
+import SiteVerification from '~/components/common/SiteVerification.astro';
+import Analytics from '~/components/common/Analytics.astro';
+import SkyCanvas from '~/components/site/SkyCanvas.astro';
+import SiteHeader from '~/components/site/SiteHeader.astro';
+import SiteFooter from '~/components/site/SiteFooter.astro';
+
+import { getDictionary, route, LOCALES, HTML_LANG, OG_LOCALE, type Locale, type RouteKey } from '~/i18n';
+import { getCanonical } from '~/utils/permalinks';
+
+export interface Props {
+  locale: Locale;
+  /** Route key of this page, used for hreflang and the language switch. Omit on pages without translations. */
+  page?: RouteKey;
+  title: string;
+  description?: string;
+  ignoreTitleTemplate?: boolean;
+  /** `home` keeps the sky clear; `content` lays a paper veil under a reading column. */
+  variant?: 'home' | 'content';
+  noindex?: boolean;
+}
+
+const { locale, page, title, description, ignoreTitleTemplate, variant = 'content', noindex } = Astro.props;
+const t = getDictionary(locale);
+
+const alternates = Object.fromEntries(LOCALES.map((l) => [l, route(page ?? 'home', l)])) as Record<Locale, string>;
+const isEnglishHome = locale === 'en' && page === 'home';
+---
+
+<!doctype html>
+<html lang={HTML_LANG[locale]} data-page={variant} transition:animate="none">
+  <head>
+    <CommonMeta />
+    <Favicons />
+    <link
+      rel="preload"
+      href="/fonts/departure-mono/DepartureMono-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <Metadata
+      title={title}
+      description={description}
+      ignoreTitleTemplate={ignoreTitleTemplate}
+      robots={noindex ? { index: false, follow: false } : undefined}
+      openGraph={{ locale: OG_LOCALE[locale] }}
+    />
+    {
+      page &&
+        LOCALES.map((l) => <link rel="alternate" hreflang={HTML_LANG[l]} href={String(getCanonical(alternates[l]))} />)
+    }
+    {page && <link rel="alternate" hreflang="x-default" href={String(getCanonical(alternates.en))} />}
+    <SiteVerification />
+    <Analytics />
+
+    <script is:inline>
+      // Apply the stored appearance before first paint, and again after every
+      // client-side navigation (which replaces the <html> attributes).
+      (() => {
+        const apply = () => {
+          let mode = 'auto';
+          try {
+            mode = localStorage.getItem('theme') || 'auto';
+          } catch {
+            // Storage unavailable: follow the system preference.
+          }
+          const dark =
+            mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', dark);
+        };
+        apply();
+        if (!window.__vastTheme) {
+          window.__vastTheme = apply;
+          document.addEventListener('astro:after-swap', apply);
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apply);
+        }
+      })();
+    </script>
+
+    <script is:inline define:vars={{ redirectToFrench: isEnglishHome }}>
+      // First visit to the English home page only: send French-speaking browsers to /fr.
+      try {
+        if (redirectToFrench && !localStorage.getItem('lang') && !sessionStorage.getItem('lang-checked')) {
+          sessionStorage.setItem('lang-checked', '1');
+          const preferred = (navigator.languages || [navigator.language])
+            .map((l) => String(l).slice(0, 2).toLowerCase())
+            .find((l) => l === 'en' || l === 'fr');
+          if (preferred === 'fr') window.location.replace('/fr');
+        }
+      } catch {
+        // Storage unavailable: stay on the English page.
+      }
+    </script>
+
+    <ClientRouter fallback="swap" />
+  </head>
+
+  <body>
+    <a class="skip-link mono" href="#main">{t.chrome.skipToContent}</a>
+    <SkyCanvas />
+
+    <div class="site-frame">
+      <SiteHeader t={t} current={page} />
+      <main id="main" class={variant === 'home' ? 'home' : 'content-page'} transition:animate="fade">
+        <slot />
+      </main>
+      <SiteFooter t={t} alternates={alternates} />
+    </div>
+
+    <script>
+      type Mode = 'auto' | 'light' | 'dark';
+
+      const root = document.documentElement;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+      const readMode = (): Mode => {
+        try {
+          const value = localStorage.getItem('theme');
+          return value === 'light' || value === 'dark' ? value : 'auto';
+        } catch {
+          return 'auto';
+        }
+      };
+
+      const applyMode = (mode: Mode) => {
+        try {
+          if (mode === 'auto') localStorage.removeItem('theme');
+          else localStorage.setItem('theme', mode);
+        } catch {
+          // Storage can be unavailable (private mode); the choice then lasts for this page only.
+        }
+        root.classList.toggle('dark', mode === 'dark' || (mode === 'auto' && prefersDark.matches));
+        syncThemeLabel(mode);
+      };
+
+      const syncThemeLabel = (mode = readMode()) => {
+        document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((button) => {
+          const labels = JSON.parse(button.dataset.labels || '{}') as Record<string, string>;
+          const text = labels[mode] ?? mode;
+          const label = button.querySelector('[data-theme-label]');
+          if (label) label.textContent = text;
+          button.setAttribute('aria-label', `${labels.label}: ${text}`);
+        });
+      };
+
+      // From "auto", the first click always produces a visible change.
+      const nextMode = (mode: Mode): Mode => {
+        const order: Mode[] = prefersDark.matches ? ['auto', 'light', 'dark'] : ['auto', 'dark', 'light'];
+        return order[(order.indexOf(mode) + 1) % order.length];
+      };
+
+      const menu = () => document.querySelector<HTMLElement>('[data-menu]');
+
+      const setMenu = (open: boolean) => {
+        const nav = menu();
+        const toggle = nav?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+        const panel = nav?.querySelector<HTMLElement>('.menu-panel');
+        if (!nav || !toggle || !panel) return;
+        nav.classList.toggle('is-open', open);
+        panel.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.textContent = (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '';
+      };
+
+      const isMenuOpen = () => menu()?.classList.contains('is-open') ?? false;
+
+      const openFromHash = () => {
+        const id = decodeURIComponent(window.location.hash.slice(1));
+        const target = id ? document.getElementById(id) : null;
+        if (target instanceof HTMLDetailsElement && !target.open) {
+          target.open = true;
+          target.scrollIntoView({ block: 'start' });
+        }
+      };
+
+      document.addEventListener('click', (event) => {
+        const target = event.target as Element | null;
+        if (!target) return;
+
+        if (target.closest('[data-menu-toggle]')) {
+          setMenu(!isMenuOpen());
+          return;
+        }
+        if (isMenuOpen() && !target.closest('[data-menu]')) setMenu(false);
+
+        if (target.closest('[data-theme-toggle]')) {
+          applyMode(nextMode(readMode()));
+          return;
+        }
+
+        const lang = target.closest<HTMLElement>('[data-lang]');
+        if (lang?.dataset.lang) {
+          try {
+            localStorage.setItem('lang', lang.dataset.lang);
+          } catch {
+            // Ignore: the language choice just won't be remembered.
+          }
+        }
+
+        // Same-page links to an offer open it.
+        const anchor = target.closest<HTMLAnchorElement>('a[href*="#"]');
+        if (anchor && anchor.pathname === window.location.pathname) {
+          requestAnimationFrame(openFromHash);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && isMenuOpen()) {
+          setMenu(false);
+          menu()?.querySelector<HTMLElement>('[data-menu-toggle]')?.focus();
+        }
+      });
+
+      prefersDark.addEventListener('change', () => syncThemeLabel());
+      window.addEventListener('hashchange', openFromHash);
+      document.addEventListener('astro:page-load', () => {
+        syncThemeLabel();
+        openFromHash();
+      });
+      syncThemeLabel();
+      openFromHash();
+    </script>
+  </body>
+</html>

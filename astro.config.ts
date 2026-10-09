@@ -26,9 +26,16 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
+  // Pages of the previous site, folded into the temporary one.
   redirects: {
-    '/services/data-science': '/services/data-science-machine-learning',
-    '/services/web-development': '/services/app-development',
+    '/services/data-science': '/services',
+    '/services/data-science-machine-learning': '/services',
+    '/services/web-development': '/services',
+    '/services/app-development': '/services',
+    '/industries': '/services',
+    '/industries/energy': '/services',
+    '/industries/research': '/services',
+    '/industries/sport-industry': '/services',
   },
 
   integrations: [
