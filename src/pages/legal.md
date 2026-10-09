@@ -11,7 +11,7 @@ _Last updated: 9 October 2026_
 ## Publisher
 
 Vast Switzerland GmbH\
-c/o Innovation Lab Fribourg\
+c/o Seed: Lab\
 Chemin du Musée 4\
 1700 Fribourg\
 Switzerland

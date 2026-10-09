@@ -12,7 +12,7 @@ This policy explains how Vast Switzerland GmbH ("Vast", "we") handles personal d
 
 ## Who is responsible
 
-Vast Switzerland GmbH, c/o Innovation Lab Fribourg, Chemin du Musée 4, 1700 Fribourg, Switzerland. For any question about your data, write to [hello@vast.ch](mailto:hello@vast.ch).
+Vast Switzerland GmbH, c/o Seed: Lab, Chemin du Musée 4, 1700 Fribourg, Switzerland. For any question about your data, write to [hello@vast.ch](mailto:hello@vast.ch).
 
 ## What we process, and why
 
@@ -28,7 +28,7 @@ Vast Switzerland GmbH, c/o Innovation Lab Fribourg, Chemin du Musée 4, 1700 Fri
 
 We do not sell personal data. We use the following providers, who may process data on our behalf:
 
-- Hosting of this website: Netlify, Inc., United States.
+- Hosting of this website: Cloudflare, Inc., United States (Cloudflare Pages), which serves the website from data centres around the world.
 - Email: Google Ireland Ltd (Google Workspace), which may process data in other countries, including the United States.
 
 When data is transferred to a country whose level of protection is not recognised as adequate by Switzerland, the transfer relies on appropriate safeguards, such as the standard contractual clauses recognised by the Federal Data Protection and Information Commissioner (FDPIC).

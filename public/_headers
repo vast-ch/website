@@ -1,0 +1,4 @@
+# Cloudflare Pages response headers.
+# Fingerprinted build assets never change, so browsers may cache them for a year.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

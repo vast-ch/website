@@ -43,7 +43,7 @@ The two dictionaries share one TypeScript type, so a string missing in French fa
 
 ## Deployment
 
-`npm run build` produces a plain static site in `dist/`, which any static host can serve. `netlify.toml` holds the build and cache settings for Netlify.
+Hosted on Cloudflare Pages. Project settings: build command `npm run build`, output directory `dist`. Cloudflare reads the Node.js version from `.node-version` and the cache headers from `public/_headers`. The build is a plain static site, so any other static host would work too.
 
 ## Credits
 

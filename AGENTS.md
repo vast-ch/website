@@ -39,9 +39,9 @@ src/
     styles/tailwind.css # Tailwind import (reset only)
     images/og/          # Social preview cards, one per locale (1200×630 JPEG)
     favicons/
-public/                 # robots.txt, Departure Mono (SIL OFL) with its licence
+public/                 # robots.txt, _headers (Cloudflare Pages cache rules), Departure Mono (SIL OFL)
 astro.config.ts         # Site URL, trailing-slash policy, sitemap, compression
-netlify.toml            # Build and cache headers when deployed on Netlify
+.node-version           # Node.js version for the Cloudflare Pages build
 ```
 
 ### Internationalisation
