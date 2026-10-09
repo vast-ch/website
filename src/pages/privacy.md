@@ -28,7 +28,7 @@ Vast Switzerland GmbH, c/o Seed: Lab, Chemin du Musée 4, 1700 Fribourg, Switzer
 
 We do not sell personal data. We use the following providers, who may process data on our behalf:
 
-- Hosting of this website: Cloudflare, Inc., United States (Cloudflare Pages), which serves the website from data centres around the world.
+- Hosting of this website: Cloudflare, Inc., United States (Cloudflare Workers), which serves the website from data centres around the world.
 - Email: Google Ireland Ltd (Google Workspace), which may process data in other countries, including the United States.
 
 When data is transferred to a country whose level of protection is not recognised as adequate by Switzerland, the transfer relies on appropriate safeguards, such as the standard contractual clauses recognised by the Federal Data Protection and Information Commissioner (FDPIC).

@@ -23,7 +23,7 @@ E-mail : [hello@vast.ch](mailto:hello@vast.ch)
 Société à responsabilité limitée (Sàrl) inscrite au registre du commerce du canton de Fribourg.
 
 - IDE : CHE-307.752.812
-- Gérants : Frédéric Montet (président), Michal Bryxí, Yannick Lagger
+- Gérants : Frédéric Montet, Michal Bryxí, Yannick Lagger
 
 ## Responsabilité
 

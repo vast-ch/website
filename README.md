@@ -43,7 +43,7 @@ The two dictionaries share one TypeScript type, so a string missing in French fa
 
 ## Deployment
 
-Hosted on Cloudflare Pages. Project settings: build command `npm run build`, output directory `dist`. Cloudflare reads the Node.js version from `.node-version` and the cache headers from `public/_headers`. The build is a plain static site, so any other static host would work too.
+Deployed as a Cloudflare Worker that serves the static build (`wrangler.jsonc`: files from `dist/`, the 404 page for unknown paths). Cloudflare builds with `npm run build` and deploys with `npx wrangler deploy`; it reads the Node.js version from `.node-version` and the cache headers from `public/_headers`. To try the production build locally: `npm run build`, then `npx wrangler dev`.
 
 ## Credits
 
