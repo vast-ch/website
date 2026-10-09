@@ -61,33 +61,38 @@ const FRAGMENT = `
     return v;
   }
 
-  // Puffy "cauliflower" noise for cumulus tops.
-  float billow(vec2 p) {
-    float v = 0.0;
-    float a = 0.5;
-    for (int i = 0; i < 5; i++) {
-      v += a * abs(noise(p) * 2.0 - 1.0);
-      p = ROT * p * 2.03 + vec2(17.0, 9.0);
-      a *= 0.5;
-    }
-    return v;
+  vec2 hash2(vec2 p) {
+    vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+    p3 += dot(p3, p3.yzx + 33.33);
+    return fract((p3.xx + p3.yz) * p3.zy);
   }
 
-  float cloudHeight(vec2 p) {
-    return fbm4(p * 0.35) * 0.7 + billow(p * 1.1) * 0.7;
+  // Cellular noise shaped into hemispheres: one round puff per cell, with
+  // creases between neighbours. The puff centres wander slowly over time.
+  float puffs(vec2 p, float t) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    float d = 1.0;
+    for (int y = -1; y <= 1; y++) {
+      for (int x = -1; x <= 1; x++) {
+        vec2 g = vec2(float(x), float(y));
+        vec2 o = hash2(i + g);
+        o = 0.5 + 0.35 * sin(t * 0.12 + 6.2831 * o);
+        vec2 r = g + o - f;
+        d = min(d, dot(r, r));
+      }
+    }
+    return pow(max(1.0 - 2.0 * d, 0.0), 0.65);
   }
 
-  // Distant mountain profile, peaky like the Bernese Oberland.
-  float ridge(float x) {
-    float h = 0.0;
-    float a = 0.6;
-    float f = 1.6;
-    for (int i = 0; i < 4; i++) {
-      float n = 1.0 - abs(noise(vec2(x * f, 7.3 + float(i) * 13.1)) * 2.0 - 1.0);
-      h += a * n * n;
-      f *= 2.4;
-      a *= 0.33;
-    }
+  // Height of the cloud tops: broad swells carrying puffs at four scales,
+  // like the cauliflower tops of cumulus.
+  float cloudHeight(vec2 p, float t) {
+    float h = fbm4(p * 0.25) * 0.8;
+    h += puffs(p * 0.8, t) * 0.42;
+    h += puffs(p * 1.7 + 3.7, t) * 0.26;
+    h += puffs(p * 3.6 + 7.1, t) * 0.15;
+    h += puffs(p * 7.4 + 1.9, t) * 0.07;
     return h;
   }
 
@@ -135,36 +140,20 @@ const FRAGMENT = `
         float star = smoothstep(0.42, 0.0, d) * twinkle * (0.35 + 0.65 * hash(cell + 7.0));
         col += star * night * (1.0 - cover) * smoothstep(0.02, 0.2, dy) * 0.85;
       }
-
-      // Distant ridge rising above the sea of clouds.
-      float rh = pow(max(ridge(x + 3.0) - 0.36, 0.0), 1.5) * 0.36;
-      if (dy < rh) {
-        float up = clamp(dy / max(rh, 0.001), 0.0, 1.0);
-        vec3 rock = mix(vec3(0.700, 0.715, 0.740), vec3(0.070, 0.071, 0.080), night);
-        vec3 snow = mix(vec3(0.965, 0.967, 0.970), vec3(0.230, 0.232, 0.248), night);
-        float snowy = smoothstep(0.45, 0.8, up + 0.3 * (noise(vec2(x * 120.0, dy * 220.0)) - 0.5));
-        vec3 m = mix(rock, snow, snowy * 0.8);
-        // Aerial perspective: the base melts into the haze above the clouds.
-        m = mix(m, haze, 0.3 + 0.55 * (1.0 - smoothstep(0.0, 0.7, up)));
-        float edge = smoothstep(rh, rh - 0.002, dy);
-        col = mix(col, m, edge);
-      }
     } else {
       // Sea of clouds below the horizon, drifting slowly towards the viewer.
       float yy = -dy;
       float depth = 0.55 / (yy + 0.003);
-      vec2 p = vec2(x * depth, depth) * 0.5 + vec2(t * 0.010, t * 0.028);
-      vec2 warp = vec2(
-        fbm4(p * 0.4 + vec2(0.0, t * 0.012)),
-        fbm4(p * 0.4 + vec2(5.2, 1.3) - t * 0.009)
-      );
-      p += warp * 0.9;
-      float h = cloudHeight(p);
-      float hl = cloudHeight(p + vec2(-0.05, 0.05));
-      float facing = clamp((h - hl) * 9.0 + 0.5, 0.0, 1.0);
-      float body = smoothstep(0.5, 0.9, h);
-      col = mix(cloudShadow, cloudLight, clamp(body * 0.5 + facing * 0.5, 0.0, 1.0));
-      col *= mix(0.88, 1.0, smoothstep(0.35, 0.75, h));
+      vec2 p = vec2(x * depth, depth) * 0.6 + vec2(t * 0.010, t * 0.028);
+      // A gentle warp keeps the puffs from lining up on the cell grid.
+      p += 0.6 * vec2(fbm4(p * 0.3 + t * 0.01), fbm4(p * 0.3 + vec2(5.2, 1.3) - t * 0.008));
+      float h = cloudHeight(p, t);
+      float hl = cloudHeight(p + vec2(-0.04, 0.06), t);
+      // Sides facing the light are bright; lee sides and creases fall into shade.
+      float facing = clamp(0.55 + (h - hl) * 7.0, 0.0, 1.0);
+      float top = smoothstep(0.7, 1.3, h);
+      col = mix(cloudShadow, cloudLight, clamp(facing * 0.55 + top * 0.45, 0.0, 1.0));
+      col *= mix(0.84, 1.0, smoothstep(0.55, 1.0, h));
       float fog = 1.0 - exp(-depth * 0.032);
       col = mix(col, haze, fog);
     }

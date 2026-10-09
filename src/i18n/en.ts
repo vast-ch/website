@@ -8,7 +8,6 @@ export const en: Dictionary = {
 
   chrome: {
     company: 'Vast Switzerland GmbH',
-    bases: 'Interlaken · Brig · Fribourg',
     skipToContent: 'Skip to content',
     primaryNav: 'Primary navigation',
     externalLinks: 'Elsewhere',

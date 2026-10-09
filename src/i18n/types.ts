@@ -37,7 +37,6 @@ export interface Dictionary {
   locale: Locale;
   chrome: {
     company: string;
-    bases: string;
     skipToContent: string;
     primaryNav: string;
     externalLinks: string;

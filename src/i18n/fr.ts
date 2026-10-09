@@ -24,7 +24,6 @@ export const fr: Dictionary = typography<Dictionary>({
 
   chrome: {
     company: 'Vast Switzerland GmbH',
-    bases: 'Interlaken · Brig · Fribourg',
     skipToContent: 'Aller au contenu',
     primaryNav: 'Navigation principale',
     externalLinks: 'Ailleurs',

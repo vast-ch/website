@@ -272,29 +272,6 @@ body {
   text-underline-offset: 0.3em;
 }
 
-/* A spinning ✦ marks hovered links, borrowed from the Departure Mono glyph set. */
-.spark::after {
-  content: '✦';
-  font-family: var(--font-mono);
-  font-size: 0.8em;
-  font-style: normal;
-  display: inline-block;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  text-decoration: none;
-}
-
-.spark:is(:hover, :focus-visible)::after {
-  opacity: 1;
-  animation: spark-spin 1.6s linear infinite;
-}
-
-@keyframes spark-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* Menu */
 .menu {
   position: relative;
@@ -325,10 +302,6 @@ body {
   gap: 10px;
 }
 
-.menu-group .chrome-link {
-  flex-direction: row-reverse;
-}
-
 [data-page='content'] .menu.is-open::before {
   content: '';
   position: absolute;
@@ -342,17 +315,6 @@ body {
 }
 
 /* Footer */
-.footer-company {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 1.5ch;
-  row-gap: 4px;
-}
-
-.footer-bases {
-  color: var(--ink-muted);
-}
-
 .footer-controls {
   display: flex;
   align-items: center;
@@ -370,12 +332,6 @@ body {
 
 .lang-switch a:not([aria-current]):hover {
   opacity: 1;
-}
-
-@media (max-width: 720px) {
-  .footer-bases {
-    display: none;
-  }
 }
 
 @media (max-width: 380px) {
@@ -406,13 +362,6 @@ body {
   align-items: center;
   text-align: center;
   gap: clamp(1.5rem, 1rem + 2vh, 2.5rem);
-}
-
-.home-wordmark {
-  width: clamp(116px, 9vw + 60px, 196px);
-  height: auto;
-  color: var(--ink);
-  transition: color var(--theme-duration) var(--theme-easing);
 }
 
 .home-hero-text {
@@ -628,16 +577,6 @@ body {
   text-decoration-style: dotted;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
-}
-
-.offer-title.spark::after {
-  margin-inline-start: 0.5em;
-  vertical-align: 0.05em;
-}
-
-.offer > summary:is(:hover, :focus-visible) .offer-title.spark::after {
-  opacity: 1;
-  animation: spark-spin 1.6s linear infinite;
 }
 
 .offer-headline {

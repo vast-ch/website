@@ -34,11 +34,7 @@ const pages: RouteKey[] = ['services', 'approach', 'about', 'contact'];
         {
           pages.map((key) => (
             <li>
-              <a
-                class="chrome-link spark"
-                href={route(key, t.locale)}
-                aria-current={current === key ? 'page' : undefined}
-              >
+              <a class="chrome-link" href={route(key, t.locale)} aria-current={current === key ? 'page' : undefined}>
                 {t.nav[key]}
               </a>
             </li>
@@ -47,12 +43,12 @@ const pages: RouteKey[] = ['services', 'approach', 'about', 'contact'];
       </ul>
       <ul class="menu-group" aria-label={t.chrome.externalLinks}>
         <li>
-          <a class="chrome-link spark" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+          <a class="chrome-link" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
             {t.nav.linkedin}
           </a>
         </li>
         <li>
-          <a class="chrome-link spark" href={EXTERNAL_LINKS.github} target="_blank" rel="noopener noreferrer">
+          <a class="chrome-link" href={EXTERNAL_LINKS.github} target="_blank" rel="noopener noreferrer">
             {t.nav.github}
           </a>
         </li>
