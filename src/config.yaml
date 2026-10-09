@@ -9,9 +9,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: 'vast — Measured outcomes for buildings, energy and the environment'
+    default: 'vast — Software and machine learning, built with you'
     template: '%s — vast'
-  description: 'Vast is a small Swiss engineering studio. We combine engineering, applied machine learning and domain knowledge of buildings, energy and the environment to deliver results you can measure and proof you can audit.'
+  description: 'Vast is a small Swiss consulting company of senior developers. We build web and mobile applications and custom software with our clients, and develop machine-learning models for time series.'
   robots:
     index: true
     follow: true

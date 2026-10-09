@@ -64,10 +64,12 @@ const { labels } = t.services;
                 <p>{offer.how}</p>
               </div>
 
-              <div class="offer-block">
-                <span class="mono">{labels.pricing}</span>
-                <p>{offer.pricing}</p>
-              </div>
+              {offer.pricing && (
+                <div class="offer-block">
+                  <span class="mono">{labels.pricing}</span>
+                  <p>{offer.pricing}</p>
+                </div>
+              )}
 
               <div class="offer-block">
                 <span class="mono">{labels.why}</span>

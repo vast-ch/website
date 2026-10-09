@@ -28,7 +28,8 @@ export interface Offer {
   /** Optional extra block such as "Typical scope" or "Typical questions". */
   extra?: { label: string; text: string };
   how: string;
-  pricing: string;
+  /** Optional: engagement terms are usually explained once, on the approach page. */
+  pricing?: string;
   why: string;
   cta: string;
 }
