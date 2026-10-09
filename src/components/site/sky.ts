@@ -1,9 +1,18 @@
 // Sky shader driving the full-screen background canvas (see SkyCanvas.astro).
+//
+// Below the horizon, every pixel casts a ray into a volumetric layer of cloud
+// and accumulates its density front to back, with one extra sample towards the
+// sun for self-shadowing. That is what gives the puffs real volume. Above the
+// horizon, a cheap 2D sky with drifting high clouds and, at night, stars.
 
 // Horizon height (fraction of the viewport from the bottom) per page type.
 // `home` must match --horizon in assets/styles/site.css.
 const HORIZON = { home: 0.4, content: 0.28 } as const;
 const MAX_FPS = 30;
+
+// Render at a fraction of the CSS size (clouds are soft), lowered further on
+// devices that cannot keep up.
+const SCALE = { desktop: 0.7, mobile: 0.6, min: 0.3 } as const;
 
 const VERTEX = `
   attribute vec2 aPosition;
@@ -19,6 +28,14 @@ const FRAGMENT = `
   uniform float uTime;
   uniform float uNight;
   uniform float uHorizon;
+  uniform sampler2D uNoise;
+
+  const float CLOUD_TOP = -0.55;
+  const float CLOUD_BOTTOM = -1.8;
+  const float MAX_DISTANCE = 60.0;
+  const vec3 SUN = vec3(-0.640, 0.533, 0.480);
+  // Rotation between octaves, so the grid of the value noise never lines up.
+  const mat3 ROT3 = mat3(0.00, 0.80, 0.60, -0.80, 0.36, -0.48, -0.60, -0.48, 0.64);
 
   float hash(vec2 p) {
     vec3 p3 = fract(vec3(p.xyx) * 0.1031);
@@ -61,39 +78,31 @@ const FRAGMENT = `
     return v;
   }
 
-  vec2 hash2(vec2 p) {
-    vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
-    p3 += dot(p3, p3.yzx + 33.33);
-    return fract((p3.xx + p3.yz) * p3.zy);
+  // 3D value noise in one texture fetch: the green channel of uNoise is its red
+  // channel shifted by (37, 239), so each texel holds two neighbouring z-slices.
+  float noise3(vec3 x) {
+    vec3 p = floor(x);
+    vec3 f = fract(x);
+    f = f * f * (3.0 - 2.0 * f);
+    vec2 uv = p.xy + vec2(37.0, 239.0) * p.z + f.xy;
+    vec2 rg = texture2D(uNoise, (uv + 0.5) / 256.0).yx;
+    return mix(rg.x, rg.y, f.z);
   }
 
-  // Cellular noise shaped into hemispheres: one round puff per cell, with
-  // creases between neighbours. The puff centres wander slowly over time.
-  float puffs(vec2 p, float t) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    float d = 1.0;
-    for (int y = -1; y <= 1; y++) {
-      for (int x = -1; x <= 1; x++) {
-        vec2 g = vec2(float(x), float(y));
-        vec2 o = hash2(i + g);
-        o = 0.5 + 0.35 * sin(t * 0.12 + 6.2831 * o);
-        vec2 r = g + o - f;
-        d = min(d, dot(r, r));
-      }
+  // Cloud density. Puffy noise whose tops undulate around y = -1, thickening
+  // with depth so the sea of clouds is opaque underneath. Fewer octaves far away.
+  // (The fourth octave reaches only 0.75: a full sum would be 0.94, not 1.)
+  float density(vec3 p, int octaves) {
+    vec3 q = p * 1.3 + vec3(0.03, 0.015, 0.08) * uTime;
+    float f = 0.0;
+    float a = 0.5;
+    for (int i = 0; i < 4; i++) {
+      if (i >= octaves) break;
+      f += a * noise3(q);
+      q = ROT3 * q * 2.03;
+      a *= 0.5;
     }
-    return pow(max(1.0 - 2.0 * d, 0.0), 0.65);
-  }
-
-  // Height of the cloud tops: broad swells carrying puffs at four scales,
-  // like the cauliflower tops of cumulus.
-  float cloudHeight(vec2 p, float t) {
-    float h = fbm4(p * 0.25) * 0.8;
-    h += puffs(p * 0.8, t) * 0.42;
-    h += puffs(p * 1.7 + 3.7, t) * 0.26;
-    h += puffs(p * 3.6 + 7.1, t) * 0.15;
-    h += puffs(p * 7.4 + 1.9, t) * 0.07;
-    return h;
+    return clamp(5.0 * f - 2.15 - (p.y + 1.0) * 5.0, 0.0, 1.0);
   }
 
   void main() {
@@ -106,8 +115,6 @@ const FRAGMENT = `
 
     vec3 haze = mix(vec3(0.912, 0.916, 0.921), vec3(0.150, 0.151, 0.162), night);
     vec3 zenith = mix(vec3(0.742, 0.760, 0.781), vec3(0.040, 0.042, 0.050), night);
-    vec3 cloudLight = mix(vec3(0.990, 0.990, 0.988), vec3(0.330, 0.333, 0.352), night);
-    vec3 cloudShadow = mix(vec3(0.660, 0.676, 0.700), vec3(0.062, 0.063, 0.072), night);
 
     vec3 col;
 
@@ -141,21 +148,40 @@ const FRAGMENT = `
         col += star * night * (1.0 - cover) * smoothstep(0.02, 0.2, dy) * 0.85;
       }
     } else {
-      // Sea of clouds below the horizon, drifting slowly towards the viewer.
-      float yy = -dy;
-      float depth = 0.55 / (yy + 0.003);
-      vec2 p = vec2(x * depth, depth) * 0.6 + vec2(t * 0.010, t * 0.028);
-      // A gentle warp keeps the puffs from lining up on the cell grid.
-      p += 0.6 * vec2(fbm4(p * 0.3 + t * 0.01), fbm4(p * 0.3 + vec2(5.2, 1.3) - t * 0.008));
-      float h = cloudHeight(p, t);
-      float hl = cloudHeight(p + vec2(-0.04, 0.06), t);
-      // Sides facing the light are bright; lee sides and creases fall into shade.
-      float facing = clamp(0.55 + (h - hl) * 7.0, 0.0, 1.0);
-      float top = smoothstep(0.7, 1.3, h);
-      col = mix(cloudShadow, cloudLight, clamp(facing * 0.55 + top * 0.45, 0.0, 1.0));
-      col *= mix(0.84, 1.0, smoothstep(0.55, 1.0, h));
-      float fog = 1.0 - exp(-depth * 0.032);
-      col = mix(col, haze, fog);
+      // Sea of clouds: march a ray from a camera floating above the layer. The
+      // projection is shifted so that the horizon lands exactly on uHorizon.
+      vec3 rd = normalize(vec3(x, dy, 1.25));
+
+      vec3 lit = mix(vec3(1.0, 1.0, 1.0), vec3(0.300, 0.302, 0.325), night);
+      vec3 dense = mix(vec3(0.600, 0.616, 0.650), vec3(0.070, 0.071, 0.080), night);
+      vec3 ambient = mix(vec3(0.580, 0.598, 0.640), vec3(0.420, 0.420, 0.440), night);
+      vec3 sunLight = mix(vec3(0.560, 0.545, 0.520), vec3(0.720, 0.720, 0.740), night);
+
+      float tStart = CLOUD_TOP / rd.y;
+      float tEnd = min(CLOUD_BOTTOM / rd.y, MAX_DISTANCE);
+      // Jitter the start to trade banding for fine grain.
+      float tt = tStart + hash(gl_FragCoord.xy) * max(0.03, 0.03 * tStart);
+      vec4 sum = vec4(0.0);
+
+      for (int i = 0; i < 80; i++) {
+        if (tt > tEnd || sum.a > 0.98) break;
+        vec3 pos = rd * tt;
+        int octaves = tt < 12.0 ? 4 : 3;
+        float den = density(pos, octaves);
+        if (den > 0.01) {
+          // Less cloud towards the sun means this point is lit.
+          float towardsSun = density(pos + 0.3 * SUN, octaves - 1);
+          float diffuse = clamp((den - towardsSun) / 0.5, 0.0, 1.0);
+          vec3 c = mix(lit, dense, den) * (ambient + sunLight * diffuse);
+          c = mix(c, haze, 1.0 - exp(-0.0004 * tt * tt));
+          float a = den * 0.8;
+          sum.rgb += c * a * (1.0 - sum.a);
+          sum.a += a * (1.0 - sum.a);
+        }
+        tt += max(0.03, 0.03 * tt);
+      }
+
+      col = sum.rgb + haze * (1.0 - sum.a);
     }
 
     // Bright band where the clouds meet the sky.
@@ -179,6 +205,40 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
     return null;
   }
   return shader;
+}
+
+/** Random 256² texture for noise3(): green is red shifted by (37, 239). Seeded, so the sky is the same on every visit. */
+function createNoiseTexture(gl: WebGLRenderingContext) {
+  const size = 256;
+  let seed = 0x9e3779b9;
+  const random = () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let r = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+
+  const red = new Uint8Array(size * size);
+  for (let i = 0; i < red.length; i++) red[i] = Math.floor(random() * 256);
+
+  const pixels = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const i = y * size + x;
+      pixels[i * 4] = red[i];
+      pixels[i * 4 + 1] = red[((y - 239 + size) % size) * size + ((x - 37 + size) % size)];
+      pixels[i * 4 + 3] = 255;
+    }
+  }
+
+  const texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, size, size, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+  return texture;
 }
 
 function start(canvas: HTMLCanvasElement) {
@@ -209,6 +269,10 @@ function start(canvas: HTMLCanvasElement) {
   gl.enableVertexAttribArray(position);
   gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
 
+  gl.activeTexture(gl.TEXTURE0);
+  createNoiseTexture(gl);
+  gl.uniform1i(gl.getUniformLocation(program, 'uNoise'), 0);
+
   const uRes = gl.getUniformLocation(program, 'uRes');
   const uTime = gl.getUniformLocation(program, 'uTime');
   const uNight = gl.getUniformLocation(program, 'uNight');
@@ -225,10 +289,10 @@ function start(canvas: HTMLCanvasElement) {
   let lastDraw = 0;
   let frame = 0;
   let lost = false;
+  let scale: number = window.innerWidth < 768 ? SCALE.mobile : SCALE.desktop;
+  let slowFrames = 0;
 
   const resize = () => {
-    // Clouds are soft: render at a fraction of the CSS size and let it scale up.
-    const scale = window.innerWidth < 768 ? 0.5 : 0.6;
     const width = Math.max(1, Math.round(canvas.clientWidth * scale));
     const height = Math.max(1, Math.round(canvas.clientHeight * scale));
     if (canvas.width !== width || canvas.height !== height) {
@@ -247,6 +311,15 @@ function start(canvas: HTMLCanvasElement) {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
+  // If frames keep arriving late, the GPU is struggling: render fewer pixels.
+  const govern = (interval: number) => {
+    slowFrames = interval > 1000 / 20 ? slowFrames + 1 : Math.max(0, slowFrames - 1);
+    if (slowFrames > 20 && scale > SCALE.min) {
+      scale = Math.max(SCALE.min, scale * 0.8);
+      slowFrames = 0;
+    }
+  };
+
   const settled = () => Math.abs(night - isNight()) < 0.001 && Math.abs(horizon - horizonTarget()) < 0.0005;
 
   const tick = (now: number) => {
@@ -263,8 +336,10 @@ function start(canvas: HTMLCanvasElement) {
     }
 
     if (now - lastDraw >= 1000 / MAX_FPS - 2) {
+      if (lastDraw) govern(now - lastDraw);
       lastDraw = now;
-      time += dt;
+      // Wrapped so noise coordinates keep their precision on long visits.
+      time = (time + dt) % 7200;
       const ease = 1 - Math.exp(-dt * 4.5);
       night += (isNight() - night) * ease;
       horizon += (horizonTarget() - horizon) * (1 - Math.exp(-dt * 2.5));
@@ -273,7 +348,7 @@ function start(canvas: HTMLCanvasElement) {
       }
       draw();
     } else {
-      time += dt;
+      time = (time + dt) % 7200;
     }
     frame = requestAnimationFrame(tick);
   };
@@ -281,6 +356,7 @@ function start(canvas: HTMLCanvasElement) {
   const wake = () => {
     if (!frame) {
       last = performance.now();
+      lastDraw = 0;
       frame = requestAnimationFrame(tick);
     }
   };
@@ -288,6 +364,10 @@ function start(canvas: HTMLCanvasElement) {
   new MutationObserver(wake).observe(root, { attributes: true, attributeFilter: ['class', 'data-page'] });
   window.addEventListener('resize', wake);
   reducedMotion.addEventListener('change', wake);
+  // Background tabs stop rAF; do not count the gap as a slow frame.
+  document.addEventListener('visibilitychange', () => {
+    lastDraw = 0;
+  });
 
   canvas.addEventListener('webglcontextlost', (event) => {
     event.preventDefault();
