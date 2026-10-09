@@ -11,7 +11,7 @@ metadata:
   title:
     default: 'vast — Software and machine learning, built with you'
     template: '%s — vast'
-  description: 'Vast is a small Swiss consulting company of senior developers. We build web and mobile applications and custom software with our clients, and develop machine-learning models for time series.'
+  description: 'Vast is a consulting company. We develop software and machine-learning models for time series with our clients.'
   robots:
     index: true
     follow: true

@@ -32,9 +32,9 @@ export const en: Dictionary = {
     meta: {
       title: 'vast — Software and machine learning, built with you',
       description:
-        'Vast is a small Swiss consulting company of senior developers. We build web and mobile applications and custom software with our clients, and develop machine-learning models for time series.',
+        'Vast is a consulting company. We develop software and machine-learning models for time series with our clients, for people and nature.',
     },
-    hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.<br />A small, senior Swiss team, for <a href="${r('about')}">people and nature</a>.`,
+    hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.<br />For <a href="${r('about')}">people and nature</a>.`,
     links: { services: 'What we do', contact: 'Get in touch' },
   },
 
@@ -42,13 +42,13 @@ export const en: Dictionary = {
     meta: {
       title: 'Services',
       description:
-        'Web and mobile applications, custom software development, and machine learning for time series: forecasting and anomaly detection.',
+        'Machine learning for time series, our speciality, along with web and mobile applications and custom software, built with our clients.',
     },
     label: 'Services',
-    heading: 'We develop software with our clients.',
+    heading: 'We develop software with our clients, and we specialise in machine learning for time series.',
     intro: [
-      'Vast is a small consulting company of senior developers. We build web and mobile applications and custom software, and we develop machine-learning models for time series, from forecasting to anomaly detection.',
-      'We work closely with your team, show progress early and keep things simple. Every project starts with a conversation and a small first step, so you can see how we work before committing to more.',
+      'Writing code is becoming cheap and fast. What stays scarce is knowing which problem is worth solving, checking that a solution really works, and having the data that makes it reliable. That is where we put most of our effort.',
+      'Our speciality is machine-learning models for time series: forecasting and anomaly detection on measurement data, especially in energy and buildings. We also build web and mobile applications and custom software. We work closely with your team, and every project starts with a conversation and a small first step.',
     ],
     listLabel: 'What we do',
     labels: {
@@ -61,6 +61,28 @@ export const en: Dictionary = {
       write: 'Write to us about this',
     },
     offers: [
+      {
+        id: 'time-series',
+        title: 'Machine learning for time series',
+        headline: 'Our speciality: forecasting and anomaly detection on your measurement data.',
+        promise:
+          'We develop machine-learning models for time series, such as consumption forecasts or the detection of abnormal behaviour, together with the data pipelines that feed them.',
+        audience:
+          'Organisations with sensor, meter or operational data, especially in energy and buildings, who want to anticipate what comes next or spot problems earlier.',
+        deliverables: [
+          'Forecasting models, from classical statistical methods to modern machine learning.',
+          'Anomaly detection on sensor and meter data.',
+          'The pipeline around the model, from raw measurements to results you can use.',
+          'Documentation of how the model works and where its limits are.',
+        ],
+        extra: {
+          label: 'From our research',
+          text: 'Estimating the energy performance of buildings; detecting anomalies in district heating networks; benchmarking forecasting models, including time-series foundation models, with onTime, our open-source library.',
+        },
+        how: 'We start from the data you already have and check what it can support before building anything complex. Every model is compared with simple baselines and tested on data it has not seen.',
+        why: 'Our machine-learning work is led by a PhD in computer science focused on data science for the energy sector, with peer-reviewed publications.',
+        cta: 'Tell us what you would like to forecast or detect, and what data you have. We will tell you honestly what seems feasible.',
+      },
       {
         id: 'web-and-mobile',
         title: 'Web and mobile applications',
@@ -96,28 +118,6 @@ export const en: Dictionary = {
         why: 'Between us we cover frontend, mobile, backend, data and infrastructure, so one small team can take a project from start to finish.',
         cta: 'Describe the manual task or the missing tool that slows your team down. We will tell you honestly whether software is the right answer.',
       },
-      {
-        id: 'time-series',
-        title: 'Machine learning for time series',
-        headline: 'Forecasting and anomaly detection on your measurement data.',
-        promise:
-          'We develop machine-learning models for time series, such as consumption forecasts or the detection of abnormal behaviour, together with the data pipelines that feed them.',
-        audience:
-          'Organisations with sensor, meter or operational data, especially in energy and buildings, who want to anticipate what comes next or spot problems earlier.',
-        deliverables: [
-          'Forecasting models, from classical statistical methods to modern machine learning.',
-          'Anomaly detection on sensor and meter data.',
-          'The pipeline around the model, from raw measurements to results you can use.',
-          'Documentation of how the model works and where its limits are.',
-        ],
-        extra: {
-          label: 'From our research',
-          text: 'Estimating the energy performance of buildings; detecting anomalies in district heating networks; benchmarking forecasting models, including time-series foundation models, with onTime, our open-source library.',
-        },
-        how: 'We start from the data you already have and check what it can support before building anything complex. Every model is compared with simple baselines and tested on data it has not seen.',
-        why: 'Our machine-learning work is led by a PhD in computer science focused on data science for the energy sector, with peer-reviewed publications.',
-        cta: 'Tell us what you would like to forecast or detect, and what data you have. We will tell you honestly what seems feasible.',
-      },
     ],
     outro: `Not sure where your project fits? <a href="${r('contact')}">Just tell us about it</a>. If we are not the right team, we will say so.`,
   },
@@ -126,14 +126,14 @@ export const en: Dictionary = {
     meta: {
       title: 'Approach',
       description:
-        'How Vast works: senior developers only, software built with you, a small first step, honesty, sovereignty over your code and data, and care for the environment.',
+        'How Vast works: knowing what to build, building it with you, a small first step, honesty, care for the environment and transparency about code and data.',
     },
     label: 'Approach',
     heading: 'How we work',
     principles: [
       {
-        title: 'Senior people only.',
-        text: 'Everyone working on your project is an experienced developer. That is how a small team gets to good results quickly.',
+        title: 'Knowing what to build.',
+        text: 'Writing code is no longer the hard part; deciding what to build is. We take the time to understand your work, your requirements and what you are really trying to achieve, and we help you decide what is worth building, and what is not.',
       },
       {
         title: 'Built with you.',
@@ -145,15 +145,15 @@ export const en: Dictionary = {
       },
       {
         title: 'Honest about what we know.',
-        text: 'We tell you what we are sure of, what we are not, and when something is not worth building.',
-      },
-      {
-        title: 'Sovereignty.',
-        text: 'Your code, your data and your infrastructure stay yours. We favour open standards, open-source tools and hosting in Switzerland or Europe, so you are never locked in, not even with us.',
+        text: 'We tell you what we are sure of, what we are not, and when something is not worth building. Models are tested on data they have not seen, and software with the people who will use it.',
       },
       {
         title: 'Care for the environment.',
         text: 'We want our work to be good for people and nature. We are especially glad to work on energy, buildings and the environment, and we keep what we build as lean as the problem allows.',
+      },
+      {
+        title: 'Transparency.',
+        text: 'You always know what we build, how, and with what. The code we write for you is yours. When we host or process your data, for instance for monitoring, we agree in writing on what we store, where, and how it may be used, including whether it can help improve our models in aggregated or anonymised form. Data is hosted in Switzerland or Europe, in line with Swiss data protection law.',
       },
     ],
     start: {
@@ -189,10 +189,10 @@ export const en: Dictionary = {
     meta: {
       title: 'About',
       description:
-        'Vast Switzerland GmbH is a small Swiss consulting company of senior developers, based in Interlaken, Brig and Fribourg. We value sovereignty and care for the environment.',
+        'Vast is a consulting company. We develop software and machine-learning models for time series with our clients, with care for the environment and for digital sovereignty.',
     },
     label: 'About',
-    intro: `<a href="${r('home')}">Vast Switzerland GmbH</a> is a small Swiss consulting company. We develop software with our clients, and machine-learning models for time series.`,
+    intro: `<a href="${r('home')}">Vast</a> is a consulting company. We develop software and machine-learning models for time series with our clients.`,
     sections: [
       {
         title: 'Who we are',
@@ -200,15 +200,11 @@ export const en: Dictionary = {
       },
       {
         title: 'Data science for energy',
-        text: 'Frédéric holds a PhD in computer science from HES-SO. His research covered estimating the energy performance of buildings, detecting anomalies in district heating networks and benchmarking forecasting models. We publish our research and develop onTime, an open-source library for benchmarking time-series forecasting models.',
+        text: 'Frédéric holds a PhD in computer science from the University of Fribourg (UNIFR). His research covered estimating the energy performance of buildings, detecting anomalies in district heating networks and benchmarking forecasting models. We publish our research and develop onTime, an open-source library for benchmarking time-series forecasting models.',
       },
       {
-        title: 'Sovereignty and the environment',
-        text: `We care about who controls software and data, and about the planet it runs on. We favour open-source tools and Swiss or European hosting, and we are glad to work on projects that help people and nature. <a href="${r('approach')}">Read how we work</a>.`,
-      },
-      {
-        title: 'Rooted in Switzerland',
-        text: 'You will find us in Interlaken, Brig and Fribourg. We work in French, German and English.',
+        title: 'Environment and sovereignty',
+        text: `We want our work to be good for people and nature, and we are glad to work on projects in energy, buildings and the environment. We also care about who controls software and data: we favour open-source tools and hosting in Switzerland or Europe. <a href="${r('approach')}">Read how we work</a>.`,
       },
     ],
     tagline: 'For a world where people and nature thrive together.',

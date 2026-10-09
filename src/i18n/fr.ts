@@ -48,9 +48,9 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'vast — Logiciels et machine learning, développés avec vous',
       description:
-        'Vast est une petite société de conseil suisse composée de développeurs expérimentés. Nous développons des applications web et mobiles et des logiciels sur mesure avec nos clients, ainsi que des modèles de machine learning pour les séries temporelles.',
+        'Vast est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients, pour les humains et la nature.',
     },
-    hero: `<a href="${r('services')}">Logiciels et machine learning</a>, développés avec vous.<br />Une petite équipe suisse expérimentée, pour <a href="${r('about')}">les humains et la nature</a>.`,
+    hero: `<a href="${r('services')}">Logiciels et machine learning</a>, développés avec vous.<br />Pour <a href="${r('about')}">les humains et la nature</a>.`,
     links: { services: 'Ce que nous faisons', contact: 'Nous écrire' },
   },
 
@@ -58,13 +58,14 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'Services',
       description:
-        'Applications web et mobiles, développement de logiciels sur mesure et machine learning pour les séries temporelles : prévision et détection d’anomalies.',
+        'Le machine learning pour les séries temporelles, notre spécialité, ainsi que des applications web et mobiles et des logiciels sur mesure, développés avec nos clients.',
     },
     label: 'Services',
-    heading: 'Nous développons des logiciels avec nos clients.',
+    heading:
+      'Nous développons des logiciels avec nos clients, et nous sommes spécialisés dans le machine learning pour les séries temporelles.',
     intro: [
-      'Vast est une petite société de conseil composée de développeurs expérimentés. Nous développons des applications web et mobiles et des logiciels sur mesure, ainsi que des modèles de machine learning pour les séries temporelles, de la prévision à la détection d’anomalies.',
-      'Nous travaillons étroitement avec votre équipe, montrons l’avancement tôt et gardons les choses simples. Chaque projet commence par une discussion et une première étape modeste, pour que vous puissiez voir comment nous travaillons avant de vous engager davantage.',
+      'Écrire du code devient bon marché et rapide. Ce qui reste rare, c’est de savoir quel problème mérite d’être résolu, de vérifier qu’une solution fonctionne vraiment et de disposer des données qui la rendent fiable. C’est là que nous mettons l’essentiel de notre effort.',
+      'Notre spécialité, ce sont les modèles de machine learning pour les séries temporelles : prévision et détection d’anomalies sur des données de mesure, en particulier dans l’énergie et les bâtiments. Nous développons aussi des applications web et mobiles et des logiciels sur mesure. Nous travaillons étroitement avec votre équipe, et chaque projet commence par une discussion et une première étape modeste.',
     ],
     listLabel: 'Ce que nous faisons',
     labels: {
@@ -77,6 +78,28 @@ export const fr: Dictionary = typography<Dictionary>({
       write: 'Nous écrire à ce sujet',
     },
     offers: [
+      {
+        id: 'time-series',
+        title: 'Machine learning pour les séries temporelles',
+        headline: 'Notre spécialité : la prévision et la détection d’anomalies sur vos données de mesure.',
+        promise:
+          'Nous développons des modèles de machine learning pour les séries temporelles, comme des prévisions de consommation ou la détection de comportements anormaux, ainsi que les pipelines de données qui les alimentent.',
+        audience:
+          'Les organisations qui disposent de données de capteurs, de compteurs ou d’exploitation, en particulier dans l’énergie et les bâtiments, et qui veulent anticiper la suite ou repérer les problèmes plus tôt.',
+        deliverables: [
+          'Des modèles de prévision, des méthodes statistiques classiques au machine learning moderne.',
+          'De la détection d’anomalies sur des données de capteurs et de compteurs.',
+          'Le pipeline autour du modèle, des mesures brutes jusqu’à des résultats exploitables.',
+          'Une documentation du fonctionnement du modèle et de ses limites.',
+        ],
+        extra: {
+          label: 'Issu de nos recherches',
+          text: 'Estimation de la performance énergétique des bâtiments ; détection d’anomalies dans les réseaux de chauffage à distance ; comparaison de modèles de prévision, y compris des modèles de fondation pour séries temporelles, avec onTime, notre bibliothèque open source.',
+        },
+        how: 'Nous partons des données dont vous disposez et vérifions ce qu’elles permettent avant de construire quoi que ce soit de complexe. Chaque modèle est comparé à des références simples et testé sur des données qu’il n’a jamais vues.',
+        why: 'Nos travaux de machine learning sont menés par un docteur en informatique spécialisé en science des données pour le secteur de l’énergie, auteur de publications évaluées par les pairs.',
+        cta: 'Dites-nous ce que vous aimeriez prévoir ou détecter, et de quelles données vous disposez. Nous vous dirons honnêtement ce qui nous semble faisable.',
+      },
       {
         id: 'web-and-mobile',
         title: 'Applications web et mobiles',
@@ -113,28 +136,6 @@ export const fr: Dictionary = typography<Dictionary>({
         why: 'À nous tous, nous couvrons le frontend, le mobile, le backend, les données et l’infrastructure : une petite équipe peut mener un projet du début à la fin.',
         cta: 'Décrivez-nous la tâche manuelle ou l’outil manquant qui ralentit votre équipe. Nous vous dirons honnêtement si un logiciel est la bonne réponse.',
       },
-      {
-        id: 'time-series',
-        title: 'Machine learning pour les séries temporelles',
-        headline: 'Prévision et détection d’anomalies sur vos données de mesure.',
-        promise:
-          'Nous développons des modèles de machine learning pour les séries temporelles, comme des prévisions de consommation ou la détection de comportements anormaux, ainsi que les pipelines de données qui les alimentent.',
-        audience:
-          'Les organisations qui disposent de données de capteurs, de compteurs ou d’exploitation, en particulier dans l’énergie et les bâtiments, et qui veulent anticiper la suite ou repérer les problèmes plus tôt.',
-        deliverables: [
-          'Des modèles de prévision, des méthodes statistiques classiques au machine learning moderne.',
-          'De la détection d’anomalies sur des données de capteurs et de compteurs.',
-          'Le pipeline autour du modèle, des mesures brutes jusqu’à des résultats exploitables.',
-          'Une documentation du fonctionnement du modèle et de ses limites.',
-        ],
-        extra: {
-          label: 'Issu de nos recherches',
-          text: 'Estimation de la performance énergétique des bâtiments ; détection d’anomalies dans les réseaux de chauffage à distance ; comparaison de modèles de prévision, y compris des modèles de fondation pour séries temporelles, avec onTime, notre bibliothèque open source.',
-        },
-        how: 'Nous partons des données dont vous disposez et vérifions ce qu’elles permettent avant de construire quoi que ce soit de complexe. Chaque modèle est comparé à des références simples et testé sur des données qu’il n’a jamais vues.',
-        why: 'Nos travaux de machine learning sont menés par un docteur en informatique spécialisé en science des données pour le secteur de l’énergie, auteur de publications évaluées par les pairs.',
-        cta: 'Dites-nous ce que vous aimeriez prévoir ou détecter, et de quelles données vous disposez. Nous vous dirons honnêtement ce qui nous semble faisable.',
-      },
     ],
     outro: `Vous ne savez pas où situer votre projet ? <a href="${r('contact')}">Parlez-nous-en simplement</a>. Si nous ne sommes pas la bonne équipe, nous vous le dirons.`,
   },
@@ -143,14 +144,14 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'Approche',
       description:
-        'Comment Vast travaille : uniquement des développeurs expérimentés, des logiciels construits avec vous, une première étape modeste, l’honnêteté, la souveraineté sur votre code et vos données, et le respect de l’environnement.',
+        'Comment Vast travaille : savoir quoi construire, le construire avec vous, une première étape modeste, l’honnêteté, le respect de l’environnement et la transparence sur le code et les données.',
     },
     label: 'Approche',
     heading: 'Notre façon de travailler',
     principles: [
       {
-        title: 'Uniquement des personnes expérimentées.',
-        text: 'Toutes les personnes qui travaillent sur votre projet sont des développeurs expérimentés. C’est ce qui permet à une petite équipe d’arriver rapidement à de bons résultats.',
+        title: 'Savoir quoi construire.',
+        text: 'Écrire du code n’est plus la partie difficile ; décider quoi construire, si. Nous prenons le temps de comprendre votre travail, vos besoins et ce que vous cherchez vraiment à accomplir, et nous vous aidons à décider ce qui vaut la peine d’être construit, et ce qui ne l’est pas.',
       },
       {
         title: 'Construit avec vous.',
@@ -162,15 +163,15 @@ export const fr: Dictionary = typography<Dictionary>({
       },
       {
         title: 'Honnêtes sur ce que nous savons.',
-        text: 'Nous vous disons ce dont nous sommes sûrs, ce dont nous ne le sommes pas, et quand quelque chose ne vaut pas la peine d’être développé.',
-      },
-      {
-        title: 'Souveraineté.',
-        text: 'Votre code, vos données et votre infrastructure restent les vôtres. Nous privilégions les standards ouverts, les outils open source et l’hébergement en Suisse ou en Europe, pour que vous ne soyez jamais captif, pas même de nous.',
+        text: 'Nous vous disons ce dont nous sommes sûrs, ce dont nous ne le sommes pas, et quand quelque chose ne vaut pas la peine d’être développé. Les modèles sont testés sur des données qu’ils n’ont jamais vues, et les logiciels avec les personnes qui vont les utiliser.',
       },
       {
         title: 'Respect de l’environnement.',
         text: 'Nous voulons que notre travail soit bon pour les êtres humains et pour la nature. Nous sommes particulièrement heureux de travailler sur l’énergie, les bâtiments et l’environnement, et nous gardons ce que nous construisons aussi sobre que le problème le permet.',
+      },
+      {
+        title: 'Transparence.',
+        text: 'Vous savez toujours ce que nous construisons, comment et avec quoi. Le code que nous écrivons pour vous vous appartient. Lorsque nous hébergeons ou traitons vos données, par exemple pour du monitoring, nous convenons par écrit de ce que nous stockons, où, et de l’usage qui peut en être fait, y compris la possibilité de les utiliser sous forme agrégée ou anonymisée pour améliorer nos modèles. Les données sont hébergées en Suisse ou en Europe, conformément à la loi suisse sur la protection des données.',
       },
     ],
     start: {
@@ -206,10 +207,10 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'À propos',
       description:
-        'Vast Switzerland GmbH est une petite société de conseil suisse composée de développeurs expérimentés, présente à Interlaken, Brig et Fribourg. Nous tenons à la souveraineté et au respect de l’environnement.',
+        'Vast est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients, dans le respect de l’environnement et de la souveraineté numérique.',
     },
     label: 'À propos',
-    intro: `<a href="${r('home')}">Vast Switzerland GmbH</a> est une petite société de conseil suisse. Nous développons des logiciels avec nos clients, ainsi que des modèles de machine learning pour les séries temporelles.`,
+    intro: `<a href="${r('home')}">Vast</a> est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients.`,
     sections: [
       {
         title: 'Qui nous sommes',
@@ -217,15 +218,11 @@ export const fr: Dictionary = typography<Dictionary>({
       },
       {
         title: 'La science des données au service de l’énergie',
-        text: 'Frédéric est docteur en informatique de la HES-SO. Ses recherches ont porté sur l’estimation de la performance énergétique des bâtiments, la détection d’anomalies dans les réseaux de chauffage à distance et la comparaison de modèles de prévision. Nous publions nos recherches et développons onTime, une bibliothèque open source pour comparer les modèles de prévision de séries temporelles.',
+        text: 'Frédéric est docteur en informatique de l’Université de Fribourg (UNIFR). Ses recherches ont porté sur l’estimation de la performance énergétique des bâtiments, la détection d’anomalies dans les réseaux de chauffage à distance et la comparaison de modèles de prévision. Nous publions nos recherches et développons onTime, une bibliothèque open source pour comparer les modèles de prévision de séries temporelles.',
       },
       {
-        title: 'Souveraineté et environnement',
-        text: `Nous tenons à savoir qui contrôle les logiciels et les données, et sur quelle planète ils tournent. Nous privilégions les outils open source et l’hébergement en Suisse ou en Europe, et nous sommes heureux de travailler sur des projets utiles aux êtres humains et à la nature. <a href="${r('approach')}">Découvrir notre façon de travailler</a>.`,
-      },
-      {
-        title: 'Ancrés en Suisse',
-        text: 'Vous nous trouverez à Interlaken, à Brig et à Fribourg. Nous travaillons en français, en allemand et en anglais.',
+        title: 'Environnement et souveraineté',
+        text: `Nous voulons que notre travail soit bon pour les êtres humains et pour la nature, et nous sommes heureux de travailler sur des projets liés à l’énergie, aux bâtiments et à l’environnement. Nous tenons aussi à savoir qui contrôle les logiciels et les données : nous privilégions les outils open source et l’hébergement en Suisse ou en Europe. <a href="${r('approach')}">Découvrir notre façon de travailler</a>.`,
       },
     ],
     tagline: 'Pour un monde où les êtres humains et la nature prospèrent ensemble.',
