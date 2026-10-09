@@ -1,16 +1,27 @@
 ---
 import SiteLayout from '~/layouts/SiteLayout.astro';
+import { DEFAULT_LOCALE, LOCALES, ROUTES, type Locale, type RouteKey } from '~/i18n';
 
+// Long-form pages written in Markdown (legal notice, privacy policy).
+// Frontmatter: `title`, optional `description`, `locale` and `page` (a key of
+// ROUTES, so the language switch and hreflang links find the translation).
 export interface Props {
   frontmatter: {
     title?: string;
+    description?: string;
+    locale?: string;
+    page?: string;
   };
 }
 
 const { frontmatter } = Astro.props;
+const locale = (LOCALES as readonly string[]).includes(frontmatter.locale ?? '')
+  ? (frontmatter.locale as Locale)
+  : DEFAULT_LOCALE;
+const page = frontmatter.page && frontmatter.page in ROUTES ? (frontmatter.page as RouteKey) : undefined;
 ---
 
-<SiteLayout locale="en" title={frontmatter?.title ?? ''}>
+<SiteLayout locale={locale} page={page} title={frontmatter.title ?? ''} description={frontmatter.description}>
   <article class="content-surface copy markdown">
     <h1 class="page-heading">{frontmatter.title}</h1>
     <slot />

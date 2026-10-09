@@ -1,5 +1,5 @@
 ---
-import { LOCALES, type Dictionary, type Locale } from '~/i18n';
+import { LOCALES, route, type Dictionary, type Locale } from '~/i18n';
 
 export interface Props {
   t: Dictionary;
@@ -11,7 +11,7 @@ const { t, alternates } = Astro.props;
 ---
 
 <footer class="site-footer mono">
-  <span>{t.chrome.company}</span>
+  <a class="chrome-link" href={route('legal', t.locale)} title={t.nav.legal}>{t.chrome.company}</a>
 
   <div class="footer-controls">
     <nav class="lang-switch" aria-label={t.chrome.language}>

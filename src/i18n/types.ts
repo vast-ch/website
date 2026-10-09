@@ -53,6 +53,8 @@ export interface Dictionary {
     approach: string;
     about: string;
     contact: string;
+    legal: string;
+    privacy: string;
     linkedin: string;
     github: string;
   };

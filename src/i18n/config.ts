@@ -14,6 +14,8 @@ export const ROUTES = {
   approach: { en: '/approach', fr: '/fr/approche' },
   about: { en: '/about', fr: '/fr/a-propos' },
   contact: { en: '/contact', fr: '/fr/contact' },
+  legal: { en: '/legal', fr: '/fr/mentions-legales' },
+  privacy: { en: '/privacy', fr: '/fr/confidentialite' },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type RouteKey = keyof typeof ROUTES;

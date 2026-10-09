@@ -40,6 +40,8 @@ export const fr: Dictionary = typography<Dictionary>({
     approach: 'Approche',
     about: 'À propos',
     contact: 'Contact',
+    legal: 'Mentions légales',
+    privacy: 'Politique de confidentialité',
     linkedin: 'LinkedIn',
     github: 'GitHub',
   },
@@ -244,7 +246,7 @@ export const fr: Dictionary = typography<Dictionary>({
     addressLabel: 'Siège',
     address: ['Vast Switzerland GmbH', 'c/o Seed: Lab', 'Chemin du Musée 4', '1700 Fribourg', 'Suisse'],
     elsewhereLabel: 'Ailleurs',
-    smallPrint: `<a href="/terms">Conditions d’utilisation</a> (en anglais)`,
+    smallPrint: `<a href="${r('legal')}">Mentions légales</a> · <a href="${r('privacy')}">Politique de confidentialité</a>`,
   },
 
   notFound: {

@@ -24,6 +24,8 @@ export const en: Dictionary = {
     approach: 'Approach',
     about: 'About',
     contact: 'Contact',
+    legal: 'Legal notice',
+    privacy: 'Privacy policy',
     linkedin: 'LinkedIn',
     github: 'GitHub',
   },
@@ -226,7 +228,7 @@ export const en: Dictionary = {
     addressLabel: 'Registered office',
     address: ['Vast Switzerland GmbH', 'c/o Seed: Lab', 'Chemin du Musée 4', '1700 Fribourg', 'Switzerland'],
     elsewhereLabel: 'Elsewhere',
-    smallPrint: `<a href="/terms">Terms and conditions</a>`,
+    smallPrint: `<a href="${r('legal')}">Legal notice</a> · <a href="${r('privacy')}">Privacy policy</a>`,
   },
 
   notFound: {
