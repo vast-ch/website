@@ -23,7 +23,7 @@ Email: [hello@vast.ch](mailto:hello@vast.ch)
 Limited liability company (GmbH) registered in the commercial register of the Canton of Fribourg.
 
 - UID: CHE-307.752.812
-- Managing directors: Frédéric Montet (chair), Michal Bryxí, Yannick Lagger
+- Managing directors: Frédéric Montet, Michal Bryxí, Yannick Lagger
 
 ## Liability
 
