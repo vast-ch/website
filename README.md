@@ -30,7 +30,7 @@ Then open http://localhost:4321 (English) or http://localhost:4321/fr (French).
 | Styles, colours, fonts                   | `src/assets/styles/site.css`                               |
 | The animated cloud background            | `src/components/site/sky.ts`                               |
 | Menu and footer                          | `src/components/site/SiteHeader.astro`, `SiteFooter.astro` |
-| Default SEO title and description        | `src/config.yaml`                                          |
+| Page titles and descriptions (SEO)       | `meta` entries in `src/i18n/en.ts` and `fr.ts`             |
 | Social preview images                    | `src/assets/images/og/`                                    |
 
 The two dictionaries share one TypeScript type, so a string missing in French fails the type check. `AGENTS.md` has the architecture in more detail.
@@ -43,9 +43,8 @@ The two dictionaries share one TypeScript type, so a string missing in French fa
 
 ## Deployment
 
-Built and served by Netlify (`netlify.toml`): `npm run build`, publishing `dist/`. Redirects for old URLs are in `astro.config.ts`.
+`npm run build` produces a plain static site in `dist/`, which any static host can serve. `netlify.toml` holds the build and cache settings for Netlify.
 
 ## Credits
 
-- Started from the [AstroWind](https://github.com/arthelokyo/astrowind) template (MIT); little of it remains.
 - [Inter](https://rsms.me/inter/) and [Departure Mono](https://departuremono.com) by Helena Zhang, both under the SIL Open Font License.

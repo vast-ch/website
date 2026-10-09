@@ -4,7 +4,7 @@
 
 The public website of Vast Switzerland GmbH: a small, static, bilingual (English/French) site built with **Astro 6**. Its look is a full-screen animated sky (a volumetric sea of clouds rendered in WebGL) with corner chrome set in Departure Mono and reading text set in Inter.
 
-**Stack:** Astro 6 | TypeScript | Tailwind CSS v4 (used only for its CSS reset) | Netlify adapter
+**Stack:** Astro 6 (static output) | TypeScript | Tailwind CSS v4 (used only for its CSS reset)
 
 ## Quick reference
 
@@ -27,24 +27,21 @@ src/
     types.ts            # Dictionary type: every locale must provide every string
     en.ts, fr.ts        # The copy, one dictionary per locale
   layouts/
-    SiteLayout.astro    # Page shell: metadata, hreflang, theme + menu scripts, view transitions
-    MarkdownLayout.astro# Long-form Markdown pages
+    SiteLayout.astro    # Page shell: head, theme + menu scripts, view transitions
+    MarkdownLayout.astro# Long-form Markdown pages (locale and page key in frontmatter)
   components/
-    site/               # SkyCanvas.astro + sky.ts (cloud shader), SiteHeader, SiteFooter, Pictogram
+    site/               # Seo (title, description, Open Graph, hreflang), Favicons,
+                        # SkyCanvas.astro + sky.ts (cloud shader), SiteHeader, SiteFooter, Pictogram
     views/              # One view per page, shared by the EN and FR route files
-    common/             # Metadata, CommonMeta, SiteVerification, Analytics
-    Favicons.astro
-  pages/                # Thin route files (EN at the root, FR under fr/)
+  pages/                # Thin route files (EN at the root, FR under fr/), Markdown legal pages
   assets/
     styles/site.css     # Design tokens and all site styles
     styles/tailwind.css # Tailwind import (reset only)
-    brand/              # 2025 logo and pictogram (source SVGs)
     images/og/          # Social preview cards, one per locale (1200×630 JPEG)
     favicons/
-  config.yaml           # Site URL, default SEO metadata (loaded as `astrowind:config`)
-  utils/                # permalinks.ts (canonical URLs), images.ts (social card URLs)
-vendor/integration/     # Loads config.yaml as the `astrowind:config` virtual module
-public/fonts/           # Departure Mono (SIL OFL) with its licence
+public/                 # robots.txt, Departure Mono (SIL OFL) with its licence
+astro.config.ts         # Site URL, trailing-slash policy, sitemap, compression
+netlify.toml            # Build and cache headers when deployed on Netlify
 ```
 
 ### Internationalisation
