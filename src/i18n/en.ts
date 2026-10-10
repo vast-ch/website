@@ -32,9 +32,9 @@ export const en: Dictionary = {
 
   home: {
     meta: {
-      title: 'vast — Software and machine learning, built with you',
+      title: 'vast \\ software and modelling',
       description:
-        'Vast is a consulting company. We develop software and machine-learning models for time series with our clients, for people and nature.',
+        'Vast is a software engineering company. We develop software and machine-learning models with our clients, for people and nature.',
     },
     hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.<br />For <a href="${r('about')}">people and nature</a>.`,
     links: { services: 'What we do', contact: 'Get in touch' },
@@ -44,14 +44,22 @@ export const en: Dictionary = {
     meta: {
       title: 'Services',
       description:
-        'Machine learning for time series, our speciality, along with web and mobile applications and custom software, built with our clients.',
+        'Machine learning for time series and tabular data, our speciality, along with web and mobile applications and custom software, built with our clients.',
     },
     label: 'Services',
-    heading: 'We develop software with our clients, and we specialise in machine learning for time series.',
+    heading:
+      'We develop software and machine-learning models with our clients, and we specialise in data from the physical world.',
+    //intro: [
+    //  'Writing code is becoming cheap and fast. What stays scarce is knowing which problem is worth solving, checking that a solution really works, and having the data that makes it reliable. That is where we put most of our effort.',
+    //  'Our speciality is machine-learning models for time series: forecasting and anomaly detection on measurement data, especially in energy and buildings. We also build web and mobile applications and custom software. We work closely with your team, and every project starts with a conversation and a small first step.',
+    //],
+
     intro: [
-      'Writing code is becoming cheap and fast. What stays scarce is knowing which problem is worth solving, checking that a solution really works, and having the data that makes it reliable. That is where we put most of our effort.',
-      'Our speciality is machine-learning models for time series: forecasting and anomaly detection on measurement data, especially in energy and buildings. We also build web and mobile applications and custom software. We work closely with your team, and every project starts with a conversation and a small first step.',
+      'Software engineering is changing with recent AI advances. Value no longer comes from the code alone: it comes from knowing which problem is worth solving, checking that a solution really works, having the data that makes it reliable, and standing behind the result.',
+
+      'Our work has two sides. One is the software organisations run on: web and mobile applications, internal tools and integrations that remove friction from everyday work. The other is modelling the physical world from sensor readings and other data sources, in the energy, buildings, sport and weather sectors. This way, we can forecast, detect anomalies and estimate what cannot be measured.',
     ],
+
     listLabel: 'What we do',
     labels: {
       audience: 'For',
@@ -64,35 +72,13 @@ export const en: Dictionary = {
     },
     offers: [
       {
-        id: 'time-series',
-        title: 'Machine learning for time series',
-        headline: 'Our speciality: forecasting and anomaly detection on your measurement data.',
-        promise:
-          'We develop machine-learning models for time series, such as consumption forecasts or the detection of abnormal behaviour, together with the data pipelines that feed them.',
-        audience:
-          'Organisations with sensor, meter or operational data, especially in energy and buildings, who want to anticipate what comes next or spot problems earlier.',
-        deliverables: [
-          'Forecasting models, from classical statistical methods to modern machine learning.',
-          'Anomaly detection on sensor and meter data.',
-          'The pipeline around the model, from raw measurements to results you can use.',
-          'Documentation of how the model works and where its limits are.',
-        ],
-        extra: {
-          label: 'From our research',
-          text: 'Estimating the energy performance of buildings; detecting anomalies in district heating networks; benchmarking forecasting models, including time-series foundation models, with onTime, our open-source library.',
-        },
-        how: 'We start from the data you already have and check what it can support before building anything complex. Every model is compared with simple baselines and tested on data it has not seen.',
-        why: 'Our machine-learning work is led by a PhD in computer science focused on data science for the energy sector, with peer-reviewed publications.',
-        cta: 'Tell us what you would like to forecast or detect, and what data you have. We will tell you honestly what seems feasible.',
-      },
-      {
         id: 'web-and-mobile',
         title: 'Web and mobile applications',
         headline: 'From a first prototype to an app in production.',
         promise:
-          'We design and build web applications and cross-platform mobile apps for iOS and Android, and we can keep developing them after launch.',
+          'We design and build web applications and cross-platform mobile apps for iOS and Android, and we keep developing them after launch.',
         audience:
-          'Organisations that need a new application, want to replace a tool that has outgrown its spreadsheet, or need an existing app taken further.',
+          'Organisations that need a new application, have a process that has outgrown its spreadsheet, or need an existing app taken further.',
         deliverables: [
           'Web applications, from simple sites to long-lived business tools.',
           'Mobile apps for iOS and Android from a single codebase, published on the app stores.',
@@ -100,8 +86,27 @@ export const en: Dictionary = {
           'Maintenance and further development after launch.',
         ],
         how: 'We start small, with a prototype or a first usable version, then work in short iterations with your feedback. We choose proven, well-documented technologies that your team or another supplier can maintain.',
-        why: 'We have shipped web and mobile applications to production for years, including apps on the App Store and Google Play.',
+        why: 'Our team has shipped apps to the App Store and Google Play and has built web frontends for over a decade.',
         cta: 'Tell us about the application you have in mind, even if it is only a rough idea. We will tell you how we would approach it.',
+      },
+      {
+        id: 'time-series',
+        title: 'Modelling the physical world',
+        headline: 'Forecasts, alerts and estimates from the data you already collect.',
+        promise:
+          "We train machine-learning models on data of many kinds, with a speciality in tabular data and time series. We use them for forecasting, anomaly detection and estimation: a consumption forecast, an alert when a sensor drifts, a building's energy rating from its characteristics. We build the data pipelines around them, so the models produce results your organisation can use.",
+        audience:
+          'Organisations with sensor, meter, wearable or weather data, in the energy, buildings, sport and weather sectors, who want to anticipate what comes next, spot problems earlier or estimate what they cannot measure.',
+        deliverables: [
+          'Forecasting models, from classical statistical methods to modern machine learning.',
+          'Anomaly detection on sensor, meter and wearable data.',
+          'Estimation of what cannot be measured directly, from the data that describes it.',
+          'The pipeline around the model, from raw measurements to results you can use.',
+          'Documentation of how the model works and where its limits are.',
+        ],
+        how: 'We start from the data you already have and check what it can support before building anything complex. Every model is compared with simple baselines and tested on data it has not seen.',
+        why: 'Our modelling work is led at doctoral level and grounded in ongoing research with the University of Fribourg (UNIFR) and the School of Engineering and Architecture of Fribourg (HEIA-FR). Our methods are published in peer-reviewed venues.',
+        cta: 'Tell us what you would like to model, and what data you have. We will come back with what the data can support, and what it cannot.',
       },
       {
         id: 'software',
@@ -109,19 +114,19 @@ export const en: Dictionary = {
         headline: 'Software built around how your organisation actually works.',
         promise:
           'We develop the software you cannot buy off the shelf: internal tools, integrations between systems, automations and data pipelines.',
-        audience: 'Teams whose work depends on manual steps, copied data and tools that do not talk to each other.',
+        audience: 'Teams slowed down by copied data, re-typed figures and tools that do not talk to each other.',
         deliverables: [
-          'Internal tools that replace fragile spreadsheets and repetitive manual work.',
+          'Internal tools that replace fragile spreadsheets and copy-and-paste between systems.',
           'Integrations between the systems you already use.',
           'Data pipelines that collect, clean and store your data reliably.',
           'Reviews of existing code or architecture, with written recommendations.',
         ],
         how: 'We look at how the work is done today before writing any code, then build in small steps. When an existing tool already does the job, we say so.',
-        why: 'Between us we cover frontend, mobile, backend, data and infrastructure, so one small team can take a project from start to finish.',
-        cta: 'Describe the manual task or the missing tool that slows your team down. We will tell you honestly whether software is the right answer.',
+        why: 'We cover frontend, mobile, backend, data and infrastructure, so one team can take a project from start to finish.',
+        cta: 'Describe the friction that slows your team down, or the tool that is missing. We will come back with a first step, scoped and priced.',
       },
     ],
-    outro: `Not sure where your project fits? <a href="${r('contact')}">Just tell us about it</a>. If we are not the right team, we will say so.`,
+    outro: `Not sure where your project fits? <a href="${r('contact')}">Just tell us about it</a>.`,
   },
 
   approach: {
