@@ -32,9 +32,9 @@ export const en: Dictionary = {
 
   home: {
     meta: {
-      title: 'vast \\ software and modelling',
+      title: 'software and modelling',
       description:
-        'Vast is a software engineering company. We develop software and machine-learning models with our clients, for people and nature.',
+        'vast is a software engineering company. We develop software and machine-learning models with our clients, for people and nature.',
     },
     hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.<br />For <a href="${r('about')}">people and nature</a>.`,
     links: { services: 'What we do', contact: 'Get in touch' },
@@ -48,12 +48,7 @@ export const en: Dictionary = {
     },
     label: 'Services',
     heading:
-      'We develop software and machine-learning models with our clients, and we specialise in data from the physical world.',
-    //intro: [
-    //  'Writing code is becoming cheap and fast. What stays scarce is knowing which problem is worth solving, checking that a solution really works, and having the data that makes it reliable. That is where we put most of our effort.',
-    //  'Our speciality is machine-learning models for time series: forecasting and anomaly detection on measurement data, especially in energy and buildings. We also build web and mobile applications and custom software. We work closely with your team, and every project starts with a conversation and a small first step.',
-    //],
-
+      'We develop software and machine learning models with our clients, and we specialise in data from the physical world.',
     intro: [
       'Software engineering is changing with recent AI advances. Value no longer comes from the code alone: it comes from knowing which problem is worth solving, checking that a solution really works, having the data that makes it reliable, and standing behind the result.',
 
@@ -129,11 +124,12 @@ export const en: Dictionary = {
     outro: `Not sure where your project fits? <a href="${r('contact')}">Just tell us about it</a>.`,
   },
 
+  // The approach page is hidden for now (see src/pages/_approach.astro). Its copy stays here.
   approach: {
     meta: {
       title: 'Approach',
       description:
-        'How Vast works: knowing what to build, building it with you, a small first step, honesty, care for the environment and transparency about code and data.',
+        'How vast works: knowing what to build, building it with you, a small first step, honesty, care for the environment and transparency about code and data.',
     },
     label: 'Approach',
     heading: 'How we work',
@@ -196,14 +192,14 @@ export const en: Dictionary = {
     meta: {
       title: 'About',
       description:
-        'Vast is a consulting company. We develop software and machine-learning models for time series with our clients, with care for the environment and for digital sovereignty.',
+        'vast is a consulting company. We develop software and machine learning models for time series with our clients, with care for the environment and for digital sovereignty.',
     },
     label: 'About',
-    intro: `<a href="${r('home')}">Vast</a> is a consulting company. We develop software and machine-learning models for time series with our clients.`,
+    intro: `<a href="${r('home')}">vast</a> is a consulting company. We develop software and machine-learning models for time series with our clients.`,
     sections: [
       {
         title: 'Who we are',
-        text: `Vast is run by its founders, all senior developers. <a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> works on data science and time-series forecasting. <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> is a software engineer with a frontend focus and a long-time Ember and JavaScript contributor. <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> builds mobile and web applications, including apps published on the App Store and Google Play.`,
+        text: `vast is run by its founders, all senior developers. <a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> works on data science and time-series forecasting. <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> is a software engineer with a frontend focus and a long-time Ember and JavaScript contributor. <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> builds mobile and web applications, including apps published on the App Store and Google Play.`,
       },
       {
         title: 'Data science for energy',
@@ -211,7 +207,9 @@ export const en: Dictionary = {
       },
       {
         title: 'Environment and sovereignty',
-        text: `We want our work to be good for people and nature, and we are glad to work on projects in energy, buildings and the environment. We also care about who controls software and data: we favour open-source tools and hosting in Switzerland or Europe. <a href="${r('approach')}">Read how we work</a>.`,
+        // Approach page hidden for now. To restore its link, append to the text:
+        //   <a href="${r('approach')}">Read how we work</a>.
+        text: 'We want our work to be good for people and nature, and we are glad to work on projects in energy, buildings and the environment. We also care about who controls software and data: we favour open-source tools and hosting in Switzerland or Europe.',
       },
     ],
     tagline: 'For a world where people and nature thrive together.',
@@ -221,7 +219,7 @@ export const en: Dictionary = {
     meta: {
       title: 'Contact',
       description:
-        'Write to Vast in French, German or English. Tell us about your project and we will tell you honestly whether we can help.',
+        'Write to vast in French, German or English. Tell us about your project and we will tell you honestly whether we can help.',
     },
     label: 'Contact',
     heading: 'Tell us about your project. We will tell you honestly whether we can help.',

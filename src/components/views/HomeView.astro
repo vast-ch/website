@@ -10,14 +10,7 @@ const { locale } = Astro.props;
 const t = getDictionary(locale);
 ---
 
-<SiteLayout
-  locale={locale}
-  page="home"
-  variant="home"
-  title={t.home.meta.title}
-  description={t.home.meta.description}
-  ignoreTitleTemplate
->
+<SiteLayout locale={locale} page="home" variant="home" title={t.home.meta.title} description={t.home.meta.description}>
   <section class="home-hero">
     <h1 class="home-hero-text" set:html={t.home.hero} />
     <div class="home-links mono">

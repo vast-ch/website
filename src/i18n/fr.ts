@@ -48,9 +48,9 @@ export const fr: Dictionary = typography<Dictionary>({
 
   home: {
     meta: {
-      title: 'vast — Logiciels et machine learning, développés avec vous',
+      title: 'logiciels et modélisation',
       description:
-        'Vast est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients, pour les humains et la nature.',
+        'vast est une société d’ingénierie logicielle. Nous développons des logiciels et des modèles de machine learning avec nos clients, pour les humains et la nature.',
     },
     hero: `<a href="${r('services')}">Logiciels et machine learning</a>, développés avec vous.<br />Pour <a href="${r('about')}">les humains et la nature</a>.`,
     links: { services: 'Ce que nous faisons', contact: 'Nous écrire' },
@@ -60,15 +60,17 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'Services',
       description:
-        'Le machine learning pour les séries temporelles, notre spécialité, ainsi que des applications web et mobiles et des logiciels sur mesure, développés avec nos clients.',
+        'Le machine learning pour les séries temporelles et les données tabulaires, notre spécialité, ainsi que des applications web et mobiles et des logiciels sur mesure, développés avec nos clients.',
     },
     label: 'Services',
     heading:
-      'Nous développons des logiciels avec nos clients, et nous sommes spécialisés dans le machine learning pour les séries temporelles.',
+      'Nous développons des logiciels et des modèles de machine learning avec nos clients, et nous sommes spécialisés dans les données du monde physique.',
     intro: [
-      'Écrire du code devient bon marché et rapide. Ce qui reste rare, c’est de savoir quel problème mérite d’être résolu, de vérifier qu’une solution fonctionne vraiment et de disposer des données qui la rendent fiable. C’est là que nous mettons l’essentiel de notre effort.',
-      'Notre spécialité, ce sont les modèles de machine learning pour les séries temporelles : prévision et détection d’anomalies sur des données de mesure, en particulier dans l’énergie et les bâtiments. Nous développons aussi des applications web et mobiles et des logiciels sur mesure. Nous travaillons étroitement avec votre équipe, et chaque projet commence par une discussion et une première étape modeste.',
+      'L’ingénierie logicielle change avec les avancées récentes de l’IA. La valeur ne vient plus du seul code : elle tient au fait de savoir quel problème mérite d’être résolu, de vérifier qu’une solution fonctionne vraiment, de disposer des données qui la rendent fiable et d’assumer le résultat.',
+
+      'Notre travail a deux volets. Le premier, ce sont les logiciels sur lesquels les organisations s’appuient : applications web et mobiles, outils internes et intégrations qui suppriment les frictions du travail quotidien. Le second, c’est la modélisation du monde physique à partir de relevés de capteurs et d’autres sources de données, dans les secteurs de l’énergie, du bâtiment, du sport et de la météo. Nous pouvons ainsi prévoir, détecter des anomalies et estimer ce qui ne peut pas être mesuré.',
     ],
+
     listLabel: 'Ce que nous faisons',
     labels: {
       audience: 'Pour qui',
@@ -81,35 +83,13 @@ export const fr: Dictionary = typography<Dictionary>({
     },
     offers: [
       {
-        id: 'time-series',
-        title: 'Machine learning pour les séries temporelles',
-        headline: 'Notre spécialité : la prévision et la détection d’anomalies sur vos données de mesure.',
-        promise:
-          'Nous développons des modèles de machine learning pour les séries temporelles, comme des prévisions de consommation ou la détection de comportements anormaux, ainsi que les pipelines de données qui les alimentent.',
-        audience:
-          'Les organisations qui disposent de données de capteurs, de compteurs ou d’exploitation, en particulier dans l’énergie et les bâtiments, et qui veulent anticiper la suite ou repérer les problèmes plus tôt.',
-        deliverables: [
-          'Des modèles de prévision, des méthodes statistiques classiques au machine learning moderne.',
-          'De la détection d’anomalies sur des données de capteurs et de compteurs.',
-          'Le pipeline autour du modèle, des mesures brutes jusqu’à des résultats exploitables.',
-          'Une documentation du fonctionnement du modèle et de ses limites.',
-        ],
-        extra: {
-          label: 'Issu de nos recherches',
-          text: 'Estimation de la performance énergétique des bâtiments ; détection d’anomalies dans les réseaux de chauffage à distance ; comparaison de modèles de prévision, y compris des modèles de fondation pour séries temporelles, avec onTime, notre bibliothèque open source.',
-        },
-        how: 'Nous partons des données dont vous disposez et vérifions ce qu’elles permettent avant de construire quoi que ce soit de complexe. Chaque modèle est comparé à des références simples et testé sur des données qu’il n’a jamais vues.',
-        why: 'Nos travaux de machine learning sont menés par un docteur en informatique spécialisé en science des données pour le secteur de l’énergie, auteur de publications évaluées par les pairs.',
-        cta: 'Dites-nous ce que vous aimeriez prévoir ou détecter, et de quelles données vous disposez. Nous vous dirons honnêtement ce qui nous semble faisable.',
-      },
-      {
         id: 'web-and-mobile',
         title: 'Applications web et mobiles',
         headline: 'Du premier prototype à l’application en production.',
         promise:
-          'Nous concevons et développons des applications web et des applications mobiles multiplateformes pour iOS et Android, et nous pouvons continuer à les faire évoluer après leur lancement.',
+          'Nous concevons et développons des applications web et des applications mobiles multiplateformes pour iOS et Android, et nous continuons à les faire évoluer après leur lancement.',
         audience:
-          'Les organisations qui ont besoin d’une nouvelle application, veulent remplacer un outil devenu trop grand pour son tableur, ou souhaitent faire évoluer une application existante.',
+          'Les organisations qui ont besoin d’une nouvelle application, dont un processus est devenu trop grand pour son tableur, ou qui souhaitent faire évoluer une application existante.',
         deliverables: [
           'Des applications web, du site simple à l’outil métier conçu pour durer.',
           'Des applications mobiles pour iOS et Android à partir d’une seule base de code, publiées sur les stores.',
@@ -117,8 +97,27 @@ export const fr: Dictionary = typography<Dictionary>({
           'La maintenance et les évolutions après le lancement.',
         ],
         how: 'Nous commençons petit, avec un prototype ou une première version utilisable, puis avançons par itérations courtes avec vos retours. Nous choisissons des technologies éprouvées et bien documentées, que votre équipe ou un autre prestataire pourra maintenir.',
-        why: 'Nous mettons en production des applications web et mobiles depuis des années, y compris des applications publiées sur l’App Store et Google Play.',
+        why: 'Notre équipe a publié des applications sur l’App Store et Google Play et développe des frontends web depuis plus de dix ans.',
         cta: 'Parlez-nous de l’application que vous avez en tête, même si ce n’est qu’une idée approximative. Nous vous dirons comment nous l’aborderions.',
+      },
+      {
+        id: 'time-series',
+        title: 'Modélisation du monde physique',
+        headline: 'Des prévisions, des alertes et des estimations à partir des données que vous collectez déjà.',
+        promise:
+          'Nous entraînons des modèles de machine learning sur des données de toutes sortes, avec une spécialité dans les données tabulaires et les séries temporelles. Nous les utilisons pour la prévision, la détection d’anomalies et l’estimation : une prévision de consommation, une alerte quand un capteur dérive, la classe énergétique d’un bâtiment à partir de ses caractéristiques. Nous construisons les pipelines de données qui les entourent, pour que les modèles produisent des résultats exploitables par votre organisation.',
+        audience:
+          'Les organisations qui disposent de données de capteurs, de compteurs, de wearables ou de données météorologiques, dans les secteurs de l’énergie, du bâtiment, du sport et de la météo, et qui veulent anticiper la suite, repérer les problèmes plus tôt ou estimer ce qu’elles ne peuvent pas mesurer.',
+        deliverables: [
+          'Des modèles de prévision, des méthodes statistiques classiques au machine learning moderne.',
+          'De la détection d’anomalies sur des données de capteurs, de compteurs et de wearables.',
+          'L’estimation de ce qui ne peut pas être mesuré directement, à partir des données qui le décrivent.',
+          'Le pipeline autour du modèle, des mesures brutes jusqu’à des résultats exploitables.',
+          'Une documentation du fonctionnement du modèle et de ses limites.',
+        ],
+        how: 'Nous partons des données dont vous disposez et vérifions ce qu’elles permettent avant de construire quoi que ce soit de complexe. Chaque modèle est comparé à des références simples et testé sur des données qu’il n’a jamais vues.',
+        why: 'Nos travaux de modélisation sont menés au niveau doctoral et s’appuient sur des recherches en cours avec l’Université de Fribourg (UNIFR) et la Haute école d’ingénierie et d’architecture de Fribourg (HEIA-FR). Nos méthodes sont publiées dans des revues et conférences évaluées par les pairs.',
+        cta: 'Dites-nous ce que vous aimeriez modéliser, et de quelles données vous disposez. Nous reviendrons vers vous avec ce que les données permettent, et ce qu’elles ne permettent pas.',
       },
       {
         id: 'software',
@@ -127,26 +126,27 @@ export const fr: Dictionary = typography<Dictionary>({
         promise:
           'Nous développons les logiciels qu’on ne trouve pas sur étagère : outils internes, intégrations entre systèmes, automatisations et pipelines de données.',
         audience:
-          'Les équipes dont le travail repose sur des étapes manuelles, des données recopiées et des outils qui ne communiquent pas entre eux.',
+          'Les équipes ralenties par des données recopiées, des chiffres ressaisis et des outils qui ne communiquent pas entre eux.',
         deliverables: [
-          'Des outils internes qui remplacent des tableurs fragiles et des tâches manuelles répétitives.',
+          'Des outils internes qui remplacent des tableurs fragiles et les copier-coller entre systèmes.',
           'Des intégrations entre les systèmes que vous utilisez déjà.',
           'Des pipelines qui collectent, nettoient et stockent vos données de manière fiable.',
           'Des revues de code ou d’architecture existants, avec des recommandations écrites.',
         ],
         how: 'Nous regardons comment le travail se fait aujourd’hui avant d’écrire la moindre ligne de code, puis nous construisons par petites étapes. Quand un outil existant fait déjà l’affaire, nous le disons.',
-        why: 'À nous tous, nous couvrons le frontend, le mobile, le backend, les données et l’infrastructure : une petite équipe peut mener un projet du début à la fin.',
-        cta: 'Décrivez-nous la tâche manuelle ou l’outil manquant qui ralentit votre équipe. Nous vous dirons honnêtement si un logiciel est la bonne réponse.',
+        why: 'Nous couvrons le frontend, le mobile, le backend, les données et l’infrastructure : une seule équipe peut mener un projet du début à la fin.',
+        cta: 'Décrivez-nous la friction qui ralentit votre équipe, ou l’outil qui manque. Nous reviendrons vers vous avec une première étape, cadrée et chiffrée.',
       },
     ],
-    outro: `Vous ne savez pas où situer votre projet ? <a href="${r('contact')}">Parlez-nous-en simplement</a>. Si nous ne sommes pas la bonne équipe, nous vous le dirons.`,
+    outro: `Vous ne savez pas où situer votre projet ? <a href="${r('contact')}">Parlez-nous-en simplement</a>.`,
   },
 
+  // The approach page is hidden for now (see src/pages/fr/_approche.astro). Its copy stays here.
   approach: {
     meta: {
       title: 'Approche',
       description:
-        'Comment Vast travaille : savoir quoi construire, le construire avec vous, une première étape modeste, l’honnêteté, le respect de l’environnement et la transparence sur le code et les données.',
+        'Comment vast travaille : savoir quoi construire, le construire avec vous, une première étape modeste, l’honnêteté, le respect de l’environnement et la transparence sur le code et les données.',
     },
     label: 'Approche',
     heading: 'Notre façon de travailler',
@@ -209,14 +209,14 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'À propos',
       description:
-        'Vast est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients, dans le respect de l’environnement et de la souveraineté numérique.',
+        'vast est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients, dans le respect de l’environnement et de la souveraineté numérique.',
     },
     label: 'À propos',
-    intro: `<a href="${r('home')}">Vast</a> est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients.`,
+    intro: `<a href="${r('home')}">vast</a> est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients.`,
     sections: [
       {
         title: 'Qui nous sommes',
-        text: `Vast est dirigée par ses fondateurs, tous développeurs expérimentés. <a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> travaille sur la science des données et la prévision de séries temporelles. <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> est ingénieur logiciel orienté frontend et contribue depuis longtemps à Ember et à l’écosystème JavaScript. <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> développe des applications mobiles et web, dont des applications publiées sur l’App Store et Google Play.`,
+        text: `vast est dirigée par ses fondateurs, tous développeurs expérimentés. <a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> travaille sur la science des données et la prévision de séries temporelles. <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> est ingénieur logiciel orienté frontend et contribue depuis longtemps à Ember et à l’écosystème JavaScript. <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> développe des applications mobiles et web, dont des applications publiées sur l’App Store et Google Play.`,
       },
       {
         title: 'La science des données au service de l’énergie',
@@ -224,7 +224,9 @@ export const fr: Dictionary = typography<Dictionary>({
       },
       {
         title: 'Environnement et souveraineté',
-        text: `Nous voulons que notre travail soit bon pour les êtres humains et pour la nature, et nous sommes heureux de travailler sur des projets liés à l’énergie, aux bâtiments et à l’environnement. Nous tenons aussi à savoir qui contrôle les logiciels et les données : nous privilégions les outils open source et l’hébergement en Suisse ou en Europe. <a href="${r('approach')}">Découvrir notre façon de travailler</a>.`,
+        // Approach page hidden for now. To restore its link, append to the text:
+        //   <a href="${r('approach')}">Découvrir notre façon de travailler</a>.
+        text: 'Nous voulons que notre travail soit bon pour les êtres humains et pour la nature, et nous sommes heureux de travailler sur des projets liés à l’énergie, aux bâtiments et à l’environnement. Nous tenons aussi à savoir qui contrôle les logiciels et les données : nous privilégions les outils open source et l’hébergement en Suisse ou en Europe.',
       },
     ],
     tagline: 'Pour un monde où les êtres humains et la nature prospèrent ensemble.',
@@ -234,7 +236,7 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'Contact',
       description:
-        'Écrivez à Vast en français, en allemand ou en anglais. Parlez-nous de votre projet et nous vous dirons honnêtement si nous pouvons aider.',
+        'Écrivez à vast en français, en allemand ou en anglais. Parlez-nous de votre projet et nous vous dirons honnêtement si nous pouvons aider.',
     },
     label: 'Contact',
     heading: 'Parlez-nous de votre projet. Nous vous dirons honnêtement si nous pouvons aider.',

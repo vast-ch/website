@@ -52,6 +52,10 @@ wrangler.jsonc          # Cloudflare Worker serving dist/ (404 page for unknown 
 - French: write a plain space before `; : ! ?`. It becomes a narrow no-break space automatically.
 - Strings documented as HTML in `types.ts` are rendered with `set:html`. They are authored in this repo only.
 
+### Hidden pages
+
+The approach page is hidden for now: its route files are `src/pages/_approach.astro` and `src/pages/fr/_approche.astro` (Astro skips files starting with an underscore), and its menu entry and the links to it are commented out. Its copy and view are kept. The route files explain how to restore it.
+
 ### Adding a page
 
 1. Add a route key with both slugs to `ROUTES` in `src/i18n/config.ts`.
@@ -61,6 +65,8 @@ wrangler.jsonc          # Cloudflare Worker serving dist/ (404 page for unknown 
 
 ### Design notes
 
+- The brand is written `vast`, in lowercase, everywhere in the copy, even at the start of a sentence. Only the registered company name keeps its spelling: `Vast Switzerland GmbH`.
+- Page titles read `vast \ page name` (a backslash between thin spaces, page name in lowercase). `Seo.astro` builds them: dictionaries and frontmatter only give the page name.
 - Departure Mono (uppercase, `.mono`) is for UI chrome and labels; Inter is for reading.
 - Colours are tokens on `:root` / `:root.dark` in `site.css`. Muted text must keep at least 4.5:1 contrast on the veil.
 - The sky shader runs at reduced resolution and at most 30 fps. A governor lowers the resolution further on slow devices, and with `prefers-reduced-motion` it draws a single still frame. Keep it cheap: test on a phone after changing it.

@@ -28,13 +28,12 @@ export interface Props {
   title: string;
   /** Defaults to the home page description of the locale. */
   description?: string;
-  ignoreTitleTemplate?: boolean;
   /** `home` keeps the sky clear; `content` lays a paper veil under a reading column. */
   variant?: 'home' | 'content';
   noindex?: boolean;
 }
 
-const { locale, page, title, description, ignoreTitleTemplate, variant = 'content', noindex } = Astro.props;
+const { locale, page, title, description, variant = 'content', noindex } = Astro.props;
 const t = getDictionary(locale);
 
 const alternates = Object.fromEntries(LOCALES.map((l) => [l, route(page ?? 'home', l)])) as Record<Locale, string>;
@@ -49,7 +48,6 @@ const isEnglishHome = locale === 'en' && page === 'home';
     <Seo
       title={title}
       description={description ?? t.home.meta.description}
-      ignoreTitleTemplate={ignoreTitleTemplate}
       noindex={noindex}
       locale={locale}
       alternates={page ? alternates : undefined}

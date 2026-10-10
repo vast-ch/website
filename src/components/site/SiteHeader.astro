@@ -8,7 +8,8 @@ export interface Props {
 }
 
 const { t, current } = Astro.props;
-const pages: RouteKey[] = ['services', 'approach', 'about', 'contact'];
+// 'approach' is commented out while the approach page is hidden (see src/pages/_approach.astro).
+const pages: RouteKey[] = ['services', /* 'approach', */ 'about', 'contact'];
 ---
 
 <header class="site-header">

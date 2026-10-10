@@ -8,7 +8,7 @@ page: privacy
 
 _Dernière mise à jour : 9 octobre 2026_
 
-Cette politique explique comment Vast Switzerland GmbH (« Vast », « nous ») traite les données personnelles en lien avec ce site, conformément à la loi fédérale sur la protection des données (LPD).
+Cette politique explique comment Vast Switzerland GmbH (« vast », « nous ») traite les données personnelles en lien avec ce site, conformément à la loi fédérale sur la protection des données (LPD).
 
 ## Responsable du traitement
 

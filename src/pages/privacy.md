@@ -8,7 +8,7 @@ page: privacy
 
 _Last updated: 9 October 2026_
 
-This policy explains how Vast Switzerland GmbH ("Vast", "we") handles personal data in connection with this website, in line with the Swiss Federal Act on Data Protection (FADP).
+This policy explains how Vast Switzerland GmbH ("vast", "we") handles personal data in connection with this website, in line with the Swiss Federal Act on Data Protection (FADP).
 
 ## Who is responsible
 
