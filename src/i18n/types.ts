@@ -113,8 +113,6 @@ export interface Dictionary {
     /** HTML */
     intro: Html;
     emailLabel: string;
-    offersLabel: string;
-    write: string;
     addressLabel: string;
     address: string[];
     elsewhereLabel: string;

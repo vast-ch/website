@@ -243,8 +243,6 @@ export const fr: Dictionary = typography<Dictionary>({
     intro:
       'Écrivez-nous en français, en allemand ou en anglais. Une idée approximative suffit. Vous recevrez une réponse des développeurs qui feraient le travail.',
     emailLabel: 'E-mail',
-    offersLabel: 'Ou partez de l’un de ces services',
-    write: 'Nous écrire à ce sujet',
     addressLabel: 'Siège',
     address: ['Vast Switzerland GmbH', 'c/o Seed: Lab', 'Chemin du Musée 4', '1700 Fribourg', 'Suisse'],
     elsewhereLabel: 'Ailleurs',

@@ -226,8 +226,6 @@ export const en: Dictionary = {
     intro:
       'Write to us in French, German or English. A rough idea is plenty. You will hear back from the developers who would do the work.',
     emailLabel: 'Email',
-    offersLabel: 'Or start from one of these',
-    write: 'Write about this',
     addressLabel: 'Registered office',
     address: ['Vast Switzerland GmbH', 'c/o Seed: Lab', 'Chemin du Musée 4', '1700 Fribourg', 'Switzerland'],
     elsewhereLabel: 'Elsewhere',

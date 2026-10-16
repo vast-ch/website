@@ -744,25 +744,6 @@ body {
   text-decoration-style: solid;
 }
 
-.offer-starts {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.offer-starts li {
-  padding: 1.1rem 0;
-  border-top: 1px dashed var(--line);
-}
-
-.offer-starts li:last-child {
-  border-bottom: 1px dashed var(--line);
-}
-
-.offer-starts p {
-  margin: 0.2rem 0 0.6rem;
-}
-
 .details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
@@ -811,22 +792,6 @@ body {
 .contact-email > .mono {
   display: block;
   margin-bottom: 0.5rem;
-}
-
-.contact-offers {
-  margin-top: 3.5rem;
-}
-
-.offer-starts .offer-title {
-  color: inherit;
-  text-decoration: none;
-}
-
-.offer-starts .offer-title:hover {
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
 }
 
 /* Long-form markdown pages (terms). */
