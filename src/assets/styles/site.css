@@ -43,6 +43,13 @@
   --leading-body: 1.65;
   --leading-tight: 1.2;
 
+  /* Vertical rhythm. Paragraphs inside running text keep 1.15em between them. */
+  --space-label: 0.5rem; /* small mono label → its text */
+  --space-eyebrow: 1rem; /* page or section label → heading or list */
+  --space-heading: 1.75rem; /* page heading → first paragraph */
+  --space-block: 1.5rem; /* between blocks of one section */
+  --space-section: 3rem; /* between sections */
+
   /* One frame drives every outer alignment. */
   --frame-inline: clamp(20px, 5.2vw, 75px);
   --frame-block: clamp(20px, 5.2vw, 75px);
@@ -439,12 +446,12 @@ body {
 }
 
 .eyebrow {
-  margin: 0 0 1.75rem;
+  margin: 0 0 var(--space-eyebrow);
   color: var(--ink-muted);
 }
 
 .page-heading {
-  margin: 0 0 1.75rem;
+  margin: 0 0 var(--space-heading);
   font-size: var(--text-heading);
   line-height: var(--leading-tight);
   font-weight: 500;
@@ -453,13 +460,13 @@ body {
 }
 
 .section-heading {
-  margin: 3.5rem 0 1.5rem;
+  margin: var(--space-section) 0 var(--space-block);
   font-size: var(--text-lead);
   font-weight: 600;
   letter-spacing: -0.012em;
 }
 
-.copy p {
+:where(.copy) p {
   margin: 0 0 1.15em;
 }
 
@@ -494,7 +501,7 @@ body {
 }
 
 .entry {
-  margin: 0 0 1.6rem;
+  margin: 0 0 var(--space-block);
 }
 
 .entry p {
@@ -531,7 +538,7 @@ body {
    -------------------------------------------------------------------------- */
 
 .offers {
-  margin: 3.25rem 0 0;
+  margin: var(--space-section) 0 0;
 }
 
 .offer {
@@ -597,16 +604,16 @@ body {
 
 .offer-promise {
   font-size: var(--text-lead);
-  margin: 0 0 1.75rem;
+  margin: 0 0 var(--space-block);
 }
 
 .offer-block {
-  margin: 0 0 1.4rem;
+  margin: 0 0 var(--space-block);
 }
 
 .offer-block > .mono {
   display: block;
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--space-label);
   color: var(--ink-muted);
 }
 
@@ -623,7 +630,7 @@ body {
 .dash-list li {
   position: relative;
   padding-inline-start: 1.6em;
-  margin: 0 0 0.45rem;
+  margin: 0 0 var(--space-label);
 }
 
 .dash-list li::before {
@@ -634,7 +641,7 @@ body {
 }
 
 .offer-cta {
-  margin-top: 1.9rem;
+  margin-top: var(--space-block);
   padding: 1.1rem 1.25rem;
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -698,7 +705,7 @@ body {
   counter-increment: step;
   display: grid;
   grid-template-columns: 4ch 1fr;
-  margin: 0 0 1.4rem;
+  margin: 0 0 var(--space-block);
 }
 
 .steps p {
@@ -715,7 +722,7 @@ body {
 }
 
 .quote {
-  margin: 3.5rem 0 2.5rem;
+  margin: var(--space-section) 0;
   padding: 0;
 }
 
@@ -730,6 +737,8 @@ body {
 }
 
 .email-link {
+  display: inline-block;
+  line-height: var(--leading-tight);
   font-size: var(--text-heading);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -747,14 +756,14 @@ body {
 .details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  gap: var(--space-block) 2rem;
+  margin-top: var(--space-section);
 }
 
 .details-grid > div > .mono {
   display: block;
   color: var(--ink-muted);
-  margin-bottom: 0.6rem;
+  margin-bottom: var(--space-label);
 }
 
 .details-grid address {
@@ -768,7 +777,7 @@ body {
 }
 
 .small-print {
-  margin-top: 3rem;
+  margin-top: var(--space-section);
   font-size: 0.875rem;
   color: var(--ink-muted);
 }
@@ -778,7 +787,7 @@ body {
 }
 
 .outro {
-  margin: 2.5rem 0 0;
+  margin: var(--space-section) 0 0;
 }
 
 .quote figcaption {
@@ -786,24 +795,24 @@ body {
 }
 
 .contact-email {
-  margin-top: 2rem;
+  margin: var(--space-section) 0 0;
 }
 
 .contact-email > .mono {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-label);
 }
 
 /* Long-form markdown pages (terms). */
 .markdown h2 {
-  margin: 2.5rem 0 1rem;
+  margin: var(--space-section) 0 var(--space-eyebrow);
   font-size: var(--text-lead);
   font-weight: 600;
   letter-spacing: -0.012em;
 }
 
 .markdown h3 {
-  margin: 1.75rem 0 0.75rem;
+  margin: var(--space-block) 0 var(--space-label);
   font-weight: 600;
   font-style: italic;
 }
@@ -817,7 +826,7 @@ body {
 .markdown li {
   position: relative;
   padding-inline-start: 1.6em;
-  margin: 0 0 0.6rem;
+  margin: 0 0 var(--space-label);
 }
 
 .markdown li::before {
