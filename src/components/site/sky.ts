@@ -201,9 +201,10 @@ const FRAGMENT = `
     // The base undulates, so that mountains vanish into it along a soft line.
     float base = CLOUD_BOTTOM + 0.5 * (first - 0.5);
     den -= 9.0 * smoothstep(0.0, 0.2, uDescent) * (1.0 - smoothstep(base, base + 0.5, p.y));
-    // After landing the deck thins out, and opens in places.
+    // After landing the deck thins out and opens in many small places, so that
+    // about 5/8 of the sky stays covered whatever drifts overhead.
     if (uClear > 0.0) {
-      float opening = smoothstep(0.4, 0.75, noise3(vec3(p.xz * 0.22, 3.7) + vec3(0.02, 0.0, 0.012) * uTime));
+      float opening = smoothstep(0.45, 0.8, noise3(vec3(p.xz * 0.6, 3.7) + vec3(0.02, 0.0, 0.012) * uTime));
       den -= uClear * (0.8 + 3.0 * opening);
     }
     return clamp(den, 0.0, 1.0);
@@ -242,6 +243,13 @@ const FRAGMENT = `
       col += star * night * (1.0 - cover) * smoothstep(0.02, 0.2, dy) * 0.85;
     }
     return col;
+  }
+
+  // The sky seen from under the clouds, through their openings: by day a soft
+  // blue, deeper overhead, so that the gaps read as sky between the clouds.
+  vec3 openSky(vec3 rd, vec3 haze, vec3 zenith, float night, float t) {
+    vec3 blue = mix(vec3(0.80, 0.84, 0.89), vec3(0.62, 0.70, 0.81), smoothstep(0.05, 0.55, rd.y));
+    return mix(skyColor(rd, haze, zenith, night, t), blue, 0.85 * (1.0 - night));
   }
 
   // Distance along the ray to the land (closer than tMax), or -1.
@@ -363,7 +371,7 @@ const FRAGMENT = `
     vec3 from = p + vec3(0.0, 0.002, 0.0);
     float tl = marchLand(from, rr, LAND_DISTANCE);
     vec3 behind = farHaze;
-    if (uClear > 0.0) behind = mix(farHaze, skyColor(rr, haze, zenith, night, t), uClear);
+    if (uClear > 0.0) behind = mix(farHaze, openSky(rr, haze, zenith, night, t), uClear);
     if (tl > 0.0) {
       vec3 q = from + rr * tl;
       float d = tView + tl;
@@ -528,7 +536,9 @@ const FRAGMENT = `
       // The farthest land melts into the haze.
       background = mix(background, farHaze, smoothstep(0.6 * LAND_DISTANCE, LAND_DISTANCE, tHit));
     } else if (rd.y > 0.0) {
-      background = mix(skyColor(rd, haze, zenith, night, t), farHaze, below * (1.0 - uClear));
+      vec3 above = skyColor(rd, haze, zenith, night, t);
+      if (below * uClear > 0.0) above = mix(above, openSky(rd, haze, zenith, night, t), below * uClear);
+      background = mix(above, farHaze, below * (1.0 - uClear));
     }
 
     vec3 col = sum.rgb + background * (1.0 - sum.a);
