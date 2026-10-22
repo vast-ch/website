@@ -21,8 +21,10 @@ const FLIGHT_FPS = 60;
 const FLIGHT = { down: 10, up: 6 } as const;
 // The .earth hero text fades in once the flight down is this far along.
 const REVEAL_AT = 0.8;
-// Once landed, the clouds thin out and let some light through, in seconds.
-const CLEARING = { in: 6, out: 1.5 } as const;
+// On the way down, once out of the clouds (from this far along the flight), the
+// clouds above thin out and let some light through: mostly done on arrival.
+// Durations in seconds.
+const CLEARING = { from: 0.55, in: 5, out: 1.5 } as const;
 
 // Render at a fraction of the CSS size (clouds are soft), lowered further on
 // devices that cannot keep up.
@@ -645,7 +647,7 @@ function start(canvas: HTMLCanvasElement) {
   const page = () => root.dataset.page as keyof typeof HORIZON | undefined;
   const horizonTarget = () => HORIZON[page() ?? 'content'] ?? HORIZON.content;
   const flightTarget = () => (page() === 'earth' ? 1 : 0);
-  const clearTarget = () => (flightTarget() === 1 && flight === 1 ? 1 : 0);
+  const clearTarget = () => (flightTarget() === 1 && flight >= CLEARING.from ? 1 : 0);
   // Smootherstep: the flight starts and ends gently.
   const eased = (v: number) => v * v * v * (v * (v * 6 - 15) + 10);
 
@@ -653,7 +655,7 @@ function start(canvas: HTMLCanvasElement) {
   let horizon = horizonTarget();
   // A direct visit to /earth starts on the ground; the flight plays on navigation.
   let flight = flightTarget();
-  let clearing = 0;
+  let clearing = clearTarget();
   let time = 40;
   let last = performance.now();
   let lastDraw = 0;
