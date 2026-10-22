@@ -54,7 +54,7 @@ wrangler.jsonc          # Cloudflare Worker serving dist/ (404 page for unknown 
 
 ### The .earth page and the flight
 
-`/earth` (and `/fr/earth`) presents vast.earth, the association; its copy is in the `earth` entry of the dictionaries, based on the association's statutes. The page uses the `earth` layout variant (`data-page="earth"` on `<html>`). When that variant appears after a client-side navigation, `sky.ts` flies the camera down through the clouds to a ray-marched valley (6 s down, 4.5 s back up when leaving); a direct visit starts on the ground. During the flight `sky.ts` sets `is-flying` on `<html>`, which hides the hero text until the camera levels out. At rest on every other page the shader reduces exactly to the plain sea of clouds. Check any change to the flight on a phone: the land is ray-marched too.
+`/earth` (and `/fr/earth`) presents vast.earth, the association; its copy is in the `earth` entry of the dictionaries, based on the association's statutes. The page uses the `earth` layout variant (`data-page="earth"` on `<html>`). When that variant appears after a client-side navigation, `sky.ts` glides the camera down to the cloud tops and tilts it towards a gap that opens over a ray-marched valley and lake (7 s down, 5 s back up when leaving); a direct visit starts at the end of the flight. The camera stops above the clouds so the hero text sits on the sky: the final horizon (`CAMERA_PITCH` in `sky.ts`) must match `--earth-horizon` in `site.css`. During the flight `sky.ts` sets `is-flying` on `<html>`, which hides the hero text until the camera settles. At rest on every other page the shader reduces exactly to the plain sea of clouds. Check any change to the flight on a phone: the land is ray-marched too.
 
 ### Hidden pages
 

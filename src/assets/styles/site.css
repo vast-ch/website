@@ -57,8 +57,10 @@
   --frame-content-bottom: calc(var(--frame-block) + 96px);
 
   /* Horizon of the sky shader, in % of the viewport height from the bottom.
-     Must match HORIZON.home in SkyCanvas.astro. */
+     Must match HORIZON.home in sky.ts; --earth-horizon is where the horizon
+     settles at the end of the flight to .earth (CAMERA_PITCH in sky.ts). */
   --horizon: 40;
+  --earth-horizon: 55;
   --hero-horizon-gap: clamp(1.75rem, 1rem + 3vh, 3.5rem);
 
   --theme-duration: 900ms;
@@ -873,23 +875,27 @@ body {
 .earth-hero {
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: var(--frame-content-top) var(--frame-inline) 0;
-  text-align: center;
 }
 
+/* Like the home hero, the text sits in the sky, just above the horizon. It
+   fills the sky below the header; on short screens it grows down over the
+   cloud band rather than up into the header. */
 .earth-hero-content {
-  max-width: 40rem;
+  box-sizing: border-box;
+  min-height: calc((100 - var(--earth-horizon)) * 1vh - var(--hero-horizon-gap));
+  min-height: calc((100 - var(--earth-horizon)) * 1dvh - var(--hero-horizon-gap));
+  padding: var(--frame-content-top) var(--frame-inline) 0;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   gap: var(--space-eyebrow);
-  padding: 1.75rem 2.5rem 2rem;
-  /* A soft halo keeps the text legible over the cloud ceiling. */
-  background: radial-gradient(closest-side, rgba(var(--veil), 0.8), rgba(var(--veil), 0.55) 65%, rgba(var(--veil), 0));
+  text-align: center;
   transition: opacity 1.4s ease;
+}
+
+.earth-hero-content > * {
+  max-width: 40rem;
 }
 
 /* Hidden while the sky flies down to the land; sky.ts sets the class. */
