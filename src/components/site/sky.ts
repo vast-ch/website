@@ -5,9 +5,9 @@
 // sun for self-shadowing. That is what gives the puffs real volume. Above the
 // horizon, a cheap 2D sky with drifting high clouds and, at night, stars.
 //
-// On the .earth page the camera glides down to skim the sea of clouds while a
-// wide gap opens in it, revealing a valley far below, whose land and lake are
-// ray-marched too. Leaving the page flies back up.
+// On the .earth page the camera flies down into the sea of clouds, through
+// their soft interior and out under them, over a valley whose land and lake
+// are ray-marched too. Leaving the page flies back up.
 
 // Horizon height (fraction of the viewport from the bottom) per page type.
 // `home` must match --horizon in assets/styles/site.css.
@@ -17,7 +17,7 @@ const MAX_FPS = 30;
 const FLIGHT_FPS = 60;
 
 // Length of the flight between the sea of clouds and the land, in seconds.
-const FLIGHT = { down: 7, up: 5 } as const;
+const FLIGHT = { down: 8, up: 5 } as const;
 // The .earth hero text fades in once the flight down is this far along.
 const REVEAL_AT = 0.8;
 
@@ -39,8 +39,8 @@ const FRAGMENT = `
   uniform float uTime;
   uniform float uNight;
   uniform float uHorizon;
-  // 0 at rest above the sea of clouds, 1 down at the cloud tops looking into the
-  // gap over the valley (eased in JavaScript).
+  // 0 at rest above the sea of clouds, 1 under them, over the valley (eased in
+  // JavaScript).
   uniform float uDescent;
   uniform sampler2D uNoise;
 
@@ -51,13 +51,12 @@ const FRAGMENT = `
   // Rotation between octaves, so the grid of the value noise never lines up.
   const mat3 ROT3 = mat3(0.00, 0.80, 0.60, -0.80, 0.36, -0.48, -0.60, -0.48, 0.64);
 
-  // The flight down: where the camera ends up (just above the cloud tops, looking
-  // down), where the clouds part, and the land seen through the gap.
-  const float CAMERA_LOW = -0.65;
-  const float CAMERA_TRAVEL = 4.0;
+  // The flight down: where the camera ends up (just under the clouds, which
+  // become the ceiling the hero text sits on), and the land below.
+  const float CAMERA_LOW = -1.75;
+  const float CAMERA_TRAVEL = 5.0;
   // Final horizon: uHorizon + 1.25 * tan(pitch) = 0.55, matching --earth-horizon in site.css.
   const float CAMERA_PITCH = 0.12;
-  const vec2 GAP = vec2(0.3, 11.5);
   const vec2 LAKE = vec2(0.6, 14.0);
   const float GROUND = -3.35;
   const float WATER = -3.33;
@@ -154,7 +153,7 @@ const FRAGMENT = `
   // Cloud density. Puffy noise whose tops undulate around y = -1, thickening
   // with depth so the sea of clouds is opaque underneath. Fewer octaves far away.
   // (The fourth octave reaches only 0.75: a full sum would be 0.94, not 1.)
-  // On the flight down, the layer gets a base and parts above the valley.
+  // On the flight down, the layer gets a base for the camera to come out of.
   float density(vec3 p, int octaves) {
     vec3 q = p * 1.3 + vec3(0.03, 0.015, 0.08) * uTime;
     float f = 0.0;
@@ -167,8 +166,6 @@ const FRAGMENT = `
     }
     float den = 5.0 * f - 2.15 - (p.y + 1.0) * 5.0;
     den -= 9.0 * smoothstep(0.0, 0.2, uDescent) * (1.0 - smoothstep(CLOUD_BOTTOM, CLOUD_BOTTOM + 0.5, p.y));
-    float gap = 1.0 - smoothstep(1.6, 5.2, length((p.xz - GAP) * vec2(1.0, 0.62)));
-    den -= 7.0 * smoothstep(0.1, 0.9, uDescent) * gap;
     return clamp(den, 0.0, 1.0);
   }
 
@@ -250,10 +247,10 @@ const FRAGMENT = `
       * smoothstep(0.18, 0.4, up) * (1.0 - smoothstep(1.0, 1.3, up));
     c = mix(c, vec3(0.15, 0.22, 0.16), woods);
     c = mix(c, vec3(0.47, 0.46, 0.44), 1.0 - smoothstep(0.58, 0.8, n.y));
-    c = mix(c, vec3(0.94, 0.95, 0.96), smoothstep(1.3, 1.6, up + 0.25 * detail) * smoothstep(0.5, 0.72, n.y));
+    c = mix(c, vec3(0.94, 0.95, 0.96), smoothstep(2.0, 2.2, up + 0.25 * detail) * smoothstep(0.5, 0.72, n.y));
     c = mix(c, vec3(dot(c, vec3(0.3, 0.59, 0.11))), 0.15 + 0.45 * night);
 
-    // Sunlight comes through the gap; elsewhere the cloud deck gives soft light.
+    // Sunlight filters through where the cloud deck is thinner.
     vec3 q = p + SUN * ((-1.2 - p.y) / SUN.y);
     float overcast = density(q, 2);
     float sun = max(dot(n, SUN), 0.0) * (1.0 - 0.75 * smoothstep(0.1, 0.9, overcast));
@@ -285,9 +282,11 @@ const FRAGMENT = `
 
     // Camera. At rest it floats above the sea of clouds looking at the horizon,
     // with the projection shifted so that the horizon lands on uHorizon. On the
-    // way down it glides forward, sinks to the cloud tops and tilts towards the
-    // gap, all in one continuous move (the easing is done in JavaScript).
-    vec3 ro = vec3(0.0, CAMERA_LOW * descent, CAMERA_TRAVEL * descent);
+    // way down it glides forward, sinks through the clouds and tilts towards the
+    // valley, all in one continuous move (the easing is done in JavaScript).
+    // It sinks more slowly through the middle of the way, inside the clouds.
+    float sink = descent + 0.4 / 6.2831853 * sin(6.2831853 * descent);
+    vec3 ro = vec3(0.0, CAMERA_LOW * sink, CAMERA_TRAVEL * descent);
     float pitch = CAMERA_PITCH * descent;
     vec3 rd = normalize(vec3(x, dy, 1.25));
     float cp = cos(pitch);
@@ -300,13 +299,19 @@ const FRAGMENT = `
     vec3 ambient = mix(vec3(0.580, 0.598, 0.640), vec3(0.420, 0.420, 0.440), night);
     vec3 sunLight = mix(vec3(0.560, 0.545, 0.520), vec3(0.720, 0.720, 0.740), night);
 
-    // Below the clouds, the land can stand in front of them: find it first.
-    // Above or inside them, it is traced only through what the clouds let through.
-    bool underDeck = ro.y < CLOUD_BOTTOM;
     bool landVisible = descent > 0.1;
+    // 1 once the camera is out under the clouds: their underside becomes a soft
+    // ceiling and the distance fades to the same low haze as the land.
+    float below = smoothstep(CLOUD_TOP - 0.25, CLOUD_BOTTOM + 0.25, ro.y);
+    // 1 while the camera is inside the cloud layer.
+    float inCloud = smoothstep(CLOUD_TOP + 0.05, CLOUD_TOP - 0.25, ro.y) * smoothstep(CLOUD_BOTTOM + 0.1, CLOUD_BOTTOM + 0.35, ro.y);
+    vec3 hazeLow = mix(vec3(0.74, 0.76, 0.79), vec3(0.13, 0.14, 0.17), night);
+    vec3 farHaze = mix(haze, hazeLow, below);
     float tHit = -1.0;
     bool lake = false;
-    if (landVisible && underDeck) {
+    // Find the land first: ridges rise into the cloud base and can stand in
+    // front of clouds, which are then marched only up to the land.
+    if (landVisible) {
       tHit = marchLand(ro, rd);
     }
 
@@ -331,8 +336,15 @@ const FRAGMENT = `
       for (int i = 0; i < 80; i++) {
         if (tt > tEnd || sum.a > 0.98) break;
         vec3 pos = ro + rd * tt;
-        int octaves = tt < 12.0 ? 4 : 3;
+        // Inside the cloud, what is close by is blurry: one octave less.
+        int octaves = tt < 12.0 && (inCloud < 0.5 || tt > 1.5) ? 4 : 3;
         float den = density(pos, octaves);
+        // Inside the cloud, open soft holes around the camera, so that it flies
+        // through wisps and puffs of cotton rather than a white wall.
+        if (inCloud > 0.0) {
+          float holes = smoothstep(0.4, 0.7, noise3(pos * 2.5 + vec3(0.0, 0.0, 0.05 * uTime)));
+          den *= mix(1.0, holes, inCloud * (1.0 - smoothstep(0.45, 1.5, tt)));
+        }
         // A big stride ended inside a cloud: go back and enter it in small
         // steps, or its surface comes out in stripes.
         if (den > 0.01 && coarse) {
@@ -349,21 +361,27 @@ const FRAGMENT = `
           // Inside a cloud the light is bright and diffuse.
           vec3 inside = mix(lit, dense, 0.3) * (ambient + sunLight * 0.55);
           c = mix(c, inside, exp(-1.5 * tt) * smoothstep(0.05, 0.2, descent));
-          c = mix(c, haze, 1.0 - exp(-0.0004 * tt * tt));
-          float a = den * 0.8;
+          // Seen from below, the clouds are a soft, even ceiling.
+          vec3 underside = mix(
+            mix(vec3(0.85, 0.86, 0.88), vec3(0.70, 0.72, 0.75), den),
+            mix(vec3(0.175, 0.177, 0.19), vec3(0.12, 0.122, 0.135), den),
+            night
+          );
+          c = mix(c, underside, below);
+          c = mix(c, farHaze, mix(1.0 - exp(-0.0004 * tt * tt), 1.0 - exp(-0.03 * tt), below));
+          // Once the flight has started, the cloud right in front of the camera is
+          // thinner, so that it can be seen into.
+          float a = den * 0.8 * mix(1.0, 0.12 + 0.88 * smoothstep(0.0, 1.5, tt), smoothstep(0.05, 0.2, descent));
           sum.rgb += c * a * (1.0 - sum.a);
           sum.a += a * (1.0 - sum.a);
         }
         float stride = den > 0.01 || tt < fineUntil ? 0.03 : emptyStride;
         coarse = stride > 0.031;
         tPrev = tt;
-        tt += max(0.03, stride * tt);
+        tt += max(0.03 + 0.03 * inCloud, stride * tt);
       }
     }
 
-    if (landVisible && !underDeck && sum.a < 0.98) {
-      tHit = marchLand(ro, rd);
-    }
     float tWater = rd.y < 0.0 ? (WATER - ro.y) / rd.y : -1.0;
     if (landVisible && sum.a < 0.98 && tWater > 0.0 && tWater < LAND_DISTANCE && (tHit < 0.0 || tWater < tHit)) {
       lake = true;
@@ -371,7 +389,7 @@ const FRAGMENT = `
     }
 
     // What lies behind the clouds: the land and the lake, the sky, or haze.
-    vec3 background = haze;
+    vec3 background = farHaze;
     if (tHit > 0.0) {
       vec3 p = ro + rd * tHit;
       vec3 ground;
@@ -383,19 +401,18 @@ const FRAGMENT = `
       } else {
         ground = landColor(p, tHit, night);
       }
-      vec3 hazeLow = mix(vec3(0.72, 0.75, 0.78), vec3(0.13, 0.14, 0.17), night);
-      background = mix(ground, hazeLow, 1.0 - exp(-0.03 * tHit));
-      // The farthest land melts into the haze behind the clouds.
-      background = mix(background, haze, smoothstep(0.6 * LAND_DISTANCE, LAND_DISTANCE, tHit));
+      background = mix(ground, hazeLow, 1.0 - exp(-mix(0.03, 0.045, below) * tHit));
+      // The farthest land melts into the haze.
+      background = mix(background, farHaze, smoothstep(0.6 * LAND_DISTANCE, LAND_DISTANCE, tHit));
     } else if (rd.y > 0.0) {
-      background = skyColor(rd, haze, zenith, night, t);
+      background = mix(skyColor(rd, haze, zenith, night, t), farHaze, below);
     }
 
     vec3 col = sum.rgb + background * (1.0 - sum.a);
 
     // Bright band along the horizon.
     float elevation = rd.y * 1.25 / max(rd.z, 0.08);
-    col += mix(0.03, 0.018, night) * exp(-abs(elevation) * 40.0);
+    col += mix(0.03, 0.018, night) * exp(-abs(elevation) * 40.0) * (1.0 - smoothstep(CLOUD_TOP, CLOUD_TOP - 0.3, ro.y));
 
     // Paper grain.
     col += (hash(gl_FragCoord.xy + 0.5) - 0.5) * mix(0.035, 0.028, night);

@@ -877,14 +877,16 @@ body {
   min-height: 100dvh;
 }
 
-/* Like the home hero, the text sits in the sky, just above the horizon. It
-   fills the sky below the header; on short screens it grows down over the
-   cloud band rather than up into the header. */
+/* Like the home hero, the text sits just above the horizon, here on the
+   ceiling of clouds. It fills the space below the header; on short screens it
+   grows down over the misty far end of the valley rather than up into the
+   header. */
 .earth-hero-content {
   box-sizing: border-box;
   min-height: calc((100 - var(--earth-horizon)) * 1vh - var(--hero-horizon-gap));
   min-height: calc((100 - var(--earth-horizon)) * 1dvh - var(--hero-horizon-gap));
-  padding: var(--frame-content-top) var(--frame-inline) 0;
+  /* Just clear the header: on short screens every pixel of sky counts. */
+  padding: calc(var(--frame-block) + 4rem) var(--frame-inline) 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
