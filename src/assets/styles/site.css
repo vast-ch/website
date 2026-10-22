@@ -78,7 +78,7 @@
   --veil-b: 245;
   --veil: var(--veil-r), var(--veil-g), var(--veil-b);
 
-  --sky-fallback: linear-gradient(to bottom, #c9cccf 0%, #e8e9ea 60%, #d9dadb 60%, #c8cacc 100%);
+  --sky-fallback: linear-gradient(to bottom, #9fb3cf 0%, #dae1ec 60%, #d9dadb 60%, #c8cacc 100%);
 
   color-scheme: light;
 }

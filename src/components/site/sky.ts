@@ -436,12 +436,11 @@ const FRAGMENT = `
     float below = smoothstep(CLOUD_TOP - 0.25, CLOUD_BOTTOM + 0.25, ro.y);
     // 1 while the camera is inside the cloud layer.
     float inCloud = smoothstep(CLOUD_TOP + 0.05, CLOUD_TOP - 0.25, ro.y) * smoothstep(CLOUD_BOTTOM + 0.1, CLOUD_BOTTOM + 0.35, ro.y);
-    // During the flight to .earth, the sky above the clouds turns the soft blue
-    // that the clouds open onto at the end. By day only, and only in flight:
-    // at rest, on every page, the sky stays grey.
-    float flightSky = smoothstep(0.0, 0.012, descent) * (1.0 - below) * (1.0 - night);
-    haze = mix(haze, vec3(0.85, 0.88, 0.925), flightSky);
-    zenith = mix(zenith, vec3(0.62, 0.70, 0.81), flightSky);
+    // By day the sky above the clouds is a soft blue, the same that the clouds
+    // open onto at the lake. Under the clouds the grey haze takes over.
+    float blueSky = (1.0 - below) * (1.0 - night);
+    haze = mix(haze, vec3(0.85, 0.88, 0.925), blueSky);
+    zenith = mix(zenith, vec3(0.62, 0.70, 0.81), blueSky);
     vec3 hazeLow = mix(vec3(0.74, 0.76, 0.79), vec3(0.13, 0.14, 0.17), night);
     hazeLow = mix(hazeLow, mix(haze, hazeLow, 0.4), uClear);
     vec3 farHaze = mix(haze, hazeLow, below);
