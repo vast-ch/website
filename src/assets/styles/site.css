@@ -57,8 +57,9 @@
   --frame-content-bottom: calc(var(--frame-block) + 96px);
 
   /* Horizon of the sky shader, in % of the viewport height from the bottom.
-     Must match HORIZON.home in sky.ts; --earth-horizon is where the horizon
-     settles at the end of the flight to .earth (CAMERA_PITCH in sky.ts). */
+     Must match HORIZON.home in sky.ts. --earth-horizon is where the hero text
+     of .earth starts, just above the far hills seen from the lake shore at the
+     end of the flight (CAMERA_END and CAMERA_PITCH in sky.ts). */
   --horizon: 40;
   --earth-horizon: 55;
   --hero-horizon-gap: clamp(1.75rem, 1rem + 3vh, 3.5rem);
@@ -877,10 +878,9 @@ body {
   min-height: 100dvh;
 }
 
-/* Like the home hero, the text sits just above the horizon, here on the
-   ceiling of clouds. It fills the space below the header; on short screens it
-   grows down over the misty far end of the valley rather than up into the
-   header. */
+/* Like the home hero, the text sits above the land, here on the ceiling of
+   clouds. It fills the space below the header; on short screens it grows down
+   over the misty far end of the valley rather than up into the header. */
 .earth-hero-content {
   box-sizing: border-box;
   min-height: calc((100 - var(--earth-horizon)) * 1vh - var(--hero-horizon-gap));
