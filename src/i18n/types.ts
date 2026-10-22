@@ -53,6 +53,7 @@ export interface Dictionary {
     approach: string;
     about: string;
     contact: string;
+    earth: string;
     legal: string;
     privacy: string;
     linkedin: string;
@@ -118,6 +119,21 @@ export interface Dictionary {
     elsewhereLabel: string;
     /** HTML */
     smallPrint: Html;
+  };
+  earth: {
+    meta: PageMeta;
+    /** Hero, shown over the landscape once the flight has landed. */
+    label: string;
+    heading: string;
+    lead: string;
+    discover: string;
+    /** Body, on the paper veil below the landscape. */
+    bodyLabel: string;
+    /** HTML */
+    intro: Html;
+    sections: Section[];
+    join: { title: string; text: string; cta: string; subject: string };
+    tagline: string;
   };
   notFound: {
     meta: PageMeta;

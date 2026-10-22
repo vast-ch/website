@@ -4,11 +4,20 @@
 // and accumulates its density front to back, with one extra sample towards the
 // sun for self-shadowing. That is what gives the puffs real volume. Above the
 // horizon, a cheap 2D sky with drifting high clouds and, at night, stars.
+//
+// On the .earth page the camera flies down: it tilts towards the clouds, drops
+// through a gap that opens in them and levels out over a valley, whose land and
+// lake are ray-marched too. Leaving the page flies back up.
 
 // Horizon height (fraction of the viewport from the bottom) per page type.
 // `home` must match --horizon in assets/styles/site.css.
-const HORIZON = { home: 0.4, content: 0.28 } as const;
+const HORIZON = { home: 0.4, content: 0.28, earth: 0.5 } as const;
 const MAX_FPS = 30;
+
+// Length of the flight between the sea of clouds and the land, in seconds.
+const FLIGHT = { down: 6, up: 4.5 } as const;
+// The .earth hero text fades in once the flight down is this far along.
+const REVEAL_AT = 0.8;
 
 // Render at a fraction of the CSS size (clouds are soft), lowered further on
 // devices that cannot keep up.
@@ -28,14 +37,28 @@ const FRAGMENT = `
   uniform float uTime;
   uniform float uNight;
   uniform float uHorizon;
+  // 0 above the sea of clouds, 1 landed under it (eased in JavaScript).
+  uniform float uDescent;
   uniform sampler2D uNoise;
 
+  const float PI = 3.14159265;
   const float CLOUD_TOP = -0.55;
   const float CLOUD_BOTTOM = -1.8;
   const float MAX_DISTANCE = 60.0;
   const vec3 SUN = vec3(-0.640, 0.533, 0.480);
   // Rotation between octaves, so the grid of the value noise never lines up.
   const mat3 ROT3 = mat3(0.00, 0.80, 0.60, -0.80, 0.36, -0.48, -0.60, -0.48, 0.64);
+
+  // The flight down: where the camera ends up, where the clouds part, and the land.
+  const float CAMERA_LOW = -2.35;
+  const float CAMERA_TRAVEL = 6.0;
+  const vec2 GAP = vec2(0.5, 11.0);
+  const vec2 LAKE = vec2(0.6, 14.0);
+  const float GROUND = -3.35;
+  const float WATER = -3.33;
+  const float LAND_TOP = -1.25;
+  // Beyond this the haze hides the land completely.
+  const float LAND_DISTANCE = 45.0;
 
   float hash(vec2 p) {
     vec3 p3 = fract(vec3(p.xyx) * 0.1031);
@@ -89,9 +112,44 @@ const FRAGMENT = `
     return mix(rg.x, rg.y, f.z);
   }
 
+  // Smooth 2D value noise in one texture fetch, for the land.
+  float tnoise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return texture2D(uNoise, (i + f + 0.5) / 256.0).x;
+  }
+
+  float landFbm(vec2 p, int octaves) {
+    float v = 0.0;
+    float a = 0.5;
+    for (int i = 0; i < 6; i++) {
+      if (i >= octaves) break;
+      v += a * tnoise(p);
+      p = ROT * p * 2.02 + vec2(11.3, 4.7);
+      a *= 0.5;
+    }
+    return v;
+  }
+
+  // A valley along the flight path with a lake, slopes rising to mountains on
+  // both sides and a range in the distance. Never higher than LAND_TOP.
+  float landHeight(vec2 p, int octaves) {
+    float n = landFbm(p * 0.32, octaves);
+    float crest = 1.0 - abs(2.0 * n - 1.0);
+    float meander = 1.1 * sin(p.y * 0.16 + 0.4);
+    float slopes = smoothstep(1.4, 6.5, abs(p.x - meander));
+    float range = smoothstep(18.0, 34.0, p.y);
+    float h = 0.18 * n + max(slopes * 1.7, range * 1.9) * (0.25 + 0.75 * crest * crest);
+    vec2 lake = (p - LAKE) * vec2(1.0, 0.5);
+    h -= 0.28 * (1.0 - smoothstep(0.0, 2.6, length(lake)));
+    return GROUND + h;
+  }
+
   // Cloud density. Puffy noise whose tops undulate around y = -1, thickening
   // with depth so the sea of clouds is opaque underneath. Fewer octaves far away.
   // (The fourth octave reaches only 0.75: a full sum would be 0.94, not 1.)
+  // On the flight down, the layer gets a base and parts above the valley.
   float density(vec3 p, int octaves) {
     vec3 q = p * 1.3 + vec3(0.03, 0.015, 0.08) * uTime;
     float f = 0.0;
@@ -102,7 +160,102 @@ const FRAGMENT = `
       q = ROT3 * q * 2.03;
       a *= 0.5;
     }
-    return clamp(5.0 * f - 2.15 - (p.y + 1.0) * 5.0, 0.0, 1.0);
+    float den = 5.0 * f - 2.15 - (p.y + 1.0) * 5.0;
+    den -= 9.0 * smoothstep(0.0, 0.2, uDescent) * (1.0 - smoothstep(CLOUD_BOTTOM, CLOUD_BOTTOM + 0.5, p.y));
+    float gap = 1.0 - smoothstep(1.2, 3.6, length((p.xz - GAP) * vec2(1.0, 0.6)));
+    den -= 6.0 * smoothstep(0.2, 0.8, uDescent) * gap;
+    return clamp(den, 0.0, 1.0);
+  }
+
+  // The 2D sky, drawn as if on the screen of a camera looking at the horizon.
+  vec3 skyColor(vec3 rd, vec3 haze, vec3 zenith, float night, float t) {
+    float k = 1.25 / max(rd.z, 0.08);
+    float x = rd.x * k;
+    float dy = max(rd.y * k, 0.0);
+    float skyT = clamp(dy / max(1.0 - uHorizon, 0.05), 0.0, 1.0);
+    vec3 col = mix(haze, zenith, pow(skyT, 0.8));
+
+    // High cloud deck seen from below, in perspective.
+    float depth = 0.2 / (dy + 0.01);
+    vec2 wp = vec2(x * depth, depth) * 0.8 + vec2(t * 0.004, t * 0.010);
+    vec2 warp = vec2(fbm4(wp * 0.5 + t * 0.002), fbm4(wp * 0.5 + vec2(4.1, 1.7)));
+    float c = fbm(wp + 0.7 * warp);
+    float cover = smoothstep(0.52, 0.80, c) * exp(-depth * 0.035) * smoothstep(0.0, 0.08, dy);
+    float underside = smoothstep(0.52, 0.95, c);
+    vec3 highCloud = mix(
+      mix(vec3(0.975, 0.977, 0.980), vec3(0.205, 0.206, 0.220), night),
+      mix(vec3(0.840, 0.848, 0.860), vec3(0.120, 0.121, 0.132), night),
+      underside * 0.6
+    );
+    col = mix(col, highCloud, cover * 0.75);
+
+    // Stars, only through clear sky.
+    vec2 sc = vec2(x, dy) * 230.0;
+    vec2 cell = floor(sc);
+    float r = hash(cell);
+    if (r > 0.991) {
+      float d = length(fract(sc) - 0.5);
+      float twinkle = 0.55 + 0.45 * sin(t * (0.8 + r * 2.5) + r * 61.0);
+      float star = smoothstep(0.42, 0.0, d) * twinkle * (0.35 + 0.65 * hash(cell + 7.0));
+      col += star * night * (1.0 - cover) * smoothstep(0.02, 0.2, dy) * 0.85;
+    }
+    return col;
+  }
+
+  // Distance along the ray to the land, or -1.
+  float marchLand(vec3 ro, vec3 rd) {
+    float t = 0.02;
+    if (ro.y > LAND_TOP) {
+      if (rd.y >= 0.0) return -1.0;
+      t = (LAND_TOP - ro.y) / rd.y;
+    }
+    for (int i = 0; i < 72; i++) {
+      vec3 p = ro + rd * t;
+      float h = p.y - landHeight(p.xz, 4);
+      if (h < 0.003 * t) return t;
+      if (t > LAND_DISTANCE || (rd.y > 0.0 && p.y > LAND_TOP)) break;
+      t += max(0.5 * h, 0.015 + 0.006 * t);
+    }
+    return -1.0;
+  }
+
+  vec3 landColor(vec3 p, float dist, float night) {
+    float e = 0.01 + 0.002 * dist;
+    float hx = landHeight(p.xz + vec2(e, 0.0), 6) - landHeight(p.xz - vec2(e, 0.0), 6);
+    float hz = landHeight(p.xz + vec2(0.0, e), 6) - landHeight(p.xz - vec2(0.0, e), 6);
+    vec3 n = normalize(vec3(-hx, 2.0 * e, -hz));
+    // Fine relief that the height field is too coarse to carry.
+    vec2 bump = vec2(tnoise(p.xz * 14.0 + 0.5), tnoise(p.xz * 14.0 + 9.5)) - 0.5;
+    n = normalize(n + vec3(bump.x, 0.0, bump.y) * 0.18 / (1.0 + 0.2 * dist));
+    float up = p.y - GROUND;
+    float detail = tnoise(p.xz * 3.1);
+
+    float fields = tnoise(p.xz * 0.9 + 3.0);
+    vec3 c = mix(vec3(0.38, 0.46, 0.30), vec3(0.52, 0.55, 0.36), fields);
+    c = mix(c, vec3(0.45, 0.49, 0.33), detail * 0.5);
+    float woods = smoothstep(0.5, 0.62, tnoise(p.xz * 3.6 + 7.0) * 0.75 + fields * 0.25)
+      * smoothstep(0.18, 0.4, up) * (1.0 - smoothstep(1.0, 1.3, up));
+    c = mix(c, vec3(0.15, 0.22, 0.16), woods);
+    c = mix(c, vec3(0.47, 0.46, 0.44), 1.0 - smoothstep(0.58, 0.8, n.y));
+    c = mix(c, vec3(0.94, 0.95, 0.96), smoothstep(1.3, 1.6, up + 0.25 * detail) * smoothstep(0.5, 0.72, n.y));
+    c = mix(c, vec3(dot(c, vec3(0.3, 0.59, 0.11))), 0.15 + 0.45 * night);
+
+    // Sunlight comes through the gap; elsewhere the cloud deck gives soft light.
+    vec3 q = p + SUN * ((-1.2 - p.y) / SUN.y);
+    float overcast = density(q, 2);
+    float sun = max(dot(n, SUN), 0.0) * (1.0 - 0.75 * smoothstep(0.1, 0.9, overcast));
+    vec3 sky = mix(vec3(0.60, 0.63, 0.67), vec3(0.17, 0.19, 0.25), night) * (0.55 + 0.45 * n.y);
+    vec3 sunCol = mix(vec3(1.10, 1.03, 0.92), vec3(0.42, 0.48, 0.62), night);
+    return c * (sky + sunCol * sun);
+  }
+
+  // The lake reflects the cloud deck, more at grazing angles.
+  vec3 waterColor(vec3 p, vec3 rd, float night, float t) {
+    float fresnel = pow(1.0 - clamp(-rd.y, 0.0, 1.0), 5.0);
+    float ripple = tnoise(p.xz * vec2(9.0, 3.0) + vec2(0.0, t * 0.4)) - 0.5;
+    vec3 deep = mix(vec3(0.14, 0.22, 0.25), vec3(0.04, 0.06, 0.09), night);
+    vec3 deck = mix(vec3(0.70, 0.73, 0.77), vec3(0.16, 0.18, 0.23), night);
+    return mix(deep, deck, clamp(0.2 + 0.8 * fresnel + 0.12 * ripple, 0.0, 1.0));
   }
 
   void main() {
@@ -112,60 +265,54 @@ const FRAGMENT = `
     float dy = uv.y - uHorizon;
     float t = uTime;
     float night = smoothstep(0.0, 1.0, uNight);
+    float descent = uDescent;
 
     vec3 haze = mix(vec3(0.912, 0.916, 0.921), vec3(0.150, 0.151, 0.162), night);
     vec3 zenith = mix(vec3(0.742, 0.760, 0.781), vec3(0.040, 0.042, 0.050), night);
 
-    vec3 col;
+    // Camera. At rest it floats above the sea of clouds looking at the horizon,
+    // with the projection shifted so that the horizon lands on uHorizon. On the
+    // way down it tilts towards the clouds, drops and levels out over the land.
+    float throughClouds = smoothstep(0.0, 0.62, descent);
+    float underClouds = smoothstep(0.55, 1.0, descent);
+    float camY = -1.55 * throughClouds + (CAMERA_LOW + 1.55) * underClouds;
+    vec3 ro = vec3(0.0, camY, CAMERA_TRAVEL * descent);
+    float pitch = 0.55 * sin(PI * clamp(descent / 0.75, 0.0, 1.0)) + 0.13 * smoothstep(0.55, 1.0, descent);
+    vec3 rd = normalize(vec3(x, dy, 1.25));
+    float cp = cos(pitch);
+    float sp = sin(pitch);
+    rd = vec3(rd.x, rd.y * cp - rd.z * sp, rd.y * sp + rd.z * cp);
+    rd.y = rd.y >= 0.0 ? max(rd.y, 1e-4) : min(rd.y, -1e-4);
 
-    if (dy > 0.0) {
-      // Sky gradient.
-      float skyT = clamp(dy / max(1.0 - uHorizon, 0.05), 0.0, 1.0);
-      col = mix(haze, zenith, pow(skyT, 0.8));
+    vec3 lit = mix(vec3(1.0, 1.0, 1.0), vec3(0.300, 0.302, 0.325), night);
+    vec3 dense = mix(vec3(0.600, 0.616, 0.650), vec3(0.070, 0.071, 0.080), night);
+    vec3 ambient = mix(vec3(0.580, 0.598, 0.640), vec3(0.420, 0.420, 0.440), night);
+    vec3 sunLight = mix(vec3(0.560, 0.545, 0.520), vec3(0.720, 0.720, 0.740), night);
 
-      // High cloud deck seen from below, in perspective.
-      float depth = 0.2 / (dy + 0.01);
-      vec2 wp = vec2(x * depth, depth) * 0.8 + vec2(t * 0.004, t * 0.010);
-      vec2 warp = vec2(fbm4(wp * 0.5 + t * 0.002), fbm4(wp * 0.5 + vec2(4.1, 1.7)));
-      float c = fbm(wp + 0.7 * warp);
-      float cover = smoothstep(0.52, 0.80, c) * exp(-depth * 0.035) * smoothstep(0.0, 0.08, dy);
-      float underside = smoothstep(0.52, 0.95, c);
-      vec3 highCloud = mix(
-        mix(vec3(0.975, 0.977, 0.980), vec3(0.205, 0.206, 0.220), night),
-        mix(vec3(0.840, 0.848, 0.860), vec3(0.120, 0.121, 0.132), night),
-        underside * 0.6
-      );
-      col = mix(col, highCloud, cover * 0.75);
+    // Below the clouds, the land can stand in front of them: find it first.
+    // Above or inside them, it is traced only through what the clouds let through.
+    bool underDeck = ro.y < CLOUD_BOTTOM;
+    bool landVisible = descent > 0.2;
+    float tHit = -1.0;
+    bool lake = false;
+    if (landVisible && underDeck) {
+      tHit = marchLand(ro, rd);
+    }
 
-      // Stars, only through clear sky.
-      vec2 sc = vec2(x, dy) * 230.0;
-      vec2 cell = floor(sc);
-      float r = hash(cell);
-      if (r > 0.991) {
-        float d = length(fract(sc) - 0.5);
-        float twinkle = 0.55 + 0.45 * sin(t * (0.8 + r * 2.5) + r * 61.0);
-        float star = smoothstep(0.42, 0.0, d) * twinkle * (0.35 + 0.65 * hash(cell + 7.0));
-        col += star * night * (1.0 - cover) * smoothstep(0.02, 0.2, dy) * 0.85;
-      }
-    } else {
-      // Sea of clouds: march a ray from a camera floating above the layer. The
-      // projection is shifted so that the horizon lands exactly on uHorizon.
-      vec3 rd = normalize(vec3(x, dy, 1.25));
+    // Clouds, marched through the part of the ray inside the cloud layer.
+    float t0 = (CLOUD_TOP - ro.y) / rd.y;
+    float t1 = (CLOUD_BOTTOM - ro.y) / rd.y;
+    float tStart = max(min(t0, t1), 0.0);
+    float tEnd = min(max(t0, t1), MAX_DISTANCE);
+    if (tHit > 0.0) tEnd = min(tEnd, tHit);
+    vec4 sum = vec4(0.0);
 
-      vec3 lit = mix(vec3(1.0, 1.0, 1.0), vec3(0.300, 0.302, 0.325), night);
-      vec3 dense = mix(vec3(0.600, 0.616, 0.650), vec3(0.070, 0.071, 0.080), night);
-      vec3 ambient = mix(vec3(0.580, 0.598, 0.640), vec3(0.420, 0.420, 0.440), night);
-      vec3 sunLight = mix(vec3(0.560, 0.545, 0.520), vec3(0.720, 0.720, 0.740), night);
-
-      float tStart = CLOUD_TOP / rd.y;
-      float tEnd = min(CLOUD_BOTTOM / rd.y, MAX_DISTANCE);
+    if (tEnd > tStart) {
       // Jitter the start to trade banding for fine grain.
       float tt = tStart + hash(gl_FragCoord.xy) * max(0.03, 0.03 * tStart);
-      vec4 sum = vec4(0.0);
-
       for (int i = 0; i < 80; i++) {
         if (tt > tEnd || sum.a > 0.98) break;
-        vec3 pos = rd * tt;
+        vec3 pos = ro + rd * tt;
         int octaves = tt < 12.0 ? 4 : 3;
         float den = density(pos, octaves);
         if (den > 0.01) {
@@ -173,6 +320,9 @@ const FRAGMENT = `
           float towardsSun = density(pos + 0.3 * SUN, octaves - 1);
           float diffuse = clamp((den - towardsSun) / 0.5, 0.0, 1.0);
           vec3 c = mix(lit, dense, den) * (ambient + sunLight * diffuse);
+          // Inside a cloud the light is bright and diffuse.
+          vec3 inside = mix(lit, dense, 0.3) * (ambient + sunLight * 0.55);
+          c = mix(c, inside, exp(-1.5 * tt) * smoothstep(0.05, 0.2, descent));
           c = mix(c, haze, 1.0 - exp(-0.0004 * tt * tt));
           float a = den * 0.8;
           sum.rgb += c * a * (1.0 - sum.a);
@@ -180,12 +330,43 @@ const FRAGMENT = `
         }
         tt += max(0.03, 0.03 * tt);
       }
-
-      col = sum.rgb + haze * (1.0 - sum.a);
     }
 
-    // Bright band where the clouds meet the sky.
-    col += mix(0.03, 0.018, night) * exp(-abs(dy) * 40.0);
+    if (landVisible && !underDeck && sum.a < 0.98) {
+      tHit = marchLand(ro, rd);
+    }
+    float tWater = rd.y < 0.0 ? (WATER - ro.y) / rd.y : -1.0;
+    if (landVisible && sum.a < 0.98 && tWater > 0.0 && tWater < LAND_DISTANCE && (tHit < 0.0 || tWater < tHit)) {
+      lake = true;
+      tHit = tWater;
+    }
+
+    // What lies behind the clouds: the land and the lake, the sky, or haze.
+    vec3 background = haze;
+    if (tHit > 0.0) {
+      vec3 p = ro + rd * tHit;
+      vec3 ground;
+      if (lake) {
+        ground = waterColor(p, rd, night, t);
+        float depth = WATER - landHeight(p.xz, 4);
+        vec3 shore = mix(vec3(0.33, 0.37, 0.28), vec3(0.08, 0.09, 0.11), night);
+        ground = mix(shore, ground, smoothstep(0.0, 0.03, depth));
+      } else {
+        ground = landColor(p, tHit, night);
+      }
+      vec3 hazeLow = mix(vec3(0.72, 0.75, 0.78), vec3(0.13, 0.14, 0.17), night);
+      background = mix(ground, hazeLow, 1.0 - exp(-0.04 * tHit));
+    } else if (rd.y > 0.0) {
+      background = skyColor(rd, haze, zenith, night, t);
+    } else if (landVisible) {
+      background = mix(vec3(0.72, 0.75, 0.78), vec3(0.13, 0.14, 0.17), night);
+    }
+
+    vec3 col = sum.rgb + background * (1.0 - sum.a);
+
+    // Bright band along the horizon.
+    float elevation = rd.y * 1.25 / max(rd.z, 0.08);
+    col += mix(0.03, 0.018, night) * exp(-abs(elevation) * 40.0);
 
     // Paper grain.
     col += (hash(gl_FragCoord.xy + 0.5) - 0.5) * mix(0.035, 0.028, night);
@@ -277,20 +458,29 @@ function start(canvas: HTMLCanvasElement) {
   const uTime = gl.getUniformLocation(program, 'uTime');
   const uNight = gl.getUniformLocation(program, 'uNight');
   const uHorizon = gl.getUniformLocation(program, 'uHorizon');
+  const uDescent = gl.getUniformLocation(program, 'uDescent');
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isNight = () => (root.classList.contains('dark') ? 1 : 0);
-  const horizonTarget = () => (root.dataset.page === 'home' ? HORIZON.home : HORIZON.content);
+  const page = () => root.dataset.page as keyof typeof HORIZON | undefined;
+  const horizonTarget = () => HORIZON[page() ?? 'content'] ?? HORIZON.content;
+  const flightTarget = () => (page() === 'earth' ? 1 : 0);
+  // Smootherstep: the flight starts and ends gently.
+  const eased = (v: number) => v * v * v * (v * (v * 6 - 15) + 10);
 
   let night = isNight();
   let horizon = horizonTarget();
+  // A direct visit to /earth starts on the ground; the flight plays on navigation.
+  let flight = flightTarget();
   let time = 40;
   let last = performance.now();
   let lastDraw = 0;
   let frame = 0;
   let lost = false;
-  let scale: number = window.innerWidth < 768 ? SCALE.mobile : SCALE.desktop;
+  const fullScale: number = window.innerWidth < 768 ? SCALE.mobile : SCALE.desktop;
+  let scale = fullScale;
   let slowFrames = 0;
+  let fastFrames = 0;
 
   const resize = () => {
     const width = Math.max(1, Math.round(canvas.clientWidth * scale));
@@ -308,29 +498,60 @@ function start(canvas: HTMLCanvasElement) {
     gl.uniform1f(uTime, time);
     gl.uniform1f(uNight, night);
     gl.uniform1f(uHorizon, horizon);
+    gl.uniform1f(uDescent, eased(flight));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
   // If frames keep arriving late, the GPU is struggling: render fewer pixels.
+  // Very slow frames count for more, so a heavy scene is fixed within a few
+  // frames; gaps over a second are pauses (hidden tab, busy page), not slowness.
+  // After a few seconds of smooth frames, the resolution climbs back.
   const govern = (interval: number) => {
-    slowFrames = interval > 1000 / 20 ? slowFrames + 1 : Math.max(0, slowFrames - 1);
+    if (interval > 1000) return;
+    if (interval > 1000 / 20) {
+      slowFrames += Math.min(4, Math.ceil(interval / 50));
+      fastFrames = 0;
+    } else {
+      slowFrames = Math.max(0, slowFrames - 1);
+      fastFrames = interval < 1000 / 28 ? fastFrames + 1 : 0;
+    }
     if (slowFrames > 20 && scale > SCALE.min) {
       scale = Math.max(SCALE.min, scale * 0.8);
       slowFrames = 0;
+    } else if (fastFrames > 150 && scale < fullScale) {
+      scale = Math.min(fullScale, scale * 1.15);
+      fastFrames = 0;
     }
   };
 
   const settled = () => Math.abs(night - isNight()) < 0.001 && Math.abs(horizon - horizonTarget()) < 0.0005;
 
+  // While flying down to .earth, the page hides its hero text (see site.css).
+  const syncFlying = () => {
+    root.classList.toggle('is-flying', flightTarget() === 1 && flight < REVEAL_AT);
+  };
+
+  const fly = (dt: number) => {
+    const target = flightTarget();
+    if (flight < target) flight = Math.min(target, flight + dt / FLIGHT.down);
+    else if (flight > target) flight = Math.max(target, flight - dt / FLIGHT.up);
+    syncFlying();
+  };
+
   const tick = (now: number) => {
     frame = 0;
     if (lost) return;
-    const dt = Math.min(0.1, (now - last) / 1000);
+    const elapsed = (now - last) / 1000;
+    const dt = Math.min(0.1, elapsed);
+    // The flight keeps its duration even if frames are slow (but not across a hidden tab).
+    const flightDt = Math.min(0.25, elapsed);
     last = now;
 
     if (reducedMotion.matches) {
       night = isNight();
       horizon = horizonTarget();
+      flight = flightTarget();
+      syncFlying();
       draw();
       return; // Redrawn only when something changes.
     }
@@ -343,12 +564,14 @@ function start(canvas: HTMLCanvasElement) {
       const ease = 1 - Math.exp(-dt * 4.5);
       night += (isNight() - night) * ease;
       horizon += (horizonTarget() - horizon) * (1 - Math.exp(-dt * 2.5));
+      fly(flightDt);
       if (settled()) {
         night = isNight();
       }
       draw();
     } else {
       time = (time + dt) % 7200;
+      fly(flightDt);
     }
     frame = requestAnimationFrame(tick);
   };
@@ -361,7 +584,10 @@ function start(canvas: HTMLCanvasElement) {
     }
   };
 
-  new MutationObserver(wake).observe(root, { attributes: true, attributeFilter: ['class', 'data-page'] });
+  new MutationObserver(() => {
+    syncFlying();
+    wake();
+  }).observe(root, { attributes: true, attributeFilter: ['class', 'data-page'] });
   window.addEventListener('resize', wake);
   reducedMotion.addEventListener('change', wake);
   // Background tabs stop rAF; do not count the gap as a slow frame.

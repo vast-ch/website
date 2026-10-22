@@ -24,6 +24,7 @@ export const en: Dictionary = {
     approach: 'Approach',
     about: 'About',
     contact: 'Contact',
+    earth: '.earth',
     legal: 'Legal notice',
     privacy: 'Privacy policy',
     linkedin: 'LinkedIn',
@@ -230,6 +231,46 @@ export const en: Dictionary = {
     address: ['Vast Switzerland GmbH', 'c/o Seed: Lab', 'Chemin du Musée 4', '1700 Fribourg', 'Switzerland'],
     elsewhereLabel: 'Elsewhere',
     smallPrint: `<a href="${r('legal')}">Legal notice</a> · <a href="${r('privacy')}">Privacy policy</a>`,
+  },
+
+  earth: {
+    meta: {
+      title: '.earth',
+      description:
+        'vast.earth is a non-profit association under Swiss law that fosters harmony between people and nature by developing and supporting projects of social and environmental benefit.',
+    },
+    label: 'vast.earth',
+    heading: 'Fostering harmony between people and nature.',
+    lead: 'vast.earth is our non-profit association. It develops and supports projects of social and environmental benefit.',
+    discover: 'Discover the association',
+    bodyLabel: 'The association',
+    intro:
+      'vast.earth is an association under Swiss law (articles 60 and following of the Civil Code), based in the canton of Fribourg. Everything it receives serves one purpose: projects that are good for people and for nature.',
+    sections: [
+      {
+        title: 'Our purpose',
+        text: 'The association fosters harmony between people and nature by developing and supporting projects of social and environmental benefit. It is non-profit: all of its resources are used for this purpose, and for nothing else.',
+      },
+      {
+        title: 'How it is run',
+        text: 'The members meet at least once a year in a General Meeting, in person or online. They approve the accounts and elect the Executive Committee, which runs the association day to day. Committee members work on a voluntary basis and are only reimbursed for actual expenses.',
+      },
+      {
+        title: 'How it is funded',
+        text: 'Membership fees, donations, grants, subsidies, sponsorship and income from its own activities. The Executive Committee draws up the accounts every year, and the General Meeting approves them.',
+      },
+      {
+        title: 'Non-profit for good',
+        text: 'No member or founder can ever receive the association’s assets. If it were dissolved, what remains would go to a tax-exempt Swiss non-profit organisation pursuing a similar purpose. Members’ personal data is used only to manage membership, in line with Swiss data protection law.',
+      },
+    ],
+    join: {
+      title: 'Join us',
+      text: 'Membership is open to anyone, individual or organisation, who supports this purpose. Write to us to apply: the Executive Committee admits new members at any time, and the General Meeting sets the yearly fee.',
+      cta: 'Write to us',
+      subject: 'vast.earth',
+    },
+    tagline: 'For a world where people and nature thrive together.',
   },
 
   notFound: {

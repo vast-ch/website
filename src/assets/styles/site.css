@@ -315,7 +315,8 @@ body {
   gap: 10px;
 }
 
-[data-page='content'] .menu.is-open::before {
+[data-page='content'] .menu.is-open::before,
+[data-page='earth'] .menu.is-open::before {
   content: '';
   position: absolute;
   inset: -14px -18px -16px -26px;
@@ -838,6 +839,97 @@ body {
 
 .markdown li p {
   margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   .earth: the association, under the clouds
+   -------------------------------------------------------------------------- */
+
+.earth-page {
+  position: relative;
+  flex: 1 0 auto;
+}
+
+/* The corners sit over clouds and land: give them a soft paper backdrop. */
+[data-page='earth'] .site-header::before,
+[data-page='earth'] .site-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+[data-page='earth'] .site-header::before {
+  bottom: -2.5rem;
+  background: linear-gradient(to bottom, rgba(var(--veil), 0.72), rgba(var(--veil), 0));
+}
+
+[data-page='earth'] .site-footer::before {
+  top: -2.5rem;
+  background: linear-gradient(to top, rgba(var(--veil), 0.82), rgba(var(--veil), 0));
+}
+
+.earth-hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--frame-content-top) var(--frame-inline) 0;
+  text-align: center;
+}
+
+.earth-hero-content {
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-eyebrow);
+  padding: 1.75rem 2.5rem 2rem;
+  /* A soft halo keeps the text legible over the cloud ceiling. */
+  background: radial-gradient(closest-side, rgba(var(--veil), 0.8), rgba(var(--veil), 0.55) 65%, rgba(var(--veil), 0));
+  transition: opacity 1.4s ease;
+}
+
+/* Hidden while the sky flies down to the land; sky.ts sets the class. */
+.is-flying .earth-hero-content {
+  opacity: 0;
+  transition-duration: 0s;
+}
+
+.earth-hero-content > .mono {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+.earth-heading {
+  margin: 0;
+  font-size: var(--text-hero);
+  line-height: var(--leading-tight);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.earth-lead {
+  margin: 0;
+  max-width: 30em;
+  text-wrap: balance;
+}
+
+.earth-body {
+  position: relative;
+  padding: 10rem var(--frame-inline) var(--frame-content-bottom);
+  background: linear-gradient(to bottom, rgba(var(--veil), 0), rgba(var(--veil), 0.97) 10rem);
+}
+
+.earth-join {
+  margin: 0 0 var(--space-block);
+}
+
+.earth-join .entry {
+  margin-bottom: var(--space-label);
 }
 
 /* --------------------------------------------------------------------------

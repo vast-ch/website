@@ -40,6 +40,7 @@ export const fr: Dictionary = typography<Dictionary>({
     approach: 'Approche',
     about: 'À propos',
     contact: 'Contact',
+    earth: '.earth',
     legal: 'Mentions légales',
     privacy: 'Politique de confidentialité',
     linkedin: 'LinkedIn',
@@ -247,6 +248,46 @@ export const fr: Dictionary = typography<Dictionary>({
     address: ['Vast Switzerland GmbH', 'c/o Seed: Lab', 'Chemin du Musée 4', '1700 Fribourg', 'Suisse'],
     elsewhereLabel: 'Ailleurs',
     smallPrint: `<a href="${r('legal')}">Mentions légales</a> · <a href="${r('privacy')}">Politique de confidentialité</a>`,
+  },
+
+  earth: {
+    meta: {
+      title: '.earth',
+      description:
+        'vast.earth est une association de droit suisse à but non lucratif qui favorise l’harmonie entre les êtres humains et la nature en développant et en soutenant des projets d’utilité sociale et environnementale.',
+    },
+    label: 'vast.earth',
+    heading: 'Favoriser l’harmonie entre les êtres humains et la nature.',
+    lead: 'vast.earth est notre association à but non lucratif. Elle développe et soutient des projets d’utilité sociale et environnementale.',
+    discover: 'Découvrir l’association',
+    bodyLabel: 'L’association',
+    intro:
+      'vast.earth est une association de droit suisse (articles 60 et suivants du Code civil), dont le siège est dans le canton de Fribourg. Tout ce qu’elle reçoit sert un seul but : des projets bons pour les êtres humains et pour la nature.',
+    sections: [
+      {
+        title: 'Notre but',
+        text: 'L’association favorise l’harmonie entre les êtres humains et la nature en développant et en soutenant des projets d’utilité sociale et environnementale. Elle ne poursuit aucun but lucratif : toutes ses ressources sont consacrées à ce but, et à rien d’autre.',
+      },
+      {
+        title: 'Son fonctionnement',
+        text: 'Les membres se réunissent au moins une fois par an en Assemblée générale, en présentiel ou en ligne. Ils approuvent les comptes et élisent le Comité, qui gère l’association au quotidien. Les membres du Comité agissent bénévolement et ne sont remboursés que de leurs frais effectifs.',
+      },
+      {
+        title: 'Son financement',
+        text: 'Cotisations, dons, subventions, aides publiques, parrainages et revenus de ses propres activités. Le Comité établit les comptes chaque année, et l’Assemblée générale les approuve.',
+      },
+      {
+        title: 'Sans but lucratif, pour de bon',
+        text: 'Aucun membre ni fondateur ne peut jamais recevoir les biens de l’association. En cas de dissolution, ce qui reste irait à une organisation suisse à but non lucratif, exonérée d’impôts et poursuivant un but analogue. Les données personnelles des membres ne servent qu’à la gestion des adhésions, conformément à la loi suisse sur la protection des données.',
+      },
+    ],
+    join: {
+      title: 'Nous rejoindre',
+      text: 'L’adhésion est ouverte à toute personne, physique ou morale, qui soutient ce but. Écrivez-nous pour adhérer : le Comité admet de nouveaux membres à tout moment, et l’Assemblée générale fixe la cotisation annuelle.',
+      cta: 'Nous écrire',
+      subject: 'vast.earth',
+    },
+    tagline: 'Pour un monde où les êtres humains et la nature prospèrent ensemble.',
   },
 
   notFound: {

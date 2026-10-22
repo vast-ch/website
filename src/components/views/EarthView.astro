@@ -1,0 +1,58 @@
+---
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import { getDictionary, mailto, type Locale } from '~/i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const e = t.earth;
+---
+
+<!--
+  The `earth` variant tells the sky (components/site/sky.ts) to fly down through
+  the clouds to the land. The hero sits over the landscape; the association
+  scrolls up over the paper veil below it.
+-->
+<SiteLayout locale={locale} page="earth" variant="earth" title={e.meta.title} description={e.meta.description}>
+  <section class="earth-hero">
+    <div class="earth-hero-content">
+      <p class="mono">{e.label}</p>
+      <h1 class="earth-heading">{e.heading}</h1>
+      <p class="earth-lead">{e.lead}</p>
+      <a class="arrow-link mono" href="#association">{e.discover} <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+
+  <section class="earth-body" id="association">
+    <article class="content-surface copy">
+      <p class="eyebrow mono">{e.bodyLabel}</p>
+      <p class="page-heading" set:html={e.intro} />
+
+      {
+        e.sections.map((section) => (
+          <p class="entry">
+            <span class="subheading">{section.title}</span>
+            <span set:html={section.text} />
+          </p>
+        ))
+      }
+
+      <div class="earth-join">
+        <p class="entry">
+          <span class="subheading">{e.join.title}</span>
+          <span>{e.join.text}</span>
+        </p>
+        <a class="arrow-link mono" href={mailto(e.join.subject)}>{e.join.cta} <span aria-hidden="true">→</span></a>
+      </div>
+
+      <figure class="quote">
+        <blockquote>
+          <p>{e.tagline}</p>
+        </blockquote>
+      </figure>
+    </article>
+  </section>
+</SiteLayout>

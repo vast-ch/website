@@ -42,6 +42,18 @@ const pages: RouteKey[] = ['services', /* 'approach', */ 'about', 'contact'];
           ))
         }
       </ul>
+      <ul class="menu-group">
+        <li>
+          <a
+            class="chrome-link"
+            href={route('earth', t.locale)}
+            aria-current={current === 'earth' ? 'page' : undefined}
+            data-earth-link
+          >
+            {t.nav.earth}
+          </a>
+        </li>
+      </ul>
       <ul class="menu-group" aria-label={t.chrome.externalLinks}>
         <li>
           <a class="chrome-link" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">

@@ -52,6 +52,10 @@ wrangler.jsonc          # Cloudflare Worker serving dist/ (404 page for unknown 
 - French: write a plain space before `; : ! ?`. It becomes a narrow no-break space automatically.
 - Strings documented as HTML in `types.ts` are rendered with `set:html`. They are authored in this repo only.
 
+### The .earth page and the flight
+
+`/earth` (and `/fr/earth`) presents vast.earth, the association; its copy is in the `earth` entry of the dictionaries, based on the association's statutes. The page uses the `earth` layout variant (`data-page="earth"` on `<html>`). When that variant appears after a client-side navigation, `sky.ts` flies the camera down through the clouds to a ray-marched valley (6 s down, 4.5 s back up when leaving); a direct visit starts on the ground. During the flight `sky.ts` sets `is-flying` on `<html>`, which hides the hero text until the camera levels out. At rest on every other page the shader reduces exactly to the plain sea of clouds. Check any change to the flight on a phone: the land is ray-marched too.
+
 ### Hidden pages
 
 The approach page is hidden for now: its route files are `src/pages/_approach.astro` and `src/pages/fr/_approche.astro` (Astro skips files starting with an underscore), and its menu entry and the links to it are commented out. Its copy and view are kept. The route files explain how to restore it.
