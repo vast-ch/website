@@ -21,6 +21,8 @@ const FLIGHT_FPS = 60;
 const FLIGHT = { down: 10, up: 6 } as const;
 // The .earth hero text fades in once the flight down is this far along.
 const REVEAL_AT = 0.8;
+// Once landed, the clouds thin out and let some light through, in seconds.
+const CLEARING = { in: 6, out: 1.5 } as const;
 
 // Render at a fraction of the CSS size (clouds are soft), lowered further on
 // devices that cannot keep up.
@@ -43,6 +45,8 @@ const FRAGMENT = `
   // 0 at rest above the sea of clouds, 1 under them, over the valley (eased in
   // JavaScript).
   uniform float uDescent;
+  // 0 under a closed cloud deck, 1 once it has thinned out after landing.
+  uniform float uClear;
   uniform sampler2D uNoise;
 
   const float CLOUD_TOP = -0.55;
@@ -53,12 +57,12 @@ const FRAGMENT = `
   const mat3 ROT3 = mat3(0.00, 0.80, 0.60, -0.80, 0.36, -0.48, -0.60, -0.48, 0.64);
 
   // The land: a valley floor, the lake in it, and the highest the land gets.
-  const vec2 LAKE = vec2(0.6, 14.0);
+  const vec2 LAKE = vec2(0.6, 15.5);
   const float GROUND = -3.35;
   const float WATER = -3.33;
   // The flight down ends on the near shore of the lake, just above the water,
   // looking across it. On the way it looks down at the valley, then levels out.
-  const vec3 CAMERA_END = vec3(0.6, WATER + 0.1, 10.0);
+  const vec3 CAMERA_END = vec3(1.0, WATER + 0.1, 7.0);
   const float CAMERA_DIP = 0.22;
   // Final pitch: level, so the horizon lands on HORIZON.earth. The hero text sits
   // above the far hills, at --earth-horizon in site.css.
@@ -148,8 +152,31 @@ const FRAGMENT = `
     float slopes = smoothstep(1.4, 6.5, abs(p.x - meander));
     float range = smoothstep(18.0, 34.0, p.y);
     float h = 0.18 * n + max(slopes * 1.7, range * 1.9) * (0.25 + 0.75 * crest * crest);
-    vec2 lake = (p - LAKE) * vec2(1.0, 0.5);
-    h -= 0.28 * (1.0 - smoothstep(0.0, 2.6, length(lake)));
+    // The lake: a long basin carved into the valley, its shore made irregular
+    // by a warp and a few lobes (sines of twice and three times the angle,
+    // without calling atan: this runs at every step of the land march). The
+    // warp reads two noise values per texel and blends them here, not in the
+    // texture unit, whose coarse blending would leave steps in the shore.
+    vec2 lp = p - LAKE;
+    if (abs(lp.x) < 6.4 && abs(lp.y) < 16.0) {
+      vec2 wi = floor(p * 0.3 + 9.1);
+      vec2 wf = fract(p * 0.3 + 9.1);
+      wf = wf * wf * (3.0 - 2.0 * wf);
+      vec2 w00 = texture2D(uNoise, (wi + 0.5) / 256.0).xy;
+      vec2 w10 = texture2D(uNoise, (wi + vec2(1.5, 0.5)) / 256.0).xy;
+      vec2 w01 = texture2D(uNoise, (wi + vec2(0.5, 1.5)) / 256.0).xy;
+      vec2 w11 = texture2D(uNoise, (wi + 1.5) / 256.0).xy;
+      lp += 2.8 * (mix(mix(w00, w10, wf.x), mix(w01, w11, wf.x), wf.y) - 0.5);
+      vec2 dir = lp / max(length(lp), 1e-4);
+      float sin2 = 2.0 * dir.x * dir.y;
+      float cos2 = dir.x * dir.x - dir.y * dir.y;
+      float sin3 = dir.y * (3.0 - 4.0 * dir.y * dir.y);
+      float cos3 = dir.x * (4.0 * dir.x * dir.x - 3.0);
+      // 0.22 sin(2a + 1.3) + 0.14 sin(3a - 0.4)
+      float lobes = 0.22 * (sin2 * 0.2675 + cos2 * 0.9636) + 0.14 * (sin3 * 0.9211 - cos3 * 0.3894);
+      float r = length(lp / vec2(3.2, 8.0)) * (1.0 + lobes);
+      h = mix(h, -0.06 - 0.25 * (1.0 - r), 1.0 - smoothstep(0.7, 1.0, r));
+    }
     return GROUND + h;
   }
 
@@ -174,6 +201,11 @@ const FRAGMENT = `
     // The base undulates, so that mountains vanish into it along a soft line.
     float base = CLOUD_BOTTOM + 0.5 * (first - 0.5);
     den -= 9.0 * smoothstep(0.0, 0.2, uDescent) * (1.0 - smoothstep(base, base + 0.5, p.y));
+    // After landing the deck thins out, and opens in places.
+    if (uClear > 0.0) {
+      float opening = smoothstep(0.4, 0.75, noise3(vec3(p.xz * 0.22, 3.7) + vec3(0.02, 0.0, 0.012) * uTime));
+      den -= uClear * (0.8 + 3.0 * opening);
+    }
     return clamp(den, 0.0, 1.0);
   }
 
@@ -256,15 +288,17 @@ const FRAGMENT = `
     float woods = smoothstep(0.5, 0.62, tnoise(p.xz * 3.6 + 7.0) * 0.75 + fields * 0.25)
       * smoothstep(0.18, 0.4, up) * (1.0 - smoothstep(1.0, 1.3, up));
     c = mix(c, vec3(0.15, 0.22, 0.16), woods);
-    c = mix(c, vec3(0.47, 0.46, 0.44), 1.0 - smoothstep(0.58, 0.8, n.y));
+    c = mix(c, vec3(0.47, 0.46, 0.44), 1.0 - smoothstep(0.42, 0.68, n.y));
     c = mix(c, vec3(0.94, 0.95, 0.96), smoothstep(2.0, 2.2, up + 0.25 * detail) * smoothstep(0.5, 0.72, n.y));
     c = mix(c, vec3(dot(c, vec3(0.3, 0.59, 0.11))), 0.15 + 0.45 * night);
+    // Wet ground along the water's edge.
+    c *= mix(0.62, 1.0, smoothstep(0.0, 0.025, p.y - WATER));
 
     // Sunlight filters through where the cloud deck is thinner.
     vec3 q = p + SUN * ((-1.2 - p.y) / SUN.y);
     float overcast = density(q, 2);
     float sun = max(dot(n, SUN), 0.0) * (1.0 - 0.75 * smoothstep(0.1, 0.9, overcast));
-    vec3 sky = mix(vec3(0.60, 0.63, 0.67), vec3(0.17, 0.19, 0.25), night) * (0.55 + 0.45 * n.y);
+    vec3 sky = mix(vec3(0.60, 0.63, 0.67), vec3(0.17, 0.19, 0.25), night) * (0.55 + 0.45 * n.y) * (1.0 + 0.25 * uClear);
     vec3 sunCol = mix(vec3(1.10, 1.03, 0.92), vec3(0.42, 0.48, 0.62), night);
     return c * (sky + sunCol * sun);
   }
@@ -311,7 +345,7 @@ const FRAGMENT = `
   // The lake: a mirror for the clouds and the mountains, broken up by ripples
   // that gusts of wind sweep across, and clear enough near the shore to show
   // its bed. tView is the distance the light has already travelled to p.
-  vec3 waterColor(vec3 p, vec3 rd, float tView, vec3 hazeLow, vec3 farHaze, float night, float t) {
+  vec3 waterColor(vec3 p, vec3 rd, float tView, vec3 haze, vec3 zenith, vec3 hazeLow, vec3 farHaze, float night, float t) {
     // Ripples: two drifting layers of noise, stronger where a gust passes, and
     // fading with distance before they turn into sparkle.
     float gust = smoothstep(0.35, 0.75, tnoise(p.xz * 0.45 + vec2(t * 0.03, -t * 0.05)));
@@ -320,7 +354,7 @@ const FRAGMENT = `
       tnoise(p.xz * vec2(5.0, 9.0) + vec2(7.3, 2.9 - t * 0.3)) + 0.5 * tnoise(p.xz * vec2(11.0, 17.0) + vec2(1.7, 5.3 - t * 0.25))
     ) - 0.75;
     // They tilt the water mostly along the view, which streaks the reflections.
-    float amp = (0.005 + 0.03 * gust) / (1.0 + 0.15 * tView);
+    float amp = (0.003 + 0.02 * gust) / (1.0 + 0.15 * tView);
     vec3 n = normalize(vec3(w.x * amp * 0.4, 1.0, w.y * amp));
 
     // What the lake reflects: the land first, then the ceiling up to it.
@@ -329,6 +363,7 @@ const FRAGMENT = `
     vec3 from = p + vec3(0.0, 0.002, 0.0);
     float tl = marchLand(from, rr, LAND_DISTANCE);
     vec3 behind = farHaze;
+    if (uClear > 0.0) behind = mix(farHaze, skyColor(rr, haze, zenith, night, t), uClear);
     if (tl > 0.0) {
       vec3 q = from + rr * tl;
       float d = tView + tl;
@@ -392,6 +427,7 @@ const FRAGMENT = `
     // 1 while the camera is inside the cloud layer.
     float inCloud = smoothstep(CLOUD_TOP + 0.05, CLOUD_TOP - 0.25, ro.y) * smoothstep(CLOUD_BOTTOM + 0.1, CLOUD_BOTTOM + 0.35, ro.y);
     vec3 hazeLow = mix(vec3(0.74, 0.76, 0.79), vec3(0.13, 0.14, 0.17), night);
+    hazeLow = mix(hazeLow, mix(haze, hazeLow, 0.4), uClear);
     vec3 farHaze = mix(haze, hazeLow, below);
     float tHit = -1.0;
     bool lake = false;
@@ -483,7 +519,7 @@ const FRAGMENT = `
       vec3 p = ro + rd * tHit;
       vec3 ground;
       if (lake) {
-        ground = waterColor(p, rd, tHit, hazeLow, farHaze, night, t);
+        ground = waterColor(p, rd, tHit, haze, zenith, hazeLow, farHaze, night, t);
       } else {
         ground = landColor(p, tHit, night);
       }
@@ -492,7 +528,7 @@ const FRAGMENT = `
       // The farthest land melts into the haze.
       background = mix(background, farHaze, smoothstep(0.6 * LAND_DISTANCE, LAND_DISTANCE, tHit));
     } else if (rd.y > 0.0) {
-      background = mix(skyColor(rd, haze, zenith, night, t), farHaze, below);
+      background = mix(skyColor(rd, haze, zenith, night, t), farHaze, below * (1.0 - uClear));
     }
 
     vec3 col = sum.rgb + background * (1.0 - sum.a);
@@ -592,12 +628,14 @@ function start(canvas: HTMLCanvasElement) {
   const uNight = gl.getUniformLocation(program, 'uNight');
   const uHorizon = gl.getUniformLocation(program, 'uHorizon');
   const uDescent = gl.getUniformLocation(program, 'uDescent');
+  const uClear = gl.getUniformLocation(program, 'uClear');
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isNight = () => (root.classList.contains('dark') ? 1 : 0);
   const page = () => root.dataset.page as keyof typeof HORIZON | undefined;
   const horizonTarget = () => HORIZON[page() ?? 'content'] ?? HORIZON.content;
   const flightTarget = () => (page() === 'earth' ? 1 : 0);
+  const clearTarget = () => (flightTarget() === 1 && flight === 1 ? 1 : 0);
   // Smootherstep: the flight starts and ends gently.
   const eased = (v: number) => v * v * v * (v * (v * 6 - 15) + 10);
 
@@ -605,6 +643,7 @@ function start(canvas: HTMLCanvasElement) {
   let horizon = horizonTarget();
   // A direct visit to /earth starts on the ground; the flight plays on navigation.
   let flight = flightTarget();
+  let clearing = 0;
   let time = 40;
   let last = performance.now();
   let lastDraw = 0;
@@ -632,6 +671,7 @@ function start(canvas: HTMLCanvasElement) {
     gl.uniform1f(uNight, night);
     gl.uniform1f(uHorizon, horizon);
     gl.uniform1f(uDescent, eased(flight));
+    gl.uniform1f(uClear, eased(clearing));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
@@ -668,6 +708,8 @@ function start(canvas: HTMLCanvasElement) {
     const target = flightTarget();
     if (flight < target) flight = Math.min(target, flight + dt / FLIGHT.down);
     else if (flight > target) flight = Math.max(target, flight - dt / FLIGHT.up);
+    if (clearTarget() > clearing) clearing = Math.min(1, clearing + dt / CLEARING.in);
+    else clearing = Math.max(0, clearing - dt / CLEARING.out);
     syncFlying();
   };
 
@@ -684,6 +726,7 @@ function start(canvas: HTMLCanvasElement) {
       night = isNight();
       horizon = horizonTarget();
       flight = flightTarget();
+      clearing = clearTarget();
       syncFlying();
       draw();
       return; // Redrawn only when something changes.
