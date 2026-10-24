@@ -1024,8 +1024,16 @@ body {
   max-width: 40rem;
 }
 
-.earth-hero-content > .mono {
+/* "Coming soon", and meanwhile the Discord. */
+.earth-soon {
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+
+.earth-soon > span {
   color: var(--ink-muted);
 }
 

@@ -258,10 +258,10 @@ export const fr: Dictionary = typography<Dictionary>({
       description:
         'vast.earth est une association de droit suisse à but non lucratif qui favorise l’harmonie entre les êtres humains et la nature en développant et en soutenant des projets d’utilité sociale et environnementale.',
     },
-    label: 'vast.earth',
     heading: 'Favoriser l’harmonie entre les êtres humains et la nature.',
     lead: 'vast.earth est notre association à but non lucratif. Elle développe et soutient des projets d’utilité sociale et environnementale pour toutes et tous.',
-    discover: 'Découvrir l’association',
+    soon: 'Prochainement',
+    discord: 'Rejoignez-nous sur Discord',
     bodyLabel: 'L’association',
     intro:
       'vast.earth est une association de droit suisse (articles 60 et suivants du Code civil), dont le siège est dans le canton de Fribourg. Tout ce qu’elle reçoit sert un seul but : des projets bons pour les êtres humains et pour la nature.',

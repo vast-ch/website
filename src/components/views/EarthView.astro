@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '~/layouts/SiteLayout.astro';
-import { getDictionary, mailto, type Locale } from '~/i18n';
+import { EXTERNAL_LINKS, getDictionary, mailto, type Locale } from '~/i18n';
 
 export interface Props {
   locale: Locale;
@@ -19,12 +19,14 @@ const e = t.earth;
 <SiteLayout locale={locale} page="earth" variant="earth" title={e.meta.title} description={e.meta.description}>
   <section class="earth-hero">
     <div class="earth-hero-content">
-      <p class="mono reveal" style="--reveal: 0">{e.label}</p>
-      <h1 class="earth-heading reveal" style="--reveal: 1">{e.heading}</h1>
-      <p class="earth-lead reveal" style="--reveal: 2">{e.lead}</p>
-      <a class="arrow-link mono reveal" style="--reveal: 3" href="#association"
-        >{e.discover} <span aria-hidden="true">↓</span></a
-      >
+      <h1 class="earth-heading reveal" style="--reveal: 0">{e.heading}</h1>
+      <p class="earth-lead reveal" style="--reveal: 1">{e.lead}</p>
+      <p class="earth-soon mono reveal" style="--reveal: 2">
+        <span>{e.soon}</span>
+        <a class="arrow-link" href={EXTERNAL_LINKS.discord} target="_blank" rel="noopener noreferrer"
+          >{e.discord} <span aria-hidden="true">→</span></a
+        >
+      </p>
     </div>
   </section>
 

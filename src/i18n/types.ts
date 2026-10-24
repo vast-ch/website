@@ -127,10 +127,11 @@ export interface Dictionary {
   earth: {
     meta: PageMeta;
     /** Hero, shown over the landscape once the flight has landed. */
-    label: string;
     heading: string;
     lead: string;
-    discover: string;
+    /** Under the lead: the association's own pages are coming, meanwhile its Discord. */
+    soon: string;
+    discord: string;
     /** Body, on the paper veil below the landscape. */
     bodyLabel: string;
     /** HTML */

@@ -34,4 +34,5 @@ export const mailto = (subject?: string) =>
 export const EXTERNAL_LINKS = {
   linkedin: 'https://www.linkedin.com/company/vast-switzerland-gmbh',
   github: 'https://github.com/vast-ch',
+  discord: 'https://discord.gg/PGZgkmnVf',
 };

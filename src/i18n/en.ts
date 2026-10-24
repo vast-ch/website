@@ -241,10 +241,10 @@ export const en: Dictionary = {
       description:
         'vast.earth is a non-profit association under Swiss law that fosters harmony between people and nature by developing and supporting projects of social and environmental benefit.',
     },
-    label: 'vast.earth',
     heading: 'Fostering harmony between people and nature.',
     lead: 'vast.earth is our non-profit association. It develops and supports projects of social and environmental benefit for everyone.',
-    discover: 'Discover the association',
+    soon: 'Coming soon',
+    discord: 'Join us on Discord',
     bodyLabel: 'The association',
     intro:
       'vast.earth is an association under Swiss law (articles 60 and following of the Civil Code), based in the canton of Fribourg. Everything it receives serves one purpose: projects that are good for people and for nature.',
