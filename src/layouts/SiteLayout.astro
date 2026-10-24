@@ -118,10 +118,14 @@ const isEnglishHome = locale === 'en' && page === 'home';
     </div>
 
     <script>
+      import type { TransitionBeforePreparationEvent } from 'astro:transitions/client';
+      import { ROUTES } from '~/i18n/config';
+
       type Mode = 'auto' | 'light' | 'dark';
 
       const root = document.documentElement;
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       const readMode = (): Mode => {
         try {
@@ -191,6 +195,25 @@ const isEnglishHome = locale === 'en' && page === 'home';
         if (anchor && anchor.pathname === window.location.pathname) {
           requestAnimationFrame(openFromHash);
         }
+      });
+
+      // Between vast.ch and vast.earth: the switch flips at once, and the page's
+      // text drifts away (is-leaving, see site.css) before the page changes and
+      // the sky starts flying. The new page's text arrives when the flight
+      // settles (is-flying, set by sky.ts).
+      const LEAVE_MS = 420;
+      const earthPaths = new Set<string>(Object.values(ROUTES.earth));
+      const isEarth = (url: URL) => earthPaths.has(url.pathname.replace(/\/+$/, '') || '/');
+
+      document.addEventListener('astro:before-preparation', (event) => {
+        const { from, to, loader } = event as TransitionBeforePreparationEvent;
+        const toEarth = isEarth(to);
+        if (toEarth === isEarth(from) || reducedMotion.matches) return;
+        document.querySelector('.realm-switch')?.setAttribute('data-realm', toEarth ? 'earth' : 'ch');
+        root.classList.add('is-leaving');
+        (event as TransitionBeforePreparationEvent).loader = async () => {
+          await Promise.all([loader(), new Promise((resolve) => setTimeout(resolve, LEAVE_MS))]);
+        };
       });
 
       prefersDark.addEventListener('change', () => syncThemeLabel());

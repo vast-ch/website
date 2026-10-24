@@ -28,7 +28,7 @@ const pages: RouteKey[] = ['services', /* 'approach', */ 'about', 'contact'];
 
     {
       !earth && (
-        <nav class="menu mono" aria-label={t.chrome.primaryNav}>
+        <nav class="menu mono reveal" style="--reveal: 3" aria-label={t.chrome.primaryNav}>
           <ul class="menu-group">
             {pages.map((key) => (
               <li>

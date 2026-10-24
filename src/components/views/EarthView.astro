@@ -19,10 +19,12 @@ const e = t.earth;
 <SiteLayout locale={locale} page="earth" variant="earth" title={e.meta.title} description={e.meta.description}>
   <section class="earth-hero">
     <div class="earth-hero-content">
-      <p class="mono">{e.label}</p>
-      <h1 class="earth-heading">{e.heading}</h1>
-      <p class="earth-lead">{e.lead}</p>
-      <a class="arrow-link mono" href="#association">{e.discover} <span aria-hidden="true">↓</span></a>
+      <p class="mono reveal" style="--reveal: 0">{e.label}</p>
+      <h1 class="earth-heading reveal" style="--reveal: 1">{e.heading}</h1>
+      <p class="earth-lead reveal" style="--reveal: 2">{e.lead}</p>
+      <a class="arrow-link mono reveal" style="--reveal: 3" href="#association"
+        >{e.discover} <span aria-hidden="true">↓</span></a
+      >
     </div>
   </section>
 

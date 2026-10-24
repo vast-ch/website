@@ -288,14 +288,16 @@ body {
   gap: 22px;
 }
 
-/* vast.ch / vast.earth switch, in pixel art: 2px pixels, a track whose corners
-   are notched (an outline drawn by four one-pixel shadows, which leave the
-   corners empty), and a square-ish knob that moves in whole pixels. */
+/* vast.ch / vast.earth switch, drawn with the pixels of the menu's font:
+   Departure Mono is drawn on an 11-pixel em, so one of its pixels is 1em / 11.
+   Capitals are 8 of those pixels tall, so is the switch, sitting on the
+   baseline. The track's outline is one pixel (four one-pixel shadows, which
+   leave the corners empty, like the font's rounded shapes), and a 4 × 4 knob
+   moves across it a pixel at a time. */
 .realm-switch {
-  --px: 2px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  --px: calc(1em / 11);
+  display: inline-block;
+  white-space: nowrap;
   color: var(--ink);
   text-decoration: none;
   text-transform: none;
@@ -313,11 +315,16 @@ body {
   opacity: 1;
 }
 
+/* The box is the inside of the track: 12 × 6 pixels, with the outline around it.
+   An empty inline block sits on the baseline by its bottom margin, so a
+   one-pixel margin puts the outline's bottom row on the baseline. */
 .realm-track {
   position: relative;
-  flex: none;
+  display: inline-block;
+  vertical-align: baseline;
   width: calc(var(--px) * 12);
-  height: calc(var(--px) * 5);
+  height: calc(var(--px) * 6);
+  margin: 0 calc(var(--px) * 4) var(--px);
   box-shadow:
     0 calc(var(--px) * -1) 0 currentColor,
     0 var(--px) 0 currentColor,
@@ -330,9 +337,9 @@ body {
   top: var(--px);
   left: var(--px);
   width: calc(var(--px) * 4);
-  height: calc(var(--px) * 3);
+  height: calc(var(--px) * 4);
   background: currentColor;
-  transition: transform 0.16s steps(2, end);
+  transition: transform 0.3s steps(6, end);
 }
 
 [data-realm='earth'] .realm-knob {
@@ -348,9 +355,10 @@ body {
   transform: translateX(calc(var(--px) * 5));
 }
 
-/* Between pages the knob slides across, a pixel at a time. */
+/* The knob flips as soon as the switch is used (see SiteLayout); between pages
+   it keeps its place. */
 ::view-transition-group(realm-knob) {
-  animation-duration: 0.36s;
+  animation-duration: 0.3s;
   animation-timing-function: steps(6, end);
 }
 
@@ -974,17 +982,10 @@ body {
   align-items: center;
   gap: var(--space-eyebrow);
   text-align: center;
-  transition: opacity 1.4s ease;
 }
 
 .earth-hero-content > * {
   max-width: 40rem;
-}
-
-/* Hidden while the sky flies down to the land; sky.ts sets the class. */
-.is-flying .earth-hero-content {
-  opacity: 0;
-  transition-duration: 0s;
 }
 
 .earth-hero-content > .mono {
@@ -1019,6 +1020,57 @@ body {
 
 .earth-join .entry {
   margin-bottom: var(--space-label);
+}
+
+/* --------------------------------------------------------------------------
+   Between vast.ch and vast.earth: the text leaves, the sky flies, the text arrives
+   -------------------------------------------------------------------------- */
+
+/* Leaving for the other side, the page's text drifts up and fades before the
+   flight starts (SiteLayout holds the page change back for that long). */
+.is-leaving main,
+.is-leaving .menu,
+.is-leaving .realm-owner {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  filter: blur(4px);
+  transition:
+    opacity 0.42s ease,
+    transform 0.42s ease,
+    filter 0.42s ease;
+}
+
+/* Arriving, the hero text stays hidden while the sky flies (sky.ts sets
+   is-flying), then comes in line by line, rising out of a light blur. */
+.reveal {
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.9s ease;
+  transition-delay: calc(var(--reveal, 0) * 0.14s);
+}
+
+.is-flying .home-hero .reveal,
+.is-flying .earth-hero .reveal,
+[data-page='home'].is-flying .menu,
+.is-flying .realm-owner {
+  opacity: 0;
+  transform: translateY(0.6rem);
+  filter: blur(4px);
+  transition-duration: 0s;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .is-leaving main,
+  .is-leaving .menu,
+  .is-leaving .realm-owner {
+    transform: none;
+    filter: none;
+    transition-duration: 0s;
+    transition-delay: 0s;
+  }
 }
 
 /* --------------------------------------------------------------------------

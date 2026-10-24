@@ -13,10 +13,10 @@ const t = getDictionary(locale);
 <SiteLayout locale={locale} page="home" variant="home" title={t.home.meta.title} description={t.home.meta.description}>
   <section class="home-hero">
     <div class="home-intro">
-      <h1 class="home-hero-text">{t.home.heading}</h1>
-      <p class="home-lead">{t.home.lead}</p>
+      <h1 class="home-hero-text reveal" style="--reveal: 0">{t.home.heading}</h1>
+      <p class="home-lead reveal" style="--reveal: 1">{t.home.lead}</p>
     </div>
-    <div class="home-links mono">
+    <div class="home-links mono reveal" style="--reveal: 2">
       <a class="arrow-link" href={route('services', locale)}
         >{t.home.links.services} <span aria-hidden="true">→</span></a
       >

@@ -19,8 +19,10 @@ const FLIGHT_FPS = 60;
 
 // Length of the flight between the sea of clouds and the land, in seconds.
 const FLIGHT = { down: 10, up: 6 } as const;
-// The .earth hero text fades in once the flight down is this far along.
-const REVEAL_AT = 0.8;
+// The hero text of the destination stays hidden during the flight: on the way
+// down until the flight is this far along, on the way up until it is back
+// down to this (the camera is then over the clouds again).
+const REVEAL = { down: 0.8, up: 0.22 } as const;
 // On the way down, once out of the clouds (from this far along the flight), the
 // clouds above thin out and let some light through: mostly done on arrival.
 // Durations in seconds.
@@ -716,9 +718,11 @@ function start(canvas: HTMLCanvasElement) {
 
   const settled = () => Math.abs(night - isNight()) < 0.001 && Math.abs(horizon - horizonTarget()) < 0.0005;
 
-  // While flying down to .earth, the page hides its hero text (see site.css).
+  // While flying, the destination page hides its hero text (see site.css).
   const syncFlying = () => {
-    root.classList.toggle('is-flying', flightTarget() === 1 && flight < REVEAL_AT);
+    const down = flightTarget() === 1 && flight < REVEAL.down;
+    const up = flightTarget() === 0 && flight > REVEAL.up;
+    root.classList.toggle('is-flying', down || up);
   };
 
   const fly = (dt: number) => {
