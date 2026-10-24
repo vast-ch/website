@@ -279,13 +279,12 @@ body {
   text-underline-offset: 0.3em;
 }
 
-/* The right end of the header: the vast.ch / vast.earth switch on top, and
-   the menu of the side you are on under it, always visible. */
-.header-end {
+/* The left end of the header: the mark, and next to it the vast.ch /
+   vast.earth switch, on the same line as the first link of the menu. */
+.header-start {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 22px;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 /* vast.ch / vast.earth switch, drawn with the pixels of the menu's font:
@@ -362,14 +361,8 @@ body {
   animation-timing-function: steps(6, end);
 }
 
-/* Menu: a column in the right margin, beside the reading column. */
-.menu {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 18px;
-}
-
+/* Menu: the pages of the side you are on, a short column in the right margin,
+   always visible. */
 .menu-group {
   list-style: none;
   margin: 0;
@@ -380,26 +373,12 @@ body {
   gap: 10px;
 }
 
-/* Where the margin is too narrow for that column, the links wrap into rows,
-   and on reading pages the header scrolls away with the page instead of
-   covering the text, which starts a little lower to clear it. */
+/* Where the margins are too narrow to keep the header beside the reading
+   column, it scrolls away with pages that have text to read (reading pages,
+   and .earth below its hero) instead of covering the text. */
 @media (max-width: 1180px) {
-  .header-end {
-    gap: 14px;
-  }
-
-  .menu {
-    gap: 10px;
-  }
-
-  .menu-group {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 10px 16px;
-  }
-
-  [data-page='content'] .site-header {
+  [data-page='content'] .site-header,
+  [data-page='earth'] .site-header {
     position: absolute;
   }
 
@@ -962,6 +941,15 @@ body {
   background: linear-gradient(to top, rgba(var(--veil), 0.82), rgba(var(--veil), 0));
 }
 
+/* On narrow screens the association's text scrolls under the footer: fade it
+   out as firmly as on reading pages. */
+@media (max-width: 1180px) {
+  [data-page='earth'] .site-footer::before {
+    top: -28px;
+    background: linear-gradient(to top, rgba(var(--veil), 0.97) 62%, rgba(var(--veil), 0));
+  }
+}
+
 .earth-hero {
   min-height: 100vh;
   min-height: 100dvh;
@@ -1015,6 +1003,7 @@ body {
 }
 
 .earth-join {
+  scroll-margin-top: var(--frame-content-top);
   margin: 0 0 var(--space-block);
 }
 
@@ -1053,6 +1042,7 @@ body {
 .is-flying .home-hero .reveal,
 .is-flying .earth-hero .reveal,
 [data-page='home'].is-flying .menu,
+[data-page='earth'].is-flying .menu,
 .is-flying .realm-owner {
   opacity: 0;
   transform: translateY(0.6rem);

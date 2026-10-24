@@ -12,7 +12,6 @@ export const en: Dictionary = {
     realm: { toEarth: 'Switch to vast.earth', toCh: 'Switch to vast.ch' },
     skipToContent: 'Skip to content',
     primaryNav: 'Primary navigation',
-    externalLinks: 'Elsewhere',
     language: 'Language',
     languageNames: { en: 'English', fr: 'Français' },
     theme: { label: 'Appearance', auto: 'Auto', light: 'Light', dark: 'Dark' },

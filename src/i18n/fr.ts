@@ -28,7 +28,6 @@ export const fr: Dictionary = typography<Dictionary>({
     realm: { toEarth: 'Passer à vast.earth', toCh: 'Passer à vast.ch' },
     skipToContent: 'Aller au contenu',
     primaryNav: 'Navigation principale',
-    externalLinks: 'Ailleurs',
     language: 'Langue',
     languageNames: { en: 'English', fr: 'Français' },
     theme: { label: 'Apparence', auto: 'Auto', light: 'Clair', dark: 'Sombre' },

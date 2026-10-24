@@ -1,7 +1,7 @@
 ---
 import Pictogram from './Pictogram.astro';
 import RealmSwitch from './RealmSwitch.astro';
-import { EXTERNAL_LINKS, route, type Dictionary, type RouteKey } from '~/i18n';
+import { route, type Dictionary, type RouteKey } from '~/i18n';
 
 export interface Props {
   t: Dictionary;
@@ -15,43 +15,38 @@ const pages: RouteKey[] = ['services', /* 'approach', */ 'about', 'contact'];
 ---
 
 <!--
-  Top right: the vast.ch / vast.earth switch, and under it the pages of the
-  side you are on. vast.earth has a single page for now, so only the switch.
+  Left, which vast: the mark and the .ch / .earth switch, which reads as
+  "vast.ch" or "vast.earth" and stays put on both sides. Right, where to go on
+  this side: the vast.ch pages, or, on vast.earth (a single page for now), a
+  link to joining the association.
 -->
 <header class="site-header">
-  <a class="brand-mark" href={route('home', t.locale)}>
-    <Pictogram title={`vast — ${t.nav.home}`} />
-  </a>
-
-  <div class="header-end">
+  <div class="header-start">
+    <a class="brand-mark" href={route('home', t.locale)}>
+      <Pictogram title={`vast — ${t.nav.home}`} />
+    </a>
     <RealmSwitch t={t} earth={earth} />
-
-    {
-      !earth && (
-        <nav class="menu mono reveal" style="--reveal: 3" aria-label={t.chrome.primaryNav}>
-          <ul class="menu-group">
-            {pages.map((key) => (
-              <li>
-                <a class="chrome-link" href={route(key, t.locale)} aria-current={current === key ? 'page' : undefined}>
-                  {t.nav[key]}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <ul class="menu-group" aria-label={t.chrome.externalLinks}>
-            <li>
-              <a class="chrome-link" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
-                {t.nav.linkedin}
-              </a>
-            </li>
-            <li>
-              <a class="chrome-link" href={EXTERNAL_LINKS.github} target="_blank" rel="noopener noreferrer">
-                {t.nav.github}
-              </a>
-            </li>
-          </ul>
-        </nav>
-      )
-    }
   </div>
+
+  <nav class="menu mono reveal" style="--reveal: 3" aria-label={t.chrome.primaryNav}>
+    <ul class="menu-group">
+      {
+        earth ? (
+          <li>
+            <a class="chrome-link" href={`${route('earth', t.locale)}#join`}>
+              {t.earth.join.title}
+            </a>
+          </li>
+        ) : (
+          pages.map((key) => (
+            <li>
+              <a class="chrome-link" href={route(key, t.locale)} aria-current={current === key ? 'page' : undefined}>
+                {t.nav[key]}
+              </a>
+            </li>
+          ))
+        )
+      }
+    </ul>
+  </nav>
 </header>
