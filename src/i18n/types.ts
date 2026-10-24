@@ -62,8 +62,8 @@ export interface Dictionary {
   };
   home: {
     meta: PageMeta;
-    /** HTML */
-    hero: Html;
+    heading: string;
+    lead: string;
     links: { services: string; contact: string };
   };
   services: {

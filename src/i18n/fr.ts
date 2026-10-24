@@ -52,7 +52,8 @@ export const fr: Dictionary = typography<Dictionary>({
       description:
         'vast est une société d’ingénierie logicielle. Nous développons des logiciels et des modèles de machine learning avec nos clients, pour les humains et la nature.',
     },
-    hero: `<a href="${r('services')}">Logiciels et machine learning</a>, développés avec vous.`,
+    heading: 'Des logiciels et des modèles d’une rigueur scientifique, pour le monde physique.',
+    lead: 'vast.ch est notre entreprise. Avec vous, nous transformons ce que vous mesurez en compréhension.',
     links: { services: 'Ce que nous faisons', contact: 'Nous écrire' },
   },
 

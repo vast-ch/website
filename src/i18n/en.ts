@@ -36,7 +36,8 @@ export const en: Dictionary = {
       description:
         'vast is a software engineering company. We develop software and machine-learning models with our clients, for people and nature.',
     },
-    hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.`,
+    heading: 'Research-grade software and models for the physical world.',
+    lead: 'vast.ch is our company. Together with you, we turn what you measure into understanding.',
     links: { services: 'What we do', contact: 'Get in touch' },
   },
 
