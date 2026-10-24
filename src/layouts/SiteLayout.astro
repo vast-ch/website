@@ -184,7 +184,17 @@ const isEnglishHome = locale === 'en' && page === 'home';
         if (!nav || !toggle) return;
         nav.classList.toggle('is-open', open);
         toggle.setAttribute('aria-expanded', String(open));
-        toggle.textContent = (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '';
+        if (open) {
+          // Open, the button shows a pixel X and is announced as "Close".
+          const cross = document.createElement('span');
+          cross.className = 'menu-x';
+          cross.setAttribute('aria-hidden', 'true');
+          toggle.replaceChildren(cross);
+          toggle.setAttribute('aria-label', toggle.dataset.labelClose ?? '');
+        } else {
+          toggle.textContent = toggle.dataset.labelOpen ?? '';
+          toggle.removeAttribute('aria-label');
+        }
       };
 
       const isMenuOpen = () => menu()?.classList.contains('is-open') ?? false;

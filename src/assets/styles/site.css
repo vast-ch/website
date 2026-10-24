@@ -394,14 +394,25 @@ body {
 
 /* On phones the links fold behind the menu button, and open in a small panel. */
 @media (max-width: 720px) {
+  /* A smaller mark, lowered so that its "v" (not the wave under it) sits on
+     the line of the switch and the menu button. */
+  .brand-mark svg {
+    width: 26px;
+    margin-top: -3px;
+  }
+
+  /* A larger touch area than the word or the X it shows. */
   .menu-toggle {
     display: inline-flex;
+    padding: 10px;
+    margin: -10px;
   }
 
   .menu:not(.is-open) .menu-group {
     display: none;
   }
 
+  /* The open panel lets the sky or the page show through, blurred. */
   .menu.is-open::before {
     content: '';
     position: absolute;
@@ -409,10 +420,44 @@ body {
     z-index: -1;
     border: 1px solid var(--line);
     border-radius: 4px;
-    background: rgba(var(--veil), 0.94);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(var(--veil), 0.62);
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
   }
+}
+
+/* The menu button's close sign: an X drawn with the pixels of the menu's font
+   (1em / 11), 7 × 7 pixels, sitting on the baseline like the switch. */
+.menu-x {
+  --px: calc(1em / 11);
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  width: calc(var(--px) * 7);
+  height: calc(var(--px) * 7);
+}
+
+.menu-x::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--px);
+  height: var(--px);
+  background: currentColor;
+  box-shadow:
+    calc(var(--px) * 1) calc(var(--px) * 1) 0 currentColor,
+    calc(var(--px) * 2) calc(var(--px) * 2) 0 currentColor,
+    calc(var(--px) * 3) calc(var(--px) * 3) 0 currentColor,
+    calc(var(--px) * 4) calc(var(--px) * 4) 0 currentColor,
+    calc(var(--px) * 5) calc(var(--px) * 5) 0 currentColor,
+    calc(var(--px) * 6) calc(var(--px) * 6) 0 currentColor,
+    calc(var(--px) * 6) calc(var(--px) * 0) 0 currentColor,
+    calc(var(--px) * 5) calc(var(--px) * 1) 0 currentColor,
+    calc(var(--px) * 4) calc(var(--px) * 2) 0 currentColor,
+    calc(var(--px) * 2) calc(var(--px) * 4) 0 currentColor,
+    calc(var(--px) * 1) calc(var(--px) * 5) 0 currentColor,
+    calc(var(--px) * 0) calc(var(--px) * 6) 0 currentColor;
 }
 
 /* Where the margins are too narrow to keep the header beside the reading
