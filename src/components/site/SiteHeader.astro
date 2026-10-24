@@ -1,5 +1,6 @@
 ---
 import Pictogram from './Pictogram.astro';
+import RealmSwitch from './RealmSwitch.astro';
 import { EXTERNAL_LINKS, route, type Dictionary, type RouteKey } from '~/i18n';
 
 export interface Props {
@@ -17,55 +18,47 @@ const pages: RouteKey[] = ['services', /* 'approach', */ 'about', 'contact'];
     <Pictogram title={`vast — ${t.nav.home}`} />
   </a>
 
-  <nav class="menu mono" aria-label={t.chrome.primaryNav} data-menu>
-    <button
-      class="chrome-button"
-      type="button"
-      aria-expanded="false"
-      aria-controls="menu-panel"
-      data-menu-toggle
-      data-label-open={t.chrome.menu}
-      data-label-close={t.chrome.close}
-    >
-      {t.chrome.menu}
-    </button>
+  <div class="header-end">
+    <RealmSwitch t={t} earth={current === 'earth'} />
 
-    <div class="menu-panel" id="menu-panel" hidden>
-      <ul class="menu-group">
-        {
-          pages.map((key) => (
-            <li>
-              <a class="chrome-link" href={route(key, t.locale)} aria-current={current === key ? 'page' : undefined}>
-                {t.nav[key]}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <ul class="menu-group">
-        <li>
-          <a
-            class="chrome-link"
-            href={route('earth', t.locale)}
-            aria-current={current === 'earth' ? 'page' : undefined}
-            data-earth-link
-          >
-            {t.nav.earth}
-          </a>
-        </li>
-      </ul>
-      <ul class="menu-group" aria-label={t.chrome.externalLinks}>
-        <li>
-          <a class="chrome-link" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
-            {t.nav.linkedin}
-          </a>
-        </li>
-        <li>
-          <a class="chrome-link" href={EXTERNAL_LINKS.github} target="_blank" rel="noopener noreferrer">
-            {t.nav.github}
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="menu mono" aria-label={t.chrome.primaryNav} data-menu>
+      <button
+        class="chrome-button"
+        type="button"
+        aria-expanded="false"
+        aria-controls="menu-panel"
+        data-menu-toggle
+        data-label-open={t.chrome.menu}
+        data-label-close={t.chrome.close}
+      >
+        {t.chrome.menu}
+      </button>
+
+      <div class="menu-panel" id="menu-panel" hidden>
+        <ul class="menu-group">
+          {
+            pages.map((key) => (
+              <li>
+                <a class="chrome-link" href={route(key, t.locale)} aria-current={current === key ? 'page' : undefined}>
+                  {t.nav[key]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <ul class="menu-group" aria-label={t.chrome.externalLinks}>
+          <li>
+            <a class="chrome-link" href={EXTERNAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+              {t.nav.linkedin}
+            </a>
+          </li>
+          <li>
+            <a class="chrome-link" href={EXTERNAL_LINKS.github} target="_blank" rel="noopener noreferrer">
+              {t.nav.github}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </header>

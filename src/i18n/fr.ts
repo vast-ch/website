@@ -24,6 +24,8 @@ export const fr: Dictionary = typography<Dictionary>({
 
   chrome: {
     company: 'Vast Switzerland GmbH',
+    association: 'Association vast.earth',
+    realm: { toEarth: 'Passer à vast.earth', toCh: 'Passer à vast.ch' },
     skipToContent: 'Aller au contenu',
     primaryNav: 'Navigation principale',
     externalLinks: 'Ailleurs',
@@ -40,7 +42,6 @@ export const fr: Dictionary = typography<Dictionary>({
     approach: 'Approche',
     about: 'À propos',
     contact: 'Contact',
-    earth: '.earth',
     legal: 'Mentions légales',
     privacy: 'Politique de confidentialité',
     linkedin: 'LinkedIn',
@@ -230,7 +231,7 @@ export const fr: Dictionary = typography<Dictionary>({
         text: 'Nous voulons que notre travail soit bon pour les êtres humains et pour la nature, et nous sommes heureux de travailler sur des projets liés à l’énergie, aux bâtiments et à l’environnement. Nous tenons aussi à savoir qui contrôle les logiciels et les données : nous privilégions les outils open source et l’hébergement en Suisse ou en Europe.',
       },
     ],
-    tagline: 'Pour un monde où les êtres humains et la nature prospèrent ensemble.',
+    tagline: 'Logiciels et modèles, développés avec vous.',
   },
 
   contact: {
@@ -258,7 +259,7 @@ export const fr: Dictionary = typography<Dictionary>({
     },
     label: 'vast.earth',
     heading: 'Favoriser l’harmonie entre les êtres humains et la nature.',
-    lead: 'vast.earth est notre association à but non lucratif. Elle développe et soutient des projets d’utilité sociale et environnementale.',
+    lead: 'vast.earth est notre association à but non lucratif. Elle développe et soutient des projets d’utilité sociale et environnementale pour toutes et tous.',
     discover: 'Découvrir l’association',
     bodyLabel: 'L’association',
     intro:
@@ -267,6 +268,14 @@ export const fr: Dictionary = typography<Dictionary>({
       {
         title: 'Notre but',
         text: 'L’association favorise l’harmonie entre les êtres humains et la nature en développant et en soutenant des projets d’utilité sociale et environnementale. Elle ne poursuit aucun but lucratif : toutes ses ressources sont consacrées à ce but, et à rien d’autre.',
+      },
+      {
+        title: 'Ce qu’elle fait',
+        text: 'vast.earth prend soin de projets open source d’utilité sociale et environnementale. Elle leur consacre des heures de travail : elle les maintient et veille à ce que les personnes qui les utilisent continuent d’être soutenues. Elle réunit aussi les personnes qui portent ces projets en une communauté, où elles partagent leur savoir-faire et trouvent des synergies entre leurs projets.',
+      },
+      {
+        title: 'vast.earth et vast.ch',
+        text: 'Pour l’instant, les fondateurs de vast.ch font ce travail sur leur temps libre, sous l’égide de vast.earth. vast.ch et les personnes qui y travaillent soutiennent l’association, et ce soutien ne va que dans un sens : l’entreprise peut fournir à l’association ce dont elle a besoin, et l’association ne rémunère jamais l’entreprise.',
       },
       {
         title: 'Son fonctionnement',
@@ -283,7 +292,7 @@ export const fr: Dictionary = typography<Dictionary>({
     ],
     join: {
       title: 'Nous rejoindre',
-      text: 'L’adhésion est ouverte à toute personne, physique ou morale, qui soutient ce but. Écrivez-nous pour adhérer : le Comité admet de nouveaux membres à tout moment, et l’Assemblée générale fixe la cotisation annuelle.',
+      text: 'L’adhésion est ouverte à toute personne, physique ou morale, qui soutient ce but. Écrivez-nous pour adhérer : le Comité admet de nouveaux membres à tout moment, et l’Assemblée générale fixe la cotisation annuelle. Si vous maintenez un projet open source et cherchez du soutien ou une communauté, écrivez-nous aussi.',
       cta: 'Nous écrire',
       subject: 'vast.earth',
     },

@@ -126,7 +126,7 @@ const isEnglishHome = locale === 'en' && page === 'home';
       <main id="main" class={MAIN_CLASS[variant]} transition:animate="fade">
         <slot />
       </main>
-      <SiteFooter t={t} alternates={alternates} />
+      <SiteFooter t={t} alternates={alternates} current={page} />
     </div>
 
     <script>

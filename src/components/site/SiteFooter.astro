@@ -1,17 +1,23 @@
 ---
-import { LOCALES, route, type Dictionary, type Locale } from '~/i18n';
+import { LOCALES, route, type Dictionary, type Locale, type RouteKey } from '~/i18n';
 
 export interface Props {
   t: Dictionary;
   /** The same page in every locale, for the language switch. */
   alternates: Record<Locale, string>;
+  current?: RouteKey;
 }
 
-const { t, alternates } = Astro.props;
+const { t, alternates, current } = Astro.props;
+// On vast.earth, the footer names the association and links to its details.
+const earth = current === 'earth';
+const owner = earth
+  ? { name: t.chrome.association, href: `${route('earth', t.locale)}#association`, title: t.earth.bodyLabel }
+  : { name: t.chrome.company, href: route('legal', t.locale), title: t.nav.legal };
 ---
 
 <footer class="site-footer mono">
-  <a class="chrome-link" href={route('legal', t.locale)} title={t.nav.legal}>{t.chrome.company}</a>
+  <a class="chrome-link" href={owner.href} title={owner.title}>{owner.name}</a>
 
   <div class="footer-controls">
     <nav class="lang-switch" aria-label={t.chrome.language}>

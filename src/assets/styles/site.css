@@ -288,6 +288,79 @@ body {
   text-underline-offset: 0.3em;
 }
 
+/* The right end of the header: the vast.ch / vast.earth switch, then the menu. */
+.header-end {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+/* vast.ch / vast.earth switch, in pixel art: 2px pixels, a track whose corners
+   are notched (an outline drawn by four one-pixel shadows, which leave the
+   corners empty), and a square-ish knob that moves in whole pixels. */
+.realm-switch {
+  --px: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  text-transform: none;
+  transition: color var(--theme-duration) var(--theme-easing);
+}
+
+.realm-name {
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+[data-realm='ch'] .realm-name[data-side='ch'],
+[data-realm='earth'] .realm-name[data-side='earth'],
+.realm-switch:hover .realm-name {
+  opacity: 1;
+}
+
+.realm-track {
+  position: relative;
+  flex: none;
+  width: calc(var(--px) * 12);
+  height: calc(var(--px) * 5);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 currentColor,
+    0 var(--px) 0 currentColor,
+    calc(var(--px) * -1) 0 0 currentColor,
+    var(--px) 0 0 currentColor;
+}
+
+.realm-knob {
+  position: absolute;
+  top: var(--px);
+  left: var(--px);
+  width: calc(var(--px) * 4);
+  height: calc(var(--px) * 3);
+  background: currentColor;
+  transition: transform 0.16s steps(2, end);
+}
+
+[data-realm='earth'] .realm-knob {
+  transform: translateX(calc(var(--px) * 6));
+}
+
+/* On hover, the knob leans one pixel towards the other side. */
+.realm-switch[data-realm='ch']:hover .realm-knob {
+  transform: translateX(var(--px));
+}
+
+.realm-switch[data-realm='earth']:hover .realm-knob {
+  transform: translateX(calc(var(--px) * 5));
+}
+
+/* Between pages the knob slides across, a pixel at a time. */
+::view-transition-group(realm-knob) {
+  animation-duration: 0.36s;
+  animation-timing-function: steps(6, end);
+}
+
 /* Menu */
 .menu {
   position: relative;

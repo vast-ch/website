@@ -1,0 +1,26 @@
+---
+import { route, type Dictionary } from '~/i18n';
+
+export interface Props {
+  t: Dictionary;
+  /** Whether the current page belongs to vast.earth rather than vast.ch. */
+  earth: boolean;
+}
+
+const { t, earth } = Astro.props;
+const href = earth ? route('home', t.locale) : route('earth', t.locale);
+const label = earth ? t.chrome.realm.toCh : t.chrome.realm.toEarth;
+---
+
+<!--
+  vast.ch or vast.earth, as a pixel-art switch. It is a link to the other side;
+  the knob carries a view-transition name, so it slides across while the page
+  changes (and the sky flies down to the lake, or back up).
+-->
+<a class="realm-switch mono" href={href} aria-label={label} title={label} data-realm={earth ? 'earth' : 'ch'}>
+  <span class="realm-name" data-side="ch">.ch</span>
+  <span class="realm-track" aria-hidden="true">
+    <span class="realm-knob" transition:name="realm-knob"></span>
+  </span>
+  <span class="realm-name" data-side="earth">.earth</span>
+</a>

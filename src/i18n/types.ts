@@ -38,6 +38,10 @@ export interface Dictionary {
   locale: Locale;
   chrome: {
     company: string;
+    /** The association's name, in the footer on vast.earth. */
+    association: string;
+    /** The vast.ch / vast.earth switch in the header. */
+    realm: { toEarth: string; toCh: string };
     skipToContent: string;
     primaryNav: string;
     externalLinks: string;
@@ -53,7 +57,6 @@ export interface Dictionary {
     approach: string;
     about: string;
     contact: string;
-    earth: string;
     legal: string;
     privacy: string;
     linkedin: string;

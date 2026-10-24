@@ -8,6 +8,8 @@ export const en: Dictionary = {
 
   chrome: {
     company: 'Vast Switzerland GmbH',
+    association: 'vast.earth association',
+    realm: { toEarth: 'Switch to vast.earth', toCh: 'Switch to vast.ch' },
     skipToContent: 'Skip to content',
     primaryNav: 'Primary navigation',
     externalLinks: 'Elsewhere',
@@ -24,7 +26,6 @@ export const en: Dictionary = {
     approach: 'Approach',
     about: 'About',
     contact: 'Contact',
-    earth: '.earth',
     legal: 'Legal notice',
     privacy: 'Privacy policy',
     linkedin: 'LinkedIn',
@@ -213,7 +214,7 @@ export const en: Dictionary = {
         text: 'We want our work to be good for people and nature, and we are glad to work on projects in energy, buildings and the environment. We also care about who controls software and data: we favour open-source tools and hosting in Switzerland or Europe.',
       },
     ],
-    tagline: 'For a world where people and nature thrive together.',
+    tagline: 'Software and models, built with you.',
   },
 
   contact: {
@@ -241,7 +242,7 @@ export const en: Dictionary = {
     },
     label: 'vast.earth',
     heading: 'Fostering harmony between people and nature.',
-    lead: 'vast.earth is our non-profit association. It develops and supports projects of social and environmental benefit.',
+    lead: 'vast.earth is our non-profit association. It develops and supports projects of social and environmental benefit for everyone.',
     discover: 'Discover the association',
     bodyLabel: 'The association',
     intro:
@@ -250,6 +251,14 @@ export const en: Dictionary = {
       {
         title: 'Our purpose',
         text: 'The association fosters harmony between people and nature by developing and supporting projects of social and environmental benefit. It is non-profit: all of its resources are used for this purpose, and for nothing else.',
+      },
+      {
+        title: 'What it does',
+        text: 'vast.earth looks after open-source projects of social and environmental benefit. It gives them working hours: it maintains them and makes sure that the people who use them keep getting support. It also brings together the main developers behind these projects, giving them a community where they share their know-how and find synergies between their projects.',
+      },
+      {
+        title: 'vast.earth and vast.ch',
+        text: 'For now, the founders of vast.ch do this work in their free time, under the umbrella of vast.earth. vast.ch and the people who work there support the association, and support only flows one way: the company may provide the association with what it needs, and the association never pays the company.',
       },
       {
         title: 'How it is run',
@@ -266,7 +275,7 @@ export const en: Dictionary = {
     ],
     join: {
       title: 'Join us',
-      text: 'Membership is open to anyone, individual or organisation, who supports this purpose. Write to us to apply: the Executive Committee admits new members at any time, and the General Meeting sets the yearly fee.',
+      text: 'Membership is open to anyone, individual or organisation, who supports this purpose. Write to us to apply: the Executive Committee admits new members at any time, and the General Meeting sets the yearly fee. If you maintain an open-source project and are looking for support or a community, write to us as well.',
       cta: 'Write to us',
       subject: 'vast.earth',
     },
