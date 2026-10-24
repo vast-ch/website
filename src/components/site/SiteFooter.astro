@@ -9,15 +9,23 @@ export interface Props {
 }
 
 const { t, alternates, current } = Astro.props;
-// On vast.earth, the footer names the association and links to its details.
+// On vast.earth the footer names the association; on vast.ch, the company,
+// with a link to the legal notice.
 const earth = current === 'earth';
-const owner = earth
-  ? { name: t.chrome.association, href: `${route('earth', t.locale)}#association`, title: t.earth.bodyLabel }
-  : { name: t.chrome.company, href: route('legal', t.locale), title: t.nav.legal };
 ---
 
 <footer class="site-footer mono">
-  <a class="chrome-link realm-owner reveal" style="--reveal: 4" href={owner.href} title={owner.title}>{owner.name}</a>
+  {
+    earth ? (
+      <span class="realm-owner reveal" style="--reveal: 4">
+        {t.chrome.association}
+      </span>
+    ) : (
+      <a class="chrome-link realm-owner reveal" style="--reveal: 4" href={route('legal', t.locale)} title={t.nav.legal}>
+        {t.chrome.company}
+      </a>
+    )
+  }
 
   <div class="footer-controls">
     <nav class="lang-switch" aria-label={t.chrome.language}>

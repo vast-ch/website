@@ -416,11 +416,9 @@ body {
 }
 
 /* Where the margins are too narrow to keep the header beside the reading
-   column, it scrolls away with pages that have text to read (reading pages,
-   and .earth below its hero) instead of covering the text. */
+   column, it scrolls away with reading pages instead of covering the text. */
 @media (max-width: 1180px) {
-  [data-page='content'] .site-header,
-  [data-page='earth'] .site-header {
+  [data-page='content'] .site-header {
     position: absolute;
   }
 
@@ -989,15 +987,6 @@ body {
   background: linear-gradient(to top, rgba(var(--veil), 0.82), rgba(var(--veil), 0));
 }
 
-/* On narrow screens the association's text scrolls under the footer: fade it
-   out as firmly as on reading pages. */
-@media (max-width: 1180px) {
-  [data-page='earth'] .site-footer::before {
-    top: -28px;
-    background: linear-gradient(to top, rgba(var(--veil), 0.97) 62%, rgba(var(--veil), 0));
-  }
-}
-
 .earth-hero {
   min-height: 100vh;
   min-height: 100dvh;
@@ -1044,27 +1033,6 @@ body {
   font-weight: 400;
   letter-spacing: -0.022em;
   text-wrap: balance;
-}
-
-.earth-lead {
-  margin: 0;
-  max-width: 30em;
-  text-wrap: balance;
-}
-
-.earth-body {
-  position: relative;
-  padding: 10rem var(--frame-inline) var(--frame-content-bottom);
-  background: linear-gradient(to bottom, rgba(var(--veil), 0), rgba(var(--veil), 0.97) 10rem);
-}
-
-.earth-join {
-  scroll-margin-top: var(--frame-content-top);
-  margin: 0 0 var(--space-block);
-}
-
-.earth-join .entry {
-  margin-bottom: var(--space-label);
 }
 
 /* --------------------------------------------------------------------------

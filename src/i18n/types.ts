@@ -56,7 +56,7 @@ export interface Dictionary {
     approach: string;
     about: string;
     contact: string;
-    /** The vast.earth menu: joining the association. */
+    /** The vast.earth menu: joining the association (its Discord, for now). */
     join: string;
     legal: string;
     privacy: string;
@@ -126,19 +126,11 @@ export interface Dictionary {
   };
   earth: {
     meta: PageMeta;
-    /** Hero, shown over the landscape once the flight has landed. */
+    /** Hero, shown over the landscape once the flight has landed: the title,
+        then word that more is coming, and meanwhile the association's Discord. */
     heading: string;
-    lead: string;
-    /** Under the lead: the association's own pages are coming, meanwhile its Discord. */
     soon: string;
     discord: string;
-    /** Body, on the paper veil below the landscape. */
-    bodyLabel: string;
-    /** HTML */
-    intro: Html;
-    sections: Section[];
-    join: { title: string; text: string; cta: string; subject: string };
-    tagline: string;
   };
   notFound: {
     meta: PageMeta;
