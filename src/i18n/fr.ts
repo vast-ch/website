@@ -29,8 +29,6 @@ export const fr: Dictionary = typography<Dictionary>({
     skipToContent: 'Aller au contenu',
     primaryNav: 'Navigation principale',
     externalLinks: 'Ailleurs',
-    menu: 'Menu',
-    close: 'Fermer',
     language: 'Langue',
     languageNames: { en: 'English', fr: 'Français' },
     theme: { label: 'Apparence', auto: 'Auto', light: 'Clair', dark: 'Sombre' },
@@ -54,7 +52,7 @@ export const fr: Dictionary = typography<Dictionary>({
       description:
         'vast est une société d’ingénierie logicielle. Nous développons des logiciels et des modèles de machine learning avec nos clients, pour les humains et la nature.',
     },
-    hero: `<a href="${r('services')}">Logiciels et machine learning</a>, développés avec vous.<br />Pour <a href="${r('about')}">les humains et la nature</a>.`,
+    hero: `<a href="${r('services')}">Logiciels et machine learning</a>, développés avec vous.`,
     links: { services: 'Ce que nous faisons', contact: 'Nous écrire' },
   },
 

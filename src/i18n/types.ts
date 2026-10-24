@@ -45,8 +45,6 @@ export interface Dictionary {
     skipToContent: string;
     primaryNav: string;
     externalLinks: string;
-    menu: string;
-    close: string;
     language: string;
     languageNames: Record<Locale, string>;
     theme: { label: string; auto: string; light: string; dark: string };

@@ -13,8 +13,6 @@ export const en: Dictionary = {
     skipToContent: 'Skip to content',
     primaryNav: 'Primary navigation',
     externalLinks: 'Elsewhere',
-    menu: 'Menu',
-    close: 'Close',
     language: 'Language',
     languageNames: { en: 'English', fr: 'Français' },
     theme: { label: 'Appearance', auto: 'Auto', light: 'Light', dark: 'Dark' },
@@ -38,7 +36,7 @@ export const en: Dictionary = {
       description:
         'vast is a software engineering company. We develop software and machine-learning models with our clients, for people and nature.',
     },
-    hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.<br />For <a href="${r('about')}">people and nature</a>.`,
+    hero: `<a href="${r('services')}">Software and machine learning</a>, built with you.`,
     links: { services: 'What we do', contact: 'Get in touch' },
   },
 

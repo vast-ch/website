@@ -219,24 +219,15 @@ body {
   pointer-events: auto;
 }
 
-/* Content scrolls under the chrome on narrow screens: fade it out there. */
+/* Content scrolls under the footer on narrow screens: fade it out there. (The
+   header scrolls away with reading pages, see the menu below.) */
 @media (max-width: 1180px) {
-  [data-page='content'] .site-header::before,
   [data-page='content'] .site-footer::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -28px 0 0;
     z-index: -1;
     pointer-events: none;
-  }
-
-  [data-page='content'] .site-header::before {
-    bottom: -28px;
-    background: linear-gradient(to bottom, rgba(var(--veil), 0.97) 62%, rgba(var(--veil), 0));
-  }
-
-  [data-page='content'] .site-footer::before {
-    top: -28px;
     background: linear-gradient(to top, rgba(var(--veil), 0.97) 62%, rgba(var(--veil), 0));
   }
 }
@@ -288,10 +279,12 @@ body {
   text-underline-offset: 0.3em;
 }
 
-/* The right end of the header: the vast.ch / vast.earth switch, then the menu. */
+/* The right end of the header: the vast.ch / vast.earth switch on top, and
+   the menu of the side you are on under it, always visible. */
 .header-end {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 22px;
 }
 
@@ -361,24 +354,12 @@ body {
   animation-timing-function: steps(6, end);
 }
 
-/* Menu */
+/* Menu: a column in the right margin, beside the reading column. */
 .menu {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-
-.menu-panel {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 18px;
-}
-
-.menu-panel[hidden] {
-  display: none;
 }
 
 .menu-group {
@@ -391,17 +372,32 @@ body {
   gap: 10px;
 }
 
-[data-page='content'] .menu.is-open::before,
-[data-page='earth'] .menu.is-open::before {
-  content: '';
-  position: absolute;
-  inset: -14px -18px -16px -26px;
-  z-index: -1;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: rgba(var(--veil), 0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+/* Where the margin is too narrow for that column, the links wrap into rows,
+   and on reading pages the header scrolls away with the page instead of
+   covering the text, which starts a little lower to clear it. */
+@media (max-width: 1180px) {
+  .header-end {
+    gap: 14px;
+  }
+
+  .menu {
+    gap: 10px;
+  }
+
+  .menu-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px 16px;
+  }
+
+  [data-page='content'] .site-header {
+    position: absolute;
+  }
+
+  .content-page {
+    padding-top: calc(var(--frame-block) + 112px);
+  }
 }
 
 /* Footer */

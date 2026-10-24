@@ -63,18 +63,6 @@ const isEnglishHome = locale === 'en' && page === 'home';
       type="font/woff2"
       crossorigin
     />
-    <noscript>
-      <style>
-        /* Without JavaScript the menu cannot toggle, so show its links. */
-        .menu-panel[hidden] {
-          display: flex;
-        }
-        [data-menu-toggle] {
-          display: none;
-        }
-      </style>
-    </noscript>
-
     <script is:inline>
       // Apply the stored appearance before first paint, and again after every
       // client-side navigation (which replaces the <html> attributes).
@@ -171,21 +159,6 @@ const isEnglishHome = locale === 'en' && page === 'home';
         return order[(order.indexOf(mode) + 1) % order.length];
       };
 
-      const menu = () => document.querySelector<HTMLElement>('[data-menu]');
-
-      const setMenu = (open: boolean) => {
-        const nav = menu();
-        const toggle = nav?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-        const panel = nav?.querySelector<HTMLElement>('.menu-panel');
-        if (!nav || !toggle || !panel) return;
-        nav.classList.toggle('is-open', open);
-        panel.hidden = !open;
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.textContent = (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '';
-      };
-
-      const isMenuOpen = () => menu()?.classList.contains('is-open') ?? false;
-
       const openFromHash = () => {
         const id = decodeURIComponent(window.location.hash.slice(1));
         const target = id ? document.getElementById(id) : null;
@@ -198,12 +171,6 @@ const isEnglishHome = locale === 'en' && page === 'home';
       document.addEventListener('click', (event) => {
         const target = event.target as Element | null;
         if (!target) return;
-
-        if (target.closest('[data-menu-toggle]')) {
-          setMenu(!isMenuOpen());
-          return;
-        }
-        if (isMenuOpen() && !target.closest('[data-menu]')) setMenu(false);
 
         if (target.closest('[data-theme-toggle]')) {
           applyMode(nextMode(readMode()));
@@ -223,13 +190,6 @@ const isEnglishHome = locale === 'en' && page === 'home';
         const anchor = target.closest<HTMLAnchorElement>('a[href*="#"]');
         if (anchor && anchor.pathname === window.location.pathname) {
           requestAnimationFrame(openFromHash);
-        }
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && isMenuOpen()) {
-          setMenu(false);
-          menu()?.querySelector<HTMLElement>('[data-menu-toggle]')?.focus();
         }
       });
 
