@@ -44,6 +44,8 @@ export interface Dictionary {
     realm: { toEarth: string; toCh: string };
     skipToContent: string;
     primaryNav: string;
+    menu: string;
+    close: string;
     language: string;
     languageNames: Record<Locale, string>;
     theme: { label: string; auto: string; light: string; dark: string };
@@ -54,6 +56,8 @@ export interface Dictionary {
     approach: string;
     about: string;
     contact: string;
+    /** The vast.earth menu: joining the association. */
+    join: string;
     legal: string;
     privacy: string;
     linkedin: string;

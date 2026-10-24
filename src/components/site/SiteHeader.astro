@@ -15,26 +15,37 @@ const pages: RouteKey[] = ['services', /* 'approach', */ 'about', 'contact'];
 ---
 
 <!--
-  Left, which vast: the mark and the .ch / .earth switch, which reads as
-  "vast.ch" or "vast.earth" and stays put on both sides. Right, where to go on
-  this side: the vast.ch pages, or, on vast.earth (a single page for now), a
-  link to joining the association.
+  The mark on the left, the .ch / .earth switch in the middle, and on the right
+  the pages of the side you are on: the vast.ch pages, or, on vast.earth (a
+  single page for now), a link to joining the association. On phones the links
+  fold behind a menu button.
 -->
 <header class="site-header">
-  <div class="header-start">
-    <a class="brand-mark" href={route('home', t.locale)}>
-      <Pictogram title={`vast — ${t.nav.home}`} />
-    </a>
-    <RealmSwitch t={t} earth={earth} />
-  </div>
+  <a class="brand-mark" href={route('home', t.locale)}>
+    <Pictogram title={`vast — ${t.nav.home}`} />
+  </a>
 
-  <nav class="menu mono reveal" style="--reveal: 3" aria-label={t.chrome.primaryNav}>
-    <ul class="menu-group">
+  <RealmSwitch t={t} earth={earth} />
+
+  <nav class="menu mono reveal" style="--reveal: 3" aria-label={t.chrome.primaryNav} data-menu>
+    <button
+      class="chrome-button menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu-list"
+      data-menu-toggle
+      data-label-open={t.chrome.menu}
+      data-label-close={t.chrome.close}
+    >
+      {t.chrome.menu}
+    </button>
+
+    <ul class="menu-group" id="menu-list">
       {
         earth ? (
           <li>
             <a class="chrome-link" href={`${route('earth', t.locale)}#join`}>
-              {t.earth.join.title}
+              {t.nav.join}
             </a>
           </li>
         ) : (

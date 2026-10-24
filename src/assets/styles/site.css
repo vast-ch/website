@@ -202,10 +202,21 @@ body {
   pointer-events: none;
 }
 
+/* The mark on the left, the switch in the exact middle, the menu on the right. */
 .site-header {
   top: 0;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
   padding-top: var(--frame-block);
+}
+
+.site-header > .brand-mark {
+  justify-self: start;
+}
+
+.site-header > .menu {
+  justify-self: end;
 }
 
 .site-footer {
@@ -277,14 +288,6 @@ body {
   text-decoration-style: dotted;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
-}
-
-/* The left end of the header: the mark, and next to it the vast.ch /
-   vast.earth switch, on the same line as the first link of the menu. */
-.header-start {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
 }
 
 /* vast.ch / vast.earth switch, drawn with the pixels of the menu's font:
@@ -362,7 +365,23 @@ body {
 }
 
 /* Menu: the pages of the side you are on, a short column in the right margin,
-   always visible. */
+   always visible; on phones, folded behind a button. */
+.menu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.menu-group .chrome-link {
+  white-space: nowrap;
+}
+
 .menu-group {
   list-style: none;
   margin: 0;
@@ -371,6 +390,29 @@ body {
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
+}
+
+/* On phones the links fold behind the menu button, and open in a small panel. */
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .menu:not(.is-open) .menu-group {
+    display: none;
+  }
+
+  .menu.is-open::before {
+    content: '';
+    position: absolute;
+    inset: -14px -18px -16px -26px;
+    z-index: -1;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: rgba(var(--veil), 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 /* Where the margins are too narrow to keep the header beside the reading
@@ -384,6 +426,12 @@ body {
 
   .content-page {
     padding-top: calc(var(--frame-block) + 112px);
+  }
+}
+
+@media (max-width: 720px) {
+  .content-page {
+    padding-top: var(--frame-content-top);
   }
 }
 

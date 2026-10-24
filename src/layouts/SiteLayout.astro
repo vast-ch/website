@@ -63,6 +63,18 @@ const isEnglishHome = locale === 'en' && page === 'home';
       type="font/woff2"
       crossorigin
     />
+    <noscript>
+      <style>
+        /* Without JavaScript the phone menu cannot fold: show its links. */
+        .menu:not(.is-open) .menu-group {
+          display: flex;
+        }
+        .menu-toggle {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+
     <script is:inline>
       // Apply the stored appearance before first paint, and again after every
       // client-side navigation (which replaces the <html> attributes).
@@ -163,6 +175,20 @@ const isEnglishHome = locale === 'en' && page === 'home';
         return order[(order.indexOf(mode) + 1) % order.length];
       };
 
+      // The phone menu: a button folds and unfolds the links.
+      const menu = () => document.querySelector<HTMLElement>('[data-menu]');
+
+      const setMenu = (open: boolean) => {
+        const nav = menu();
+        const toggle = nav?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+        if (!nav || !toggle) return;
+        nav.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.textContent = (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '';
+      };
+
+      const isMenuOpen = () => menu()?.classList.contains('is-open') ?? false;
+
       const openFromHash = () => {
         const id = decodeURIComponent(window.location.hash.slice(1));
         const target = id ? document.getElementById(id) : null;
@@ -175,6 +201,13 @@ const isEnglishHome = locale === 'en' && page === 'home';
       document.addEventListener('click', (event) => {
         const target = event.target as Element | null;
         if (!target) return;
+
+        if (target.closest('[data-menu-toggle]')) {
+          setMenu(!isMenuOpen());
+          return;
+        }
+        // A click outside the menu, or on one of its links, folds it.
+        if (isMenuOpen() && (!target.closest('[data-menu]') || target.closest('[data-menu] a'))) setMenu(false);
 
         if (target.closest('[data-theme-toggle]')) {
           applyMode(nextMode(readMode()));
@@ -214,6 +247,13 @@ const isEnglishHome = locale === 'en' && page === 'home';
         (event as TransitionBeforePreparationEvent).loader = async () => {
           await Promise.all([loader(), new Promise((resolve) => setTimeout(resolve, LEAVE_MS))]);
         };
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && isMenuOpen()) {
+          setMenu(false);
+          menu()?.querySelector<HTMLElement>('[data-menu-toggle]')?.focus();
+        }
       });
 
       prefersDark.addEventListener('change', () => syncThemeLabel());
