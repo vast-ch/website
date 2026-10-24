@@ -126,9 +126,11 @@ export interface Dictionary {
   };
   earth: {
     meta: PageMeta;
-    /** Hero, shown over the landscape once the flight has landed: the title,
-        then word that more is coming, and meanwhile the association's Discord. */
+    /** Hero, shown over the landscape once the flight has landed: the title and
+        its tagline, then word that more is coming, and meanwhile the
+        association's Discord. */
     heading: string;
+    lead: string;
     soon: string;
     discord: string;
   };

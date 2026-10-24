@@ -13,14 +13,15 @@ const e = t.earth;
 
 <!--
   The `earth` variant tells the sky (components/site/sky.ts) to fly down through
-  the clouds to the lake. For now the page is only its title over the landscape,
-  with a word that more is coming and the association's Discord.
+  the clouds to the lake. For now the page is only its title and tagline over
+  the landscape, with a word that more is coming and the association's Discord.
 -->
 <SiteLayout locale={locale} page="earth" variant="earth" title={e.meta.title} description={e.meta.description}>
   <section class="earth-hero">
     <div class="earth-hero-content">
       <h1 class="earth-heading reveal" style="--reveal: 0">{e.heading}</h1>
-      <p class="earth-soon mono reveal" style="--reveal: 1">
+      <p class="earth-lead reveal" style="--reveal: 1">{e.lead}</p>
+      <p class="earth-soon mono reveal" style="--reveal: 2">
         <span>{e.soon}</span>
         <a class="arrow-link" href={EXTERNAL_LINKS.discord} target="_blank" rel="noopener noreferrer"
           >{e.discord} <span aria-hidden="true">→</span></a

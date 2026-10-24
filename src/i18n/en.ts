@@ -242,6 +242,7 @@ export const en: Dictionary = {
         'vast.earth is a non-profit association under Swiss law that fosters harmony between people and nature by developing and supporting projects of social and environmental benefit.',
     },
     heading: 'Fostering harmony between people and nature.',
+    lead: 'vast.earth is our non-profit association. It develops and supports projects of social and environmental benefit for everyone.',
     soon: 'Coming soon',
     discord: 'Join us on Discord',
   },
