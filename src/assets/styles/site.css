@@ -459,7 +459,8 @@ body {
 
 .home-hero-text {
   margin: 0;
-  max-width: 34em;
+  /* Two balanced lines, like the .earth heading. */
+  max-width: 19em;
   font-size: var(--text-hero);
   line-height: var(--leading-tight);
   font-weight: 400;
