@@ -41,6 +41,7 @@ export const fr: Dictionary = typography<Dictionary>({
     approach: 'Approche',
     about: 'À propos',
     contact: 'Contact',
+    news: 'Actualités',
     join: 'Rejoindre',
     legal: 'Mentions légales',
     privacy: 'Politique de confidentialité',
@@ -264,6 +265,26 @@ export const fr: Dictionary = typography<Dictionary>({
     discord: 'Rejoignez-nous sur Discord',
   },
 
+  news: {
+    meta: {
+      title: 'Actualités',
+      description: 'Les nouvelles et les articles de vast : projets, recherche et ce que nous apprenons en chemin.',
+    },
+    label: 'Actualités',
+    empty: 'Rien pour l’instant.',
+    feed: { title: 'vast — Actualités', description: 'Les nouvelles et les articles de vast.' },
+    letter: { date: 'Date :', from: 'De :', to: 'À :', toValue: 'Vous', subject: 'Objet :' },
+    back: 'Toutes les actualités',
+    subscribe: {
+      title: 'Recevoir nos nouvelles',
+      email: 'Adresse e-mail',
+      placeholder: 'votre@adresse.ch',
+      submit: 'S’abonner',
+      subject: 'Abonnement aux actualités de vast',
+      body: 'Bonjour, merci d’envoyer les actualités de vast à {email}.',
+      note: 'Votre messagerie s’ouvre avec la demande : envoyez-la, et nous vous ajouterons. Écrivez-nous à tout moment pour arrêter.',
+    },
+  },
   notFound: {
     meta: { title: 'Page introuvable', description: 'Cette page est introuvable.' },
     heading: 'Cette page s’est perdue dans les nuages.',

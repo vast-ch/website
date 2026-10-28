@@ -1,0 +1,41 @@
+---
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import NewsSubscribe from '~/components/news/NewsSubscribe.astro';
+import { getDictionary, type Locale } from '~/i18n';
+import { formatDate, getPosts, isoDate, postSlug, postUrl } from '~/news';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const n = t.news;
+const posts = await getPosts(locale);
+---
+
+<!-- One line per post, its date and its title, newest first; then subscribing. -->
+<SiteLayout locale={locale} page="news" title={n.meta.title} description={n.meta.description}>
+  <article class="content-surface">
+    <h1 class="eyebrow mono">{n.label}</h1>
+
+    {
+      posts.length ? (
+        <ol class="news-list">
+          {posts.map((post) => (
+            <li>
+              <time class="mono" datetime={isoDate(post.data.date)}>
+                {formatDate(locale, post.data.date)}
+              </time>
+              <a href={postUrl(locale, postSlug(post))}>{post.data.title}</a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="news-empty">{n.empty}</p>
+      )
+    }
+
+    <NewsSubscribe t={t} />
+  </article>
+</SiteLayout>

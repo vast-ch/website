@@ -1,0 +1,55 @@
+---
+import { CONTACT_EMAIL, type Dictionary } from '~/i18n';
+import { feedUrl } from '~/news';
+
+export interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const s = t.news.subscribe;
+---
+
+<!--
+  Subscribing, kept simple: the form opens the visitor's email app with a
+  request to hello@vast.ch, which we answer by adding them to the list. Without
+  JavaScript the browser builds that email itself (a GET form to a mailto: URL
+  turns `subject` and `body` into the email's); with it, the body is a sentence.
+  To use a newsletter service instead, point the form at its signup URL.
+-->
+<section class="news-subscribe" id="subscribe" aria-labelledby="subscribe-title">
+  <p class="mono" id="subscribe-title">{s.title}</p>
+  <form class="news-form mono" action={`mailto:${CONTACT_EMAIL}`} method="get" data-subscribe data-body={s.body}>
+    <input type="hidden" name="subject" value={s.subject} />
+    <label class="visually-hidden" for="subscribe-email">{s.email}</label>
+    <input
+      class="news-email"
+      id="subscribe-email"
+      type="email"
+      name="body"
+      placeholder={s.placeholder}
+      autocomplete="email"
+      required
+    />
+    <button class="chrome-button" type="submit">{s.submit} <span aria-hidden="true">↵</span></button>
+  </form>
+  <p class="news-note">{s.note}</p>
+  <p class="news-feeds mono">
+    <a class="chrome-link" href={feedUrl(t.locale, 'atom')}>Atom</a> ·
+    <a class="chrome-link" href={feedUrl(t.locale, 'rss')}>RSS</a>
+  </p>
+</section>
+
+<script>
+  // With JavaScript, the email reads as a sentence rather than a bare address.
+  document.addEventListener('submit', (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || !form.matches('[data-subscribe]')) return;
+    event.preventDefault();
+    const data = new FormData(form);
+    const email = String(data.get('body') ?? '').trim();
+    const body = (form.dataset.body ?? '{email}').replace('{email}', email);
+    const subject = String(data.get('subject') ?? '');
+    window.location.href = `${form.action}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>

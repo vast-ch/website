@@ -25,6 +25,7 @@ export const en: Dictionary = {
     approach: 'Approach',
     about: 'About',
     contact: 'Contact',
+    news: 'News',
     join: 'Join us',
     legal: 'Legal notice',
     privacy: 'Privacy policy',
@@ -247,6 +248,26 @@ export const en: Dictionary = {
     discord: 'Join us on Discord',
   },
 
+  news: {
+    meta: {
+      title: 'News',
+      description: 'News and articles about the work of vast: projects, research and what we learn along the way.',
+    },
+    label: 'News',
+    empty: 'Nothing here yet.',
+    feed: { title: 'vast — News', description: 'News and articles about the work of vast.' },
+    letter: { date: 'Date:', from: 'From:', to: 'To:', toValue: 'You', subject: 'Subject:' },
+    back: 'All news',
+    subscribe: {
+      title: 'Hear from us',
+      email: 'Email address',
+      placeholder: 'your@email.com',
+      submit: 'Subscribe',
+      subject: 'Subscribe to vast news',
+      body: 'Hello, please send the news of vast to {email}.',
+      note: 'Your email app opens with the request: send it, and we will add you. Write to us any time to stop.',
+    },
+  },
   notFound: {
     meta: { title: 'Page not found', description: 'This page could not be found.' },
     heading: 'This page is lost in the clouds.',

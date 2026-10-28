@@ -56,6 +56,7 @@ export interface Dictionary {
     approach: string;
     about: string;
     contact: string;
+    news: string;
     /** The vast.earth menu: joining the association (its Discord, for now). */
     join: string;
     legal: string;
@@ -133,6 +134,26 @@ export interface Dictionary {
     lead: string;
     soon: string;
     discord: string;
+  };
+  news: {
+    meta: PageMeta;
+    label: string;
+    /** Shown when there is no post yet. */
+    empty: string;
+    feed: { title: string; description: string };
+    /** A post is shown as a letter: its header lines. */
+    letter: { date: string; from: string; to: string; toValue: string; subject: string };
+    back: string;
+    subscribe: {
+      title: string;
+      email: string;
+      placeholder: string;
+      submit: string;
+      /** The subscription request, sent by email: its subject and body ({email} is replaced). */
+      subject: string;
+      body: string;
+      note: string;
+    };
   };
   notFound: {
     meta: PageMeta;

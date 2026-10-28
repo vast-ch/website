@@ -1087,6 +1087,152 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+   News: a list of dates and titles, posts read as letters, and subscribing
+   -------------------------------------------------------------------------- */
+
+/* Read by screen readers, not shown. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* The date in a column of its own, so that the titles line up. */
+.news-list li {
+  display: grid;
+  grid-template-columns: 11.5em 1fr;
+  column-gap: 1.5rem;
+  align-items: baseline;
+}
+
+.news-list time {
+  color: var(--ink-muted);
+}
+
+.news-list a {
+  color: inherit;
+  font-style: italic;
+  text-decoration: none;
+}
+
+.news-list a:hover {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+@media (max-width: 560px) {
+  .news-list {
+    gap: 1rem;
+  }
+
+  .news-list li {
+    grid-template-columns: 1fr;
+  }
+}
+
+.news-empty {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+/* The letter's header: Date, From, To, Subject. */
+.news-letter {
+  margin: 0 0 var(--space-section);
+  padding-bottom: var(--space-block);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.news-letter > div {
+  display: grid;
+  grid-template-columns: 7em 1fr;
+  column-gap: 1rem;
+}
+
+.news-letter dt {
+  color: var(--ink-muted);
+}
+
+.news-letter dd {
+  margin: 0;
+  text-transform: none;
+}
+
+.news-back {
+  margin: var(--space-block) 0 0;
+}
+
+/* Subscribing: a line, an email field and its button, then the feeds. */
+.news-subscribe {
+  margin-top: var(--space-section);
+  padding-top: var(--space-block);
+  border-top: 1px solid var(--line);
+}
+
+.news-subscribe > .mono:first-child {
+  margin: 0 0 var(--space-eyebrow);
+}
+
+.news-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+}
+
+.news-email {
+  flex: 0 1 18rem;
+  min-width: 0;
+  padding: 0.35rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--ink-faint);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  text-transform: none;
+}
+
+.news-email::placeholder {
+  color: var(--ink-faint);
+}
+
+.news-email:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+
+.news-note {
+  margin: var(--space-block) 0 0;
+  max-width: 34em;
+  color: var(--ink-muted);
+  font-size: var(--text-ui);
+}
+
+.news-feeds {
+  margin: var(--space-label) 0 0;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
    Between vast.ch and vast.earth: the text leaves, the sky flies, the text arrives
    -------------------------------------------------------------------------- */
 
