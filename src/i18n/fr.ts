@@ -275,15 +275,7 @@ export const fr: Dictionary = typography<Dictionary>({
     feed: { title: 'vast — Actualités', description: 'Les nouvelles et les articles de vast.' },
     letter: { date: 'Date :', from: 'De :', to: 'À :', toValue: 'Vous', subject: 'Objet :' },
     back: 'Toutes les actualités',
-    subscribe: {
-      title: 'Recevoir nos nouvelles',
-      email: 'Adresse e-mail',
-      placeholder: 'votre@adresse.ch',
-      submit: 'S’abonner',
-      subject: 'Abonnement aux actualités de vast',
-      body: 'Bonjour, merci d’envoyer les actualités de vast à {email}.',
-      note: 'Votre messagerie s’ouvre avec la demande : envoyez-la, et nous vous ajouterons. Écrivez-nous à tout moment pour arrêter.',
-    },
+    follow: 'Recevoir nos nouvelles',
   },
   notFound: {
     meta: { title: 'Page introuvable', description: 'Cette page est introuvable.' },

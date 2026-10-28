@@ -6,7 +6,7 @@ locale: fr
 page: privacy
 ---
 
-_Dernière mise à jour : 28 octobre 2026_
+_Dernière mise à jour : 9 octobre 2026_
 
 Cette politique explique comment Vast Switzerland GmbH (« vast », « nous ») traite les données personnelles en lien avec ce site, conformément à la loi fédérale sur la protection des données (LPD).
 
@@ -19,8 +19,6 @@ Vast Switzerland GmbH, c/o Seed: Lab, Chemin du Musée 4, 1700 Fribourg, Suisse.
 **Lorsque vous visitez le site.** Notre hébergeur enregistre des données techniques telles que votre adresse IP, la page demandée, la date et l’heure, ainsi que votre navigateur. C’est nécessaire pour afficher le site et en assurer la sécurité.
 
 **Lorsque vous nous écrivez.** Si vous nous contactez par e-mail, nous utilisons votre adresse et le contenu de votre message pour vous répondre et donner suite à votre demande.
-
-**Lorsque vous vous abonnez à nos actualités.** Si vous nous demandez par e-mail de recevoir nos actualités, nous utilisons votre adresse uniquement pour vous les envoyer, jusqu’à ce que vous nous demandiez d’arrêter.
 
 **Aucun suivi.** Ce site n’utilise ni cookies, ni outil d’analyse d’audience, ni traceur publicitaire. Ses polices sont servies par le site lui-même : charger une page ne contacte aucune autre entreprise.
 

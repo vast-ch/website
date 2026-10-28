@@ -1087,7 +1087,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   News: a list of dates and titles, posts read as letters, and subscribing
+   News: a list of dates and titles, posts read as letters, and the feeds
    -------------------------------------------------------------------------- */
 
 /* Read by screen readers, not shown. */
@@ -1181,50 +1181,15 @@ body {
   margin: var(--space-block) 0 0;
 }
 
-/* Subscribing: a line, an email field and its button, then the feeds. */
-.news-subscribe {
+/* Following the news: a line, then the feeds. */
+.news-follow {
   margin-top: var(--space-section);
   padding-top: var(--space-block);
   border-top: 1px solid var(--line);
 }
 
-.news-subscribe > .mono:first-child {
-  margin: 0 0 var(--space-eyebrow);
-}
-
-.news-form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.75rem 1.25rem;
-}
-
-.news-email {
-  flex: 0 1 18rem;
-  min-width: 0;
-  padding: 0.35rem 0;
-  border: 0;
-  border-bottom: 1px solid var(--ink-faint);
-  border-radius: 0;
-  background: transparent;
-  color: var(--ink);
-  text-transform: none;
-}
-
-.news-email::placeholder {
-  color: var(--ink-faint);
-}
-
-.news-email:focus {
-  outline: none;
-  border-bottom-color: var(--ink);
-}
-
-.news-note {
-  margin: var(--space-block) 0 0;
-  max-width: 34em;
-  color: var(--ink-muted);
-  font-size: var(--text-ui);
+.news-follow > .mono:first-child {
+  margin: 0 0 var(--space-label);
 }
 
 .news-feeds {

@@ -144,16 +144,8 @@ export interface Dictionary {
     /** A post is shown as a letter: its header lines. */
     letter: { date: string; from: string; to: string; toValue: string; subject: string };
     back: string;
-    subscribe: {
-      title: string;
-      email: string;
-      placeholder: string;
-      submit: string;
-      /** The subscription request, sent by email: its subject and body ({email} is replaced). */
-      subject: string;
-      body: string;
-      note: string;
-    };
+    /** Above the links to the feeds. */
+    follow: string;
   };
   notFound: {
     meta: PageMeta;

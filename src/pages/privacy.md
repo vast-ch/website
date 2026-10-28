@@ -6,7 +6,7 @@ locale: en
 page: privacy
 ---
 
-_Last updated: 28 October 2026_
+_Last updated: 9 October 2026_
 
 This policy explains how Vast Switzerland GmbH ("vast", "we") handles personal data in connection with this website, in line with the Swiss Federal Act on Data Protection (FADP).
 
@@ -19,8 +19,6 @@ Vast Switzerland GmbH, c/o Seed: Lab, Chemin du Musée 4, 1700 Fribourg, Switzer
 **When you visit the website.** Our hosting provider records technical data such as your IP address, the page requested, the date and time, and your browser. This is needed to deliver the website and keep it secure.
 
 **When you write to us.** If you contact us by email, we use your address and the content of your message to reply and to follow up on your request.
-
-**When you subscribe to our news.** If you ask us by email to receive our news, we use your address only to send it to you, until you ask us to stop.
 
 **No tracking.** This website uses no cookies, no analytics and no advertising trackers. Its fonts are served with the site itself, so loading a page contacts no other company.
 

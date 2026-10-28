@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 
 import SiteLayout from '~/layouts/SiteLayout.astro';
-import NewsSubscribe from '~/components/news/NewsSubscribe.astro';
+import NewsFeeds from '~/components/news/NewsFeeds.astro';
 import { CONTACT_EMAIL, getDictionary, LOCALES, type Locale } from '~/i18n';
 import { formatDate, isoDate, newsUrl, postSlug, postUrl, type Post } from '~/news';
 
@@ -66,6 +66,6 @@ const translated = LOCALES.every(has);
       <a class="arrow-link" href={newsUrl(locale)}><span aria-hidden="true">←</span> {n.back}</a>
     </p>
 
-    <NewsSubscribe t={t} />
+    <NewsFeeds t={t} />
   </article>
 </SiteLayout>

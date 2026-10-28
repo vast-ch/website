@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '~/layouts/SiteLayout.astro';
-import NewsSubscribe from '~/components/news/NewsSubscribe.astro';
+import NewsFeeds from '~/components/news/NewsFeeds.astro';
 import { getDictionary, type Locale } from '~/i18n';
 import { formatDate, getPosts, isoDate, postSlug, postUrl } from '~/news';
 
@@ -14,7 +14,7 @@ const n = t.news;
 const posts = await getPosts(locale);
 ---
 
-<!-- One line per post, its date and its title, newest first; then subscribing. -->
+<!-- One line per post, its date and its title, newest first; then the feeds. -->
 <SiteLayout locale={locale} page="news" title={n.meta.title} description={n.meta.description}>
   <article class="content-surface">
     <h1 class="eyebrow mono">{n.label}</h1>
@@ -36,6 +36,6 @@ const posts = await getPosts(locale);
       )
     }
 
-    <NewsSubscribe t={t} />
+    <NewsFeeds t={t} />
   </article>
 </SiteLayout>

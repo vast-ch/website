@@ -258,15 +258,7 @@ export const en: Dictionary = {
     feed: { title: 'vast — News', description: 'News and articles about the work of vast.' },
     letter: { date: 'Date:', from: 'From:', to: 'To:', toValue: 'You', subject: 'Subject:' },
     back: 'All news',
-    subscribe: {
-      title: 'Hear from us',
-      email: 'Email address',
-      placeholder: 'your@email.com',
-      submit: 'Subscribe',
-      subject: 'Subscribe to vast news',
-      body: 'Hello, please send the news of vast to {email}.',
-      note: 'Your email app opens with the request: send it, and we will add you. Write to us any time to stop.',
-    },
+    follow: 'Hear from us',
   },
   notFound: {
     meta: { title: 'Page not found', description: 'This page could not be found.' },
