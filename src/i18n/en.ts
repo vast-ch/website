@@ -237,7 +237,7 @@ export const en: Dictionary = {
 
   earth: {
     meta: {
-      title: '.earth',
+      title: 'earth',
       description:
         'vast.earth is a non-profit association under Swiss law that fosters harmony between people and nature by developing and supporting projects of social and environmental benefit.',
     },

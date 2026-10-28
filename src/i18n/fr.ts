@@ -254,7 +254,7 @@ export const fr: Dictionary = typography<Dictionary>({
 
   earth: {
     meta: {
-      title: '.earth',
+      title: 'earth',
       description:
         'vast.earth est une association de droit suisse à but non lucratif qui favorise l’harmonie entre les êtres humains et la nature en développant et en soutenant des projets d’utilité sociale et environnementale.',
     },
