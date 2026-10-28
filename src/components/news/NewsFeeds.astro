@@ -9,11 +9,11 @@ export interface Props {
 const { t } = Astro.props;
 ---
 
-<!-- Following the news: the Atom and RSS feeds of this language. -->
-<section class="news-follow" aria-labelledby="follow-title">
-  <p class="mono" id="follow-title">{t.news.follow}</p>
-  <p class="news-feeds mono">
+<!-- Following the news, on one line: the Atom and RSS feeds of this language. -->
+<p class="news-follow mono">
+  <span>{t.news.follow}</span>
+  <span class="news-feeds">
     <a class="chrome-link" href={feedUrl(t.locale, 'atom')}>Atom</a> ·
     <a class="chrome-link" href={feedUrl(t.locale, 'rss')}>RSS</a>
-  </p>
-</section>
+  </span>
+</p>

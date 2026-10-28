@@ -1181,19 +1181,18 @@ body {
   margin: var(--space-block) 0 0;
 }
 
-/* Following the news: a line, then the feeds. */
+/* Following the news, on one line: a few words, then the feeds. */
 .news-follow {
-  margin-top: var(--space-section);
+  margin: var(--space-section) 0 0;
   padding-top: var(--space-block);
   border-top: 1px solid var(--line);
-}
-
-.news-follow > .mono:first-child {
-  margin: 0 0 var(--space-label);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1.5rem;
 }
 
 .news-feeds {
-  margin: var(--space-label) 0 0;
   color: var(--ink-muted);
 }
 
