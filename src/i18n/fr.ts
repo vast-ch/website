@@ -212,27 +212,37 @@ export const fr: Dictionary = typography<Dictionary>({
     meta: {
       title: 'À propos',
       description:
-        'vast est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients, dans le respect de l’environnement et de la souveraineté numérique.',
+        "Nous sommes une entreprise suisse d'ingénierie logicielle et de modélisation, spécialisée dans les données issues du monde physique.",
     },
     label: 'À propos',
-    intro: `<a href="${r('home')}">vast</a> est une société de conseil. Nous développons des logiciels et des modèles de machine learning pour les séries temporelles avec nos clients.`,
+    intro: `Nous sommes <a href="${r('home')}"><b>vast</b></a>, une entreprise suisse fondée et dirigée par trois développeurs seniors. Nous développons des logiciels et des modèles d'apprentissage automatique avec nos clients, en particulier à partir de données issues du monde physique.`,
     sections: [
       {
-        title: 'Qui nous sommes',
-        text: `vast est dirigée par ses fondateurs, tous développeurs expérimentés. <a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> travaille sur la science des données et la prévision de séries temporelles. <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> est ingénieur logiciel orienté frontend et contribue depuis longtemps à Ember et à l’écosystème JavaScript. <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> développe des applications mobiles et web, dont des applications publiées sur l’App Store et Google Play.`,
+        title: 'Les fondateurs',
+        text: `<a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> dirige nos travaux en science des données et en apprentissage automatique.
+
+    <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> est ingénieur logiciel, spécialisé dans le développement front-end, et contribue depuis longtemps à Ember.js et à l'écosystème JavaScript.
+
+    <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> développe des applications web capables de traiter de grands volumes de données, ainsi que des applications mobiles publiées sur l'App Store et Google Play.`,
       },
       {
-        title: 'La science des données au service de l’énergie',
-        text: 'Frédéric est docteur en informatique de l’Université de Fribourg (UNIFR). Ses recherches ont porté sur l’estimation de la performance énergétique des bâtiments, la détection d’anomalies dans les réseaux de chauffage à distance et la comparaison de modèles de prévision. Nous publions nos recherches et développons onTime, une bibliothèque open source pour comparer les modèles de prévision de séries temporelles.',
+        title: 'La recherche à la base de notre travail',
+        text: `Frédéric est titulaire d'un doctorat en informatique de l'Université de Fribourg, préparé en collaboration avec la HEIA-FR.
+
+    Ses travaux ont porté sur l'estimation de la performance énergétique des bâtiments, la prédiction du radon à l'intérieur des bâtiments à partir de données géologiques et de caractéristiques constructives, la détection d'anomalies dans les réseaux de chauffage à distance et l'évaluation comparative de modèles de prévision.`,
       },
       {
-        title: 'Environnement et souveraineté',
+        title: "L'humain, la nature et la souveraineté",
         // Approach page hidden for now. To restore its link, append to the text:
         //   <a href="${r('approach')}">Découvrir notre façon de travailler</a>.
-        text: 'Nous voulons que notre travail soit bon pour les êtres humains et pour la nature, et nous sommes heureux de travailler sur des projets liés à l’énergie, aux bâtiments et à l’environnement. Nous tenons aussi à savoir qui contrôle les logiciels et les données : nous privilégions les outils open source et l’hébergement en Suisse ou en Europe.',
+        text: `Nous voulons que notre travail aide l'humain et la nature à prospérer ensemble, et nous sommes particulièrement heureux de travailler sur des projets dans les domaines de l'énergie, du bâtiment, du sport, de la météo et de l'environnement.
+
+    Notre association à but non lucratif, <a href="https://vast.earth" target="_blank" rel="noopener noreferrer">vast.earth</a>, développe et soutient des projets d'utilité sociale et environnementale.
+
+    Le contrôle des logiciels et des données est un enjeu important, y compris pour les vôtres. Nous privilégions les outils open source et l'hébergement en Suisse ou en Europe.`,
       },
     ],
-    tagline: 'Logiciels et modèles, développés avec vous.',
+    tagline: 'Des logiciels et des modèles, conçus avec vous.',
   },
 
   contact: {

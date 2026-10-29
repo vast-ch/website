@@ -195,24 +195,34 @@ export const en: Dictionary = {
     meta: {
       title: 'About',
       description:
-        'vast is a consulting company. We develop software and machine learning models for time series with our clients, with care for the environment and for digital sovereignty.',
+        'We are a Swiss software engineering and modelling company specialising in data from the physical world.',
     },
     label: 'About',
-    intro: `<a href="${r('home')}">vast</a> is a consulting company. We develop software and machine-learning models for time series with our clients.`,
+    intro: `We are <a href="${r('home')}"><b>vast</b></a>, a Swiss company founded and run by three senior developers. We build software and machine-learning models with our clients, with a focus on data from the physical world.`,
     sections: [
       {
-        title: 'Who we are',
-        text: `vast is run by its founders, all senior developers. <a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> works on data science and time-series forecasting. <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> is a software engineer with a frontend focus and a long-time Ember and JavaScript contributor. <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> builds mobile and web applications, including apps published on the App Store and Google Play.`,
+        title: 'About the founders',
+        text: `<a href="https://ch.linkedin.com/in/fredmontet" target="_blank" rel="noopener noreferrer">Frédéric Montet</a> leads our data science and machine-learning work.
+
+      <a href="https://www.linkedin.com/in/michalbryxi/" target="_blank" rel="noopener noreferrer">Michal Bryxí</a> is a software engineer focused on frontend development and a long-time contributor to Ember.js and the JavaScript ecosystem.
+
+      <a href="https://www.linkedin.com/in/yannick-lagger-302070193/" target="_blank" rel="noopener noreferrer">Yannick Lagger</a> builds web applications that handle large volumes of data, and mobile apps published on the App Store and Google Play.`,
       },
       {
-        title: 'Data science for energy',
-        text: 'Frédéric holds a PhD in computer science from the University of Fribourg (UNIFR). His research covered estimating the energy performance of buildings, detecting anomalies in district heating networks and benchmarking forecasting models. We publish our research and develop onTime, an open-source library for benchmarking time-series forecasting models.',
+        title: 'Research behind our work',
+        text: `Frédéric holds a PhD in computer science from the University of Fribourg, with research carried out in collaboration with HEIA-FR.
+
+      His work covered estimating the energy performance of buildings, predicting indoor radon levels from geological and building data, detecting anomalies in district heating networks and benchmarking forecasting models.`,
       },
       {
-        title: 'Environment and sovereignty',
+        title: 'People, nature and sovereignty',
         // Approach page hidden for now. To restore its link, append to the text:
         //   <a href="${r('approach')}">Read how we work</a>.
-        text: 'We want our work to be good for people and nature, and we are glad to work on projects in energy, buildings and the environment. We also care about who controls software and data: we favour open-source tools and hosting in Switzerland or Europe.',
+        text: `We want our work to help people and nature thrive together, and we are particularly glad to take on projects in energy, buildings, sport, weather and the environment.
+
+      Our non-profit association, <a href="https://vast.earth" target="_blank" rel="noopener noreferrer">vast.earth</a>, develops and supports projects of social and environmental benefit.
+
+      Who controls software and data matters, and that includes your data. We favour open-source tools and hosting in Switzerland or Europe.`,
       },
     ],
     tagline: 'Software and models, built with you.',
