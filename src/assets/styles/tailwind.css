@@ -1,2 +1,6 @@
-/* Tailwind supplies the CSS reset (preflight) that site.css builds on. */
+/*
+ * Tailwind supplies the CSS reset (preflight) that site.css builds on, and the
+ * typography plugin's `prose` styles for Markdown content (news posts).
+ */
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
