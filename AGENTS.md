@@ -4,7 +4,7 @@
 
 The public website of Vast Switzerland GmbH: a small, static, bilingual (English/French) site built with **Astro 6**. Its look is a full-screen animated sky (a volumetric sea of clouds rendered in WebGL) with corner chrome set in Departure Mono and reading text set in Inter.
 
-**Stack:** Astro 6 (static output) | TypeScript | Tailwind CSS v4 (used only for its CSS reset)
+**Stack:** Astro 6 (static output) | TypeScript | Tailwind CSS v4 (its CSS reset, and the typography plugin's `prose` for news posts)
 
 ## Quick reference
 
@@ -36,7 +36,7 @@ src/
   pages/                # Thin route files (EN at the root, FR under fr/), Markdown legal pages
   assets/
     styles/site.css     # Design tokens and all site styles
-    styles/tailwind.css # Tailwind import (reset only)
+    styles/tailwind.css # Tailwind: the reset and the typography plugin
     images/og/          # Social preview cards, one per locale (1200×630 JPEG)
     favicons/
 public/                 # robots.txt, _headers (Cloudflare cache rules), Departure Mono (SIL OFL)
@@ -58,7 +58,7 @@ wrangler.jsonc          # Cloudflare Worker serving dist/ (404 page for unknown 
 
 ### News
 
-`/news` (and `/fr/actualites`) lists the news, one line per post (date and title), newest first; each post reads as a letter (Date, From, To, Subject, then the text). To publish, add a Markdown file to `src/content/news/en/` or `src/content/news/fr/` with `title`, `date` and `description` in its front matter (see `src/content.config.ts`); the folder is its language, a file with the same name in the other folder is its translation, and `draft: true` keeps it out of the build. RSS and Atom feeds are generated per language (`/news/rss.xml`, `/news/atom.xml`, and the same under `/fr/actualites`), with each post in full; every page announces them. Everything is in `src/news.ts`, `src/components/news/` and the two `News*View.astro` views. There is no email subscription for now (no newsletter service); a signup form would also need a line in the privacy policy.
+`/news` (and `/fr/actualites`) lists the news, one line per post (date and title), newest first; each post reads as a letter (Date, From, To, Subject, then the text). To publish, add a Markdown file to `src/content/news/en/` or `src/content/news/fr/` with `title`, `date` and `description` in its front matter (see `src/content.config.ts`); the folder is its language, a file with the same name in the other folder is its translation, and `draft: true` keeps it out of the build. RSS and Atom feeds are generated per language (`/news/rss.xml`, `/news/atom.xml`, and the same under `/fr/actualites`), with each post in full; every page announces them. Everything is in `src/news.ts`, `src/components/news/` and the two `News*View.astro` views. A post's text is styled with Tailwind's typography plugin (`prose` on the post body), set to the site's ink colours and body size in `site.css` (`.news-body`), so Markdown headings, lists, quotes and images come out styled. There is no email subscription for now (no newsletter service); a signup form would also need a line in the privacy policy.
 
 ### Hidden pages
 
