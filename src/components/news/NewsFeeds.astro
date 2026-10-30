@@ -1,0 +1,19 @@
+---
+import type { Dictionary } from '~/i18n';
+import { feedUrl } from '~/news';
+
+export interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+---
+
+<!-- Following the news, on one line: the Atom and RSS feeds of this language. -->
+<p class="news-follow mono">
+  <span>{t.news.follow}</span>
+  <span class="news-feeds">
+    <a class="chrome-link" href={feedUrl(t.locale, 'atom')}>Atom</a> ·
+    <a class="chrome-link" href={feedUrl(t.locale, 'rss')}>RSS</a>
+  </span>
+</p>

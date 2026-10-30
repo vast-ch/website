@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import SiteLayout from '~/layouts/SiteLayout.astro';
+import NewsFeeds from '~/components/news/NewsFeeds.astro';
+import { CONTACT_EMAIL, getDictionary, LOCALES, type Locale } from '~/i18n';
+import { formatDate, isoDate, newsUrl, postSlug, postUrl, type Post } from '~/news';
+
+export interface Props {
+  locale: Locale;
+  post: Post;
+}
+
+const { locale, post } = Astro.props;
+const t = getDictionary(locale);
+const n = t.news;
+const slug = postSlug(post);
+const { Content } = await render(post);
+
+// The language switch leads to the translation of this post when there is one,
+// otherwise to the news of the other language.
+const all = await getCollection('news');
+const has = (l: Locale) => all.some((p) => p.id === `${l}/${slug}` && (import.meta.env.DEV || !p.data.draft));
+const alternates = Object.fromEntries(LOCALES.map((l) => [l, has(l) ? postUrl(l, slug) : newsUrl(l)])) as Record<
+  Locale,
+  string
+>;
+const translated = LOCALES.every(has);
+---
+
+<!-- A post reads as a letter: who, to whom, when, about what; then the text. -->
+<SiteLayout
+  locale={locale}
+  page="news"
+  alternates={alternates}
+  translated={translated}
+  title={post.data.title}
+  description={post.data.description}
+>
+  <article class="content-surface">
+    <h1 class="visually-hidden">{post.data.title}</h1>
+    <dl class="news-letter mono">
+      <div>
+        <dt>{n.letter.date}</dt>
+        <dd><time datetime={isoDate(post.data.date)}>{formatDate(locale, post.data.date)}</time></dd>
+      </div>
+      <div>
+        <dt>{n.letter.from}</dt>
+        <dd>vast &lt;<a class="chrome-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>&gt;</dd>
+      </div>
+      <div>
+        <dt>{n.letter.to}</dt>
+        <dd>{n.letter.toValue}</dd>
+      </div>
+      <div>
+        <dt>{n.letter.subject}</dt>
+        <dd>{post.data.title}</dd>
+      </div>
+    </dl>
+
+    <div class="copy news-body prose max-w-none">
+      <Content />
+    </div>
+
+    <p class="news-back mono">
+      <a class="arrow-link" href={newsUrl(locale)}><span aria-hidden="true">←</span> {n.back}</a>
+    </p>
+
+    <NewsFeeds t={t} />
+  </article>
+</SiteLayout>

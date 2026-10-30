@@ -15,6 +15,7 @@ import SiteHeader from '~/components/site/SiteHeader.astro';
 import SiteFooter from '~/components/site/SiteFooter.astro';
 
 import { getDictionary, route, LOCALES, HTML_LANG, type Locale, type RouteKey } from '~/i18n';
+import { feedUrl } from '~/news';
 
 import ogEn from '~/assets/images/og/og-en.jpg';
 import ogFr from '~/assets/images/og/og-fr.jpg';
@@ -25,6 +26,10 @@ export interface Props {
   locale: Locale;
   /** Route key of this page, used for hreflang and the language switch. Omit on pages without translations. */
   page?: RouteKey;
+  /** The same page in every locale, when it is not just `page` (a news post). */
+  alternates?: Record<Locale, string>;
+  /** Whether those alternates are translations of this page, for hreflang. Defaults to true. */
+  translated?: boolean;
   title: string;
   /** Defaults to the home page description of the locale. */
   description?: string;
@@ -33,11 +38,13 @@ export interface Props {
   noindex?: boolean;
 }
 
-const { locale, page, title, description, variant = 'content', noindex } = Astro.props;
+const { locale, page, title, description, variant = 'content', noindex, translated = true } = Astro.props;
 const MAIN_CLASS = { home: 'home', content: 'content-page', earth: 'earth-page' } as const;
 const t = getDictionary(locale);
 
-const alternates = Object.fromEntries(LOCALES.map((l) => [l, route(page ?? 'home', l)])) as Record<Locale, string>;
+const alternates =
+  Astro.props.alternates ??
+  (Object.fromEntries(LOCALES.map((l) => [l, route(page ?? 'home', l)])) as Record<Locale, string>);
 const isEnglishHome = locale === 'en' && page === 'home';
 ---
 
@@ -51,10 +58,12 @@ const isEnglishHome = locale === 'en' && page === 'home';
       description={description ?? t.home.meta.description}
       noindex={noindex}
       locale={locale}
-      alternates={page ? alternates : undefined}
+      alternates={page && translated ? alternates : undefined}
       image={OG_IMAGES[locale]}
     />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={t.news.feed.title} href={feedUrl(locale, 'rss')} />
+    <link rel="alternate" type="application/atom+xml" title={t.news.feed.title} href={feedUrl(locale, 'atom')} />
     <Favicons />
     <link
       rel="preload"

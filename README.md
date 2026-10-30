@@ -32,6 +32,7 @@ Then open http://localhost:4321 (English) or http://localhost:4321/fr (French).
 | Menu and footer                          | `src/components/site/SiteHeader.astro`, `SiteFooter.astro` |
 | Page titles and descriptions (SEO)       | `meta` entries in `src/i18n/en.ts` and `fr.ts`             |
 | Social preview images                    | `src/assets/images/og/`                                    |
+| News posts (one Markdown file each)      | `src/content/news/en/` and `src/content/news/fr/`          |
 
 The two dictionaries share one TypeScript type, so a string missing in French fails the type check. `AGENTS.md` has the architecture in more detail.
 
