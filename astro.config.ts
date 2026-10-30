@@ -7,11 +7,17 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import compress from 'astro-compress';
 
+import rehypeFigure from './src/rehype-figure';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   site: 'https://vast.ch',
   trailingSlash: 'never',
+
+  markdown: {
+    rehypePlugins: [rehypeFigure],
+  },
 
   integrations: [
     sitemap(),
