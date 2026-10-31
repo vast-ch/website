@@ -1,5 +1,5 @@
 ---
-title: 'Forkcast: the weather along your bike route, months ahead'
+title: 'Introducing Forkcast: weather planning for long bike trips'
 date: 2026-10-30
 description: 'Forkcast, a vast.earth project, shows what the weather usually does along a bikepacking route, day by day, so you can plan a trip long before any forecast reaches it.'
 ---
