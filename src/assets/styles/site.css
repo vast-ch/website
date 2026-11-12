@@ -460,13 +460,15 @@ body {
     calc(var(--px) * 0) calc(var(--px) * 6) 0 currentColor;
 }
 
-/* Where the margins are too narrow to keep the header beside the reading
-   column, it scrolls away with reading pages instead of covering the text. */
-@media (max-width: 1180px) {
-  [data-page='content'] .site-header {
-    position: absolute;
-  }
+/* On reading pages the header scrolls away with the page: the switch sits
+   over the reading column, and would cover the text. */
+[data-page='content'] .site-header {
+  position: absolute;
+}
 
+/* Where the margins are too narrow for the menu beside the reading column,
+   the text starts a little lower to clear it. */
+@media (max-width: 1180px) {
   .content-page {
     padding-top: calc(var(--frame-block) + 112px);
   }
